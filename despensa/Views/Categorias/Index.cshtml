@@ -1,0 +1,44 @@
+﻿@model IEnumerable<despensa.Models.Categoria>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+
+
+
+<div class="page-content-product">
+    <div class="main-product">
+        <div class="container">
+            <div class="row clearfix">
+                <div class="find-box">
+                    <h1>Categorias de productos</h1>
+                    <h4>Tenemos todo lo que necesitas</h4>
+                    <div class="col-sm-3">
+                        <div class="form-sh"> <a class="btn" asp-action="Create" >Crear</a> </div>
+                    </div>
+                </div>
+            </div>
+                @foreach (var item in Model)
+                {
+                    <div class="col-lg-3 col-sm-6 col-md-3">
+                        <a asp-controller="Productoes" asp-route-idcat="@item.CodCategoria" >
+                            <div class="box-img">
+                                <h4> @Html.DisplayFor(modelItem => item.Nombre) </h4>
+                                <img src=@Url.Content("~/image/" + item.Imagen) alt="" />
+                            </div>
+                        </a>
+                        <a asp-action="Edit" asp-route-id="@item.CodCategoria">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.CodCategoria">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.CodCategoria">Delete</a>
+                    </div>
+                }
+                <div class="categories_link">
+                    <a href="#">Browse all categories here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
