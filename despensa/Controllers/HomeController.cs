@@ -33,5 +33,21 @@ namespace despensa.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+        [HttpGet]
+        public JsonResult Get()
+        {
+            Console.WriteLine("hola mundo 6456524");
+            despensaContext _context = new despensaContext();
+            var entradas = (from m in _context.Producto
+                            where m.CodEstado == 1
+                            orderby m.Nombre descending
+                            select m).ToList();
+            return Json(entradas);
+        }
+
+
+
     }
 }

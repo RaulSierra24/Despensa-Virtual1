@@ -27,6 +27,8 @@ namespace despensa
         {
             services.AddDbContext<despensaContext>(options => options.UseMySQL("server=192.168.99.100;port=3306;user=root;password=password;database=despensa"));
             services.AddControllersWithViews();
+            services.AddSession();
+            services.AddDistributedMemoryCache();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,17 +46,17 @@ namespace despensa
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            
         }
     }
 }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\proyectosvisual\\despensa\\despensa\\despensa\\despensa.csproj": {}
+    "D:\\proyectosvisual\\despensa\\despensa\\Despensa-Virtual\\Despensa-Virtual1\\despensa\\despensa.csproj": {}
   },
   "projects": {
-    "D:\\proyectosvisual\\despensa\\despensa\\despensa\\despensa.csproj": {
+    "D:\\proyectosvisual\\despensa\\despensa\\Despensa-Virtual\\Despensa-Virtual1\\despensa\\despensa.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\proyectosvisual\\despensa\\despensa\\despensa\\despensa.csproj",
+        "projectUniqueName": "D:\\proyectosvisual\\despensa\\despensa\\Despensa-Virtual\\Despensa-Virtual1\\despensa\\despensa.csproj",
         "projectName": "despensa",
-        "projectPath": "D:\\proyectosvisual\\despensa\\despensa\\despensa\\despensa.csproj",
+        "projectPath": "D:\\proyectosvisual\\despensa\\despensa\\Despensa-Virtual\\Despensa-Virtual1\\despensa\\despensa.csproj",
         "packagesPath": "C:\\Users\\allan\\.nuget\\packages\\",
-        "outputPath": "D:\\proyectosvisual\\despensa\\despensa\\despensa\\obj\\",
+        "outputPath": "D:\\proyectosvisual\\despensa\\despensa\\Despensa-Virtual\\Despensa-Virtual1\\despensa\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -42,14 +42,6 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
-            "Microsoft.EntityFrameworkCore.SqlServer": {
-              "target": "Package",
-              "version": "[3.1.8, )"
-            },
-            "Microsoft.EntityFrameworkCore.Sqlite": {
-              "target": "Package",
-              "version": "[3.1.8, )"
-            },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
