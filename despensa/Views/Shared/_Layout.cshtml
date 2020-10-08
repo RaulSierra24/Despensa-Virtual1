@@ -20,7 +20,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!--//tags -->
     <link href="~/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
     <link href="~/css/style.css" rel="stylesheet" type="text/css" media="all" />
-    <link rel="stylesheet" href="~/css/style1.css">
+    <link rel="stylesheet" href="~/css/style.css">
     <link href="~/css/font-awesome.css" rel="stylesheet">
     <!--pop-up-box-->
     <link href="~/css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
@@ -29,6 +29,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <link rel="~/stylesheet" type="text/css" href="~/css/jquery-ui1.css">
     <!-- fonts -->
     <link href="~///fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/modal.css">
     <style>
         .cuadrado_imagen {
             width: 100%;
@@ -48,7 +49,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>-->
     <!-- header-bot-->
-    <header  class="top-head">
+    <header class="top-head">
         <div class="header-bot">
             <div class="header-bot_inner_wthreeinfo_header_mid">
                 <!-- header-bot-->
@@ -103,13 +104,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <!-- cart details -->
                     <div class="top_nav_right">
                         <div class="wthreecartaits wthreecartaits2 cart cart box_1">
-                            <form action="#" method="post" class="last">
-                                <input type="hidden" name="cmd" value="_cart">
-                                <input type="hidden" name="display" value="1">
-                                <button class="w3view-cart" type="submit" name="submit" value="">
-                                    <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
-                                </button>
-                            </form>
+                            <button class="trigger" type="button" onclick="obtenerCarrito()"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i><span class="badge badge-primary"></span></button>
+                         
                         </div>
                     </div>
                     <!-- //cart details -->
@@ -119,7 +115,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </div>
         </div>
     </header>
-    
+
     <!-- shop locator (popup) -->
     <!-- Button trigger modal(shop-locator) -->
     <div id="small-dialog1" class="mfp-hide">
@@ -500,6 +496,46 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!-- //shop locator (popup) -->
     <!-- signin Model -->
     <!-- Modal1 -->
+    <div class="modal" data-modal="trigger-1">
+        <article class="content-wrapper">
+            <button class="close"></button>
+            <header class="modal-header">
+                <h2>Carrito de Compras</h2>
+            </header>
+            <div class="modal-contenido">
+                <div id="global">
+                    <div id="mensajes">
+                        <table id="lstProductos" class="table table-striped  table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Cantidad</th>
+                                    <th>Producto</th>
+                                    <th>Precio Unitario</th>
+                                    <th>Subtotal</th>
+                                    <th>#</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3">Total</td>
+                                    <td class="total"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <footer class="modal-footer">
+                <button class="action">Accept</button>
+                <button class="action">Decline</button>
+            </footer>
+        </article>
+    </div>
+
+
     <div class="modal fade" id="myModal1" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -793,7 +829,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
     <div>
 
-            @RenderBody()
+        @RenderBody()
 
     </div>
 
@@ -1176,33 +1212,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         });
     </script>
     <!-- Large modal -->
-    <!-- <script>
-        $('#').modal('show');
-    </script> -->
-    <!-- //popup modal (for signin & signup)-->
-    <!-- cart-js -->
-    <script src="~/js/minicart.js"></script>
-    <script>
-        paypalm.minicartk.render(); //use only unique class names other than paypalm.minicartk.Also Replace same class name in css and minicart.min.js
-
-        paypalm.minicartk.cart.on('checkout', function (evt) {
-            var items = this.items(),
-                len = items.length,
-                total = 0,
-                i;
-
-            // Count the number of each item in the cart
-            for (i = 0; i < len; i++) {
-                total += items[i].get('quantity');
-            }
-
-            if (total < 3) {
-                alert('The minimum order quantity is 3. Please add more to your shopping cart before checking out');
-                evt.preventDefault();
-            }
-        });
-    </script>
-    <!-- //cart-js -->
     <!-- price range (top products) -->
     <script src="~/js/jquery-ui.js"></script>
     <script>
@@ -1252,6 +1261,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         });
     </script>
     <!-- //flexisel (for special offers) -->
+    <script src="~/js/modal.js"></script>
     <!-- password-script -->
     <script>
         window.onload = function () {
@@ -1310,6 +1320,96 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script src="~/js/bootstrap.js"></script>
     <!-- //for bootstrap working -->
     <!-- //js-files -->
+    <script>
+        function obtenerCarrito() {
+            $.ajax({
+                dataType: "json",
+                url: "/cart/get",
+                success: function (data) {
+                    console.log(data);
+                    $("#lstProductos > tbody").html("");
+                    for (n = 0; n < data.length; n++) {
+                        enlistarProducto(data[n].product.codProducto, data[n].product.nombre, data[n].product.precioVenta, data[n].quantity);
+                    }
+                    const trigger = "trigger-1";
+                    const modal = document.querySelector(`[data-modal=${trigger}]`);
+                    const contentWrapper = modal.querySelector('.content-wrapper');
+                    const close = modal.querySelector('.close');
+                    close.addEventListener('click', () => modal.classList.remove('open'));
+                    modal.addEventListener('click', () => modal.classList.remove('open'));
+                    contentWrapper.addEventListener('click', (e) => e.stopPropagation());
+                    modal.classList.toggle('open');
+                }
+            });
+        }
+        var cnt = 0;
+        function enlistarProducto(codProducto, nombre, precio, cantidad) {
+            var fila = '<tr>';
+            fila += '<td>';
+            fila += '<input type="number" value="' + cantidad + '" class="cantidad form-control"></td>';
+            fila += '<td>' + nombre + '</td>';
+            fila += '<td ><input type="hidden" value="' + precio + '" class="precio_unitario form-control">' + precio + '</div></td>';
+            fila += '<td><input class="form-control subtotal" type="text" disabled></td>';
+            fila += "<td><button class='btn btn-danger' onclick='eliminarFila(this," + codProducto + ")'>Eliminar</button></td>";
+            fila += '</tr>';
+            $("#lstProductos > tbody").append(fila);
+
+            cnt++;
+            calcular();
+            $("input").change(function () {
+                calcular();
+                $('#lstProductos> tbody').find('tr').each(function (i, tr) {
+                    numero = parseFloat($(tr).find('.cantidad').val());
+                    if (numero >= 0 || !isNaN(numero)) {
+                        $.ajax({
+                            url: "/cart/Editar/",
+                            data: { "id": codProducto, "cantidad": numero },
+                            success: function () {
+                            }
+                        });
+                    }
+                })
+                
+            });
+        }
+        function seleccionarCliente(cod_cliente, nombre) {
+            $('#bsqCliente').modal('hide');
+            $('#cod_cliente').val(cod_cliente);
+            $('#nombre_cliente').html(nombre);
+        }
+
+        function eliminarFila(obj, codigo) {
+            fila = $(obj).parent().parent();
+            $(fila).fadeOut(300).delay(100).remove();
+            $.ajax({
+                url: "/cart/Remove/",
+                data: { "id": codigo },
+                success: function () {
+                }
+            });
+            calcular();
+        }
+
+        function calcular() {
+            var filas = $("#tblProductos > tbody > tr");
+            var total = 0;
+            $('#lstProductos> tbody').find('tr').each(function (i, tr) {
+                cantidad = parseFloat($(tr).find('.cantidad').val());
+                precio_unitario = $(tr).find('.precio_unitario').val();
+                if (cantidad <= 0 || isNaN(cantidad)) {
+                    $(tr).find('.cantidad').val(0);
+                    cantidad = 0;
+                }
+                if (precio_unitario <= 0 || isNaN(precio_unitario)) {
+                    $(tr).find('.precio_unitario').val(0);
+                    precio_unitario = "0";
+                }
+                total += cantidad * precio_unitario;
+                $(".total").html("Q. " + total.toFixed(2));
+                $(tr).find('.subtotal').val("" + (cantidad * precio_unitario).toFixed(2));
+            })
+        }   
+    </script>
 
     @RenderSection("Scripts", required: false)
 

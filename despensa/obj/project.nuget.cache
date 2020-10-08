@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MUaY8hoXu1YUeNpl35U8BFyLptSAdVYTo8k9+Fz69qnjqPDmOmR8cZ+4GDq+IfUnXPLzBjvqHVaFWivqLuZMeA==",
+  "dgSpecHash": "IKPWHK0+9bwkfGtpd4EL8zalpmHcti7eiqiNDm54YJCUGLd98IRyO/A+BlzgqYCiq2skTrUVsn/BVJlYwmE1hA==",
   "success": true,
-  "projectFilePath": "D:\\proyectosvisual\\despensa\\despensa\\Despensa-Virtual\\Despensa-Virtual1\\despensa\\despensa.csproj",
+  "projectFilePath": "D:\\proyectosvisual\\despensa\\Despensa-Virtual1\\despensa\\despensa.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\allan\\.nuget\\packages\\bouncycastle.netcore\\1.8.3\\bouncycastle.netcore.1.8.3.nupkg.sha512",
     "C:\\Users\\allan\\.nuget\\packages\\google.protobuf\\3.6.1\\google.protobuf.3.6.1.nupkg.sha512",

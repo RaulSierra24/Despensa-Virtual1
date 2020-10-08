@@ -25,40 +25,18 @@ namespace despensa.Controllers
         [HttpGet]
         public JsonResult Get()
         {
-            var entradas = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
-            return Json(entradas.ToArray());
-        }
-
-
-        [Route("buy/{id}")]
-        //   public async Task<IActionResult> DeleteConfirmed(int id)
-        public async Task<IActionResult> Buy(int id)
-        {
-            despensaContext productModel = new despensaContext();
-            if (SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart") == null)
+            try{
+                var entradas = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+                return Json(entradas.ToList());
+            }
+            catch
             {
                 List<Item> cart = new List<Item>();
-                cart.Add(new Item { Product = await productModel.Producto.FindAsync(id), Quantity = 1 });
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+                return Json(cart.ToList());
             }
-            else
-            {
-                List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
-                int index = isExist(id);
-                if (index != -1)
-                {
-                    cart[index].Quantity++;
-                }
-                else
-                {
-                    cart.Add(new Item { Product = await productModel.Producto.FindAsync(id), Quantity = 1 });
-                }
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-            }
-            var carts = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
 
-            return RedirectToAction("Index");
         }
+
 
         [HttpGet]
         //   public async Task<IActionResult> DeleteConfirmed(int id)
@@ -85,17 +63,34 @@ namespace despensa.Controllers
                 }
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
-            var carts = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
         }
 
-        [Route("remove/{id}")]
-        public IActionResult Remove(int id)
+        [HttpGet]
+        public void Remove(int id)
         {
             List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
             int index = isExist(id);
-            cart.RemoveAt(index);
+            if (index != -1)
+            {
+                cart.RemoveAt(index);
+            }
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public void Editar(int id, int cantidad)
+        {
+            Console.WriteLine("entre a editar la cantidad");
+            List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+            foreach (var item in cart)
+            {
+                if (item.Product.CodProducto.Equals(id))
+                {
+                    item.Quantity= cantidad;
+
+                }
+            }
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
         }
 
         private int isExist(int id)

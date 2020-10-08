@@ -10,5 +10,7 @@ namespace despensa.Models
         public Producto Product { get; set; }
 
         public int Quantity { get; set; }
+
+
     }
 }

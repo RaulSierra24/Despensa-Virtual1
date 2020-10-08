@@ -3,45 +3,7 @@
 @using X.PagedList.Mvc.Core
 
 @{ ViewData["Title"] = "Index"; }
-
-<h2>Index</h2>
-
-<div class="page-content-product">
-    <div class="main-product">
-        <div class="container">
-            <div class="row clearfix">
-                <div class="find-box">
-                    <h1>Categorias de productos</h1>
-                    <h4>Tenemos todo lo que necesitas</h4>
-                    <div class="col-sm-3">
-                        <div class="form-sh"> <a class="btn" asp-action="Create" asp-route-idcat="@ViewData["codigo_cat"]">Crear</a> </div>
-                    </div>
-                </div>
-            </div>
-            @foreach (var item in ViewBag.pagina)
-            {
-            <div class="col-lg-3 col-sm-6 col-md-3">
-                <a asp-action="Details" asp-route-id="@item.CodProducto">
-                    <div class="box-img">
-                        <h4> @item.Nombre </h4>
-                        <img src=@Url.Content("~/image/" + item.Imagen) alt="" />
-                    </div>
-                </a>
-                <a asp-action="Edit" asp-route-id="@item.CodProducto" asp-route-idcat="@ViewData["codigo_cat"]">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@item.CodProducto" asp-route-idcat="@ViewData["codigo_cat"]">Delete</a>
-            </div>      
-}
-            <div class="categories_link">
-                <a href="#">Browse all categories here</a>
-            </div>
-
-            @Html.PagedListPager((IPagedList)ViewBag.pagina, page => Url.Action("Index", new { page = page }))
-        </div>
-    </div>
-</div>
-</div>
 <div class="ads-grid">
-
     <div class="container">
         <!-- tittle heading -->
         <h3 class="tittle-w3l">
@@ -84,8 +46,6 @@
 
                                     </div>
                                     <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                                        <button class="button2" type="button" onclick="obtenerCarrito()">obtenerCarrito</button>
-                                        <a asp-Controller="Cart" asp-action="buy" asp-route-id="@item.CodProducto">Añadir al Carrito 0</a>
                                         <button class="button2" onclick="agregarProducto(@item.CodProducto)">Añadir al Carrito 1</button>
 
                                     </div>
@@ -106,31 +66,16 @@
 
 @section Scripts {
 <script>
-    function obtenerCarrito() {
-
-        $.ajax({
-            dataType: "json",
-            url: "/cart/get",
-            success: function (data) {
-                console.log(data);
-            }
-
-        });
-    }
-
-
     function agregarProducto(txt) {
-
         $.ajax({
             url: "/cart/compra/",
             data: { "id": txt },
             success: function () {
-                console.log("txt");
+                obtenerCarrito();
             }
         });
     }
 </script>
-
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 
