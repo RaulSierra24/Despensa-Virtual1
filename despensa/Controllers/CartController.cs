@@ -80,14 +80,13 @@ namespace despensa.Controllers
         [HttpGet]
         public void Editar(int id, int cantidad)
         {
-            Console.WriteLine("entre a editar la cantidad");
+            Console.WriteLine("id= " + id + " cantidad = " + cantidad);
             List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
             foreach (var item in cart)
             {
                 if (item.Product.CodProducto.Equals(id))
                 {
                     item.Quantity= cantidad;
-
                 }
             }
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
@@ -99,16 +98,13 @@ namespace despensa.Controllers
             int i = 0;
             foreach (var item in cart)
             {
-
                 if (item.Product.CodProducto.Equals(id))
                 {
                     Console.WriteLine("id " + i);
                     return i;
-
                 }
                 i++;
             }
-
             return -1;
         }
 

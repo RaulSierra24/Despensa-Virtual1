@@ -1346,31 +1346,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         function enlistarProducto(codProducto, nombre, precio, cantidad) {
             var fila = '<tr>';
             fila += '<td>';
-            fila += '<input type="number" value="' + cantidad + '" class="cantidad form-control"></td>';
+            fila += '<input type="text" value="' + cantidad + '" class="cantidad form-control" onchange="calcular2(this,' + codProducto + ');"></td>';
             fila += '<td>' + nombre + '</td>';
             fila += '<td ><input type="hidden" value="' + precio + '" class="precio_unitario form-control">' + precio + '</div></td>';
             fila += '<td><input class="form-control subtotal" type="text" disabled></td>';
             fila += "<td><button class='btn btn-danger' onclick='eliminarFila(this," + codProducto + ")'>Eliminar</button></td>";
             fila += '</tr>';
             $("#lstProductos > tbody").append(fila);
-
             cnt++;
             calcular();
-            $("input").change(function () {
-                calcular();
-                $('#lstProductos> tbody').find('tr').each(function (i, tr) {
-                    numero = parseFloat($(tr).find('.cantidad').val());
-                    if (numero >= 0 || !isNaN(numero)) {
-                        $.ajax({
-                            url: "/cart/Editar/",
-                            data: { "id": codProducto, "cantidad": numero },
-                            success: function () {
-                            }
-                        });
-                    }
-                })
-                
-            });
+
+           
         }
         function seleccionarCliente(cod_cliente, nombre) {
             $('#bsqCliente').modal('hide');
@@ -1404,10 +1390,43 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     $(tr).find('.precio_unitario').val(0);
                     precio_unitario = "0";
                 }
+                
+                    total += cantidad * precio_unitario;
+                    $(".total").html("Q. " + total.toFixed(2));
+                    $(tr).find('.subtotal').val("" + (cantidad * precio_unitario).toFixed(2));
+            
+            })
+        } 
+        function calcular2(obj, codigo) {
+            var x = 0;
+            var total = 0;
+            cantidades = $(obj).val();
+            console.log(cantidades);
+            $('#lstProductos> tbody').find('tr').each(function (i, tr) {
+                cantidad = parseFloat($(tr).find('.cantidad').val());
+                precio_unitario = $(tr).find('.precio_unitario').val();
+                if (cantidad <= 0 || isNaN(cantidad)) {
+                    $(tr).find('.cantidad').val(0);
+                    cantidad = 0;
+                }
+                if (precio_unitario <= 0 || isNaN(precio_unitario)) {
+                    $(tr).find('.precio_unitario').val(0);
+                    precio_unitario = 0;
+                }
                 total += cantidad * precio_unitario;
+                x = cantidad;
                 $(".total").html("Q. " + total.toFixed(2));
                 $(tr).find('.subtotal').val("" + (cantidad * precio_unitario).toFixed(2));
             })
+
+            if (x >= 0) {
+                $.ajax({
+                    url: "/cart/Editar/",
+                    data: { "id": codigo, "cantidad": cantidades },
+                    success: function () {
+                    }
+                });
+            }
         }   
     </script>
 
