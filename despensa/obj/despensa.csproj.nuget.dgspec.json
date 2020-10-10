@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\proyectosvisual\\despensa\\Despensa-Virtual1\\despensa\\despensa.csproj": {}
+    "D:\\proyectosvisual\\Despensa-Virtual1\\despensa\\despensa.csproj": {}
   },
   "projects": {
-    "D:\\proyectosvisual\\despensa\\Despensa-Virtual1\\despensa\\despensa.csproj": {
+    "D:\\proyectosvisual\\Despensa-Virtual1\\despensa\\despensa.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\proyectosvisual\\despensa\\Despensa-Virtual1\\despensa\\despensa.csproj",
+        "projectUniqueName": "D:\\proyectosvisual\\Despensa-Virtual1\\despensa\\despensa.csproj",
         "projectName": "despensa",
-        "projectPath": "D:\\proyectosvisual\\despensa\\Despensa-Virtual1\\despensa\\despensa.csproj",
+        "projectPath": "D:\\proyectosvisual\\Despensa-Virtual1\\despensa\\despensa.csproj",
         "packagesPath": "C:\\Users\\allan\\.nuget\\packages\\",
-        "outputPath": "D:\\proyectosvisual\\despensa\\Despensa-Virtual1\\despensa\\obj\\",
+        "outputPath": "D:\\proyectosvisual\\Despensa-Virtual1\\despensa\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -87,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
         }
       }
     }
