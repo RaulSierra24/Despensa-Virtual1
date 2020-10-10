@@ -1,0 +1,65 @@
+﻿@model IEnumerable<despensa.Models.PredidoFactura>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FecEmision)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalVendido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalCosto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodClienteNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodEmpleadoNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodEstadoNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FecEmision)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalVendido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCosto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodClienteNavigation.CodCliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodEmpleadoNavigation.CodEmpleado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodEstadoNavigation.CodEstado)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CodFactura">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CodFactura">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CodFactura">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

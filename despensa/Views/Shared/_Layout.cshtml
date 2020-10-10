@@ -18,6 +18,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         }
     </script>
     <!--//tags -->
+
+    <link href="~/css/inputnum.css" rel="stylesheet"  />
+
+
     <link href="~/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
     <link href="~/css/style.css" rel="stylesheet" type="text/css" media="all" />
     <link rel="stylesheet" href="~/css/style.css">
@@ -105,7 +109,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <div class="top_nav_right">
                         <div class="wthreecartaits wthreecartaits2 cart cart box_1">
                             <button class="trigger" type="button" onclick="obtenerCarrito()"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i><span class="badge badge-primary"></span></button>
-                         
+
                         </div>
                     </div>
                     <!-- //cart details -->
@@ -529,7 +533,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
             </div>
             <footer class="modal-footer">
-                <button class="action">Accept</button>
+                <a class="action" asp-controller="PredidoFacturas" asp-action="Create">Accept</a>
                 <button class="action">Decline</button>
             </footer>
         </article>
@@ -1186,6 +1190,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </div>
     </div>
     <!-- //copyright -->
+
+    <script src="~/js/inputnum.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js%22%3E"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -1346,7 +1354,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         function enlistarProducto(codProducto, nombre, precio, cantidad) {
             var fila = '<tr>';
             fila += '<td>';
-            fila += '<input type="text" value="' + cantidad + '" class="cantidad form-control" onchange="calcular2(this,' + codProducto + ');"></td>';
+            fila += '<div class ="pikachu">';
+            fila += '<input type="number" min="0" step="1" value="' + cantidad + '" class="cantidad form-control" onchange="calcular2(this,' + codProducto + ');"></td> </div>';
             fila += '<td>' + nombre + '</td>';
             fila += '<td ><input type="hidden" value="' + precio + '" class="precio_unitario form-control">' + precio + '</div></td>';
             fila += '<td><input class="form-control subtotal" type="text" disabled></td>';
@@ -1356,14 +1365,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             cnt++;
             calcular();
 
-           
         }
         function seleccionarCliente(cod_cliente, nombre) {
             $('#bsqCliente').modal('hide');
             $('#cod_cliente').val(cod_cliente);
             $('#nombre_cliente').html(nombre);
         }
-
         function eliminarFila(obj, codigo) {
             fila = $(obj).parent().parent();
             $(fila).fadeOut(300).delay(100).remove();
@@ -1375,7 +1382,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             });
             calcular();
         }
-
         function calcular() {
             var filas = $("#tblProductos > tbody > tr");
             var total = 0;
@@ -1390,13 +1396,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     $(tr).find('.precio_unitario').val(0);
                     precio_unitario = "0";
                 }
-                
-                    total += cantidad * precio_unitario;
-                    $(".total").html("Q. " + total.toFixed(2));
-                    $(tr).find('.subtotal').val("" + (cantidad * precio_unitario).toFixed(2));
-            
+
+                total += cantidad * precio_unitario;
+                $(".total").html("Q. " + total.toFixed(2));
+                $(tr).find('.subtotal').val("" + (cantidad * precio_unitario).toFixed(2));
+
             })
-        } 
+        }
         function calcular2(obj, codigo) {
             var x = 0;
             var total = 0;
@@ -1418,7 +1424,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 $(".total").html("Q. " + total.toFixed(2));
                 $(tr).find('.subtotal').val("" + (cantidad * precio_unitario).toFixed(2));
             })
-
             if (x >= 0) {
                 $.ajax({
                     url: "/cart/Editar/",
@@ -1427,7 +1432,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     }
                 });
             }
-        }   
+        }
     </script>
 
     @RenderSection("Scripts", required: false)
