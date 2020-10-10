@@ -1,23 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\proyectosvisual\\Despensa-Virtual1\\despensa\\despensa.csproj": {}
+    "C:\\Users\\joser\\OneDrive\\Documents\\UNIVERSIDAD\\OCTAVO CICLO\\Análisis y Diseño de Sistemas 1\\PR-002 DESPENSA VIRTUAL\\Z Codigo - Proyecto\\despensa\\despensa.csproj": {}
   },
   "projects": {
-    "D:\\proyectosvisual\\Despensa-Virtual1\\despensa\\despensa.csproj": {
+    "C:\\Users\\joser\\OneDrive\\Documents\\UNIVERSIDAD\\OCTAVO CICLO\\Análisis y Diseño de Sistemas 1\\PR-002 DESPENSA VIRTUAL\\Z Codigo - Proyecto\\despensa\\despensa.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\proyectosvisual\\Despensa-Virtual1\\despensa\\despensa.csproj",
+        "projectUniqueName": "C:\\Users\\joser\\OneDrive\\Documents\\UNIVERSIDAD\\OCTAVO CICLO\\Análisis y Diseño de Sistemas 1\\PR-002 DESPENSA VIRTUAL\\Z Codigo - Proyecto\\despensa\\despensa.csproj",
         "projectName": "despensa",
-        "projectPath": "D:\\proyectosvisual\\Despensa-Virtual1\\despensa\\despensa.csproj",
-        "packagesPath": "C:\\Users\\allan\\.nuget\\packages\\",
-        "outputPath": "D:\\proyectosvisual\\Despensa-Virtual1\\despensa\\obj\\",
+        "projectPath": "C:\\Users\\joser\\OneDrive\\Documents\\UNIVERSIDAD\\OCTAVO CICLO\\Análisis y Diseño de Sistemas 1\\PR-002 DESPENSA VIRTUAL\\Z Codigo - Proyecto\\despensa\\despensa.csproj",
+        "packagesPath": "C:\\Users\\joser\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\joser\\OneDrive\\Documents\\UNIVERSIDAD\\OCTAVO CICLO\\Análisis y Diseño de Sistemas 1\\PR-002 DESPENSA VIRTUAL\\Z Codigo - Proyecto\\despensa\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\allan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\joser\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -42,6 +43,14 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[3.1.8, )"
+            },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
@@ -87,7 +96,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
