@@ -10752,25 +10752,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\joser\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\allan\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\joser\\OneDrive\\Documents\\UNIVERSIDAD\\OCTAVO CICLO\\Análisis y Diseño de Sistemas 1\\PR-002 DESPENSA VIRTUAL\\Z Codigo - Proyecto\\despensa\\despensa.csproj",
+      "projectUniqueName": "D:\\proyectosvisual\\Despensa-Virtual1\\despensa\\despensa.csproj",
       "projectName": "despensa",
-      "projectPath": "C:\\Users\\joser\\OneDrive\\Documents\\UNIVERSIDAD\\OCTAVO CICLO\\Análisis y Diseño de Sistemas 1\\PR-002 DESPENSA VIRTUAL\\Z Codigo - Proyecto\\despensa\\despensa.csproj",
-      "packagesPath": "C:\\Users\\joser\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\joser\\OneDrive\\Documents\\UNIVERSIDAD\\OCTAVO CICLO\\Análisis y Diseño de Sistemas 1\\PR-002 DESPENSA VIRTUAL\\Z Codigo - Proyecto\\despensa\\obj\\",
+      "projectPath": "D:\\proyectosvisual\\Despensa-Virtual1\\despensa\\despensa.csproj",
+      "packagesPath": "C:\\Users\\allan\\.nuget\\packages\\",
+      "outputPath": "D:\\proyectosvisual\\Despensa-Virtual1\\despensa\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\joser\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\allan\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -10848,7 +10846,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.102\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
       }
     }
   }

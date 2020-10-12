@@ -1,0 +1,113 @@
+﻿@model IEnumerable<despensa.Models.Cliente>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PrimerNombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SegundoNombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrimerApellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SegundoApellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cui)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Direccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CorreoElectronico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FecNacimiento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contrasenia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodEstadoNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodGeneroNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodRolNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrimerNombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SegundoNombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrimerApellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SegundoApellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cui)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Direccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CorreoElectronico)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FecNacimiento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Contrasenia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodEstadoNavigation.CodEstado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodGeneroNavigation.CodGenero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodRolNavigation.CodRol)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CodCliente">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CodCliente">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CodCliente">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

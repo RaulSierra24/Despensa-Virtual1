@@ -36,7 +36,7 @@ namespace despensa.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySql("server=192.168.99.101;port=3306;user=root;password=Ruiz201642512;database=despensa", x => x.ServerVersion("5.7.28-mysql"));
+                optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=password;database=despensa", x => x.ServerVersion("5.7.28-mysql"));
             }
         }
 
