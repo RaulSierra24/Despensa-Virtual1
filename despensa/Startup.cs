@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using despensa.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,7 +26,14 @@ namespace despensa
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<despensaContext>(options => options.UseMySQL("server=192.168.99.101;port=3306;user=root;password=Ruiz201642512;database=despensa"));
+            services.AddDbContext<despensaContext>(options => options.UseMySQL("server=localhost;port=3306;user=root;password=password;database=despensa"));
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                options.LoginPath = "/Cliente/login";
+                options.LogoutPath = "/Cliente/logout";
+                options.AccessDeniedPath = "/home/index";
+            });
             services.AddControllersWithViews();
             services.AddSession();
             services.AddDistributedMemoryCache();
@@ -49,6 +57,10 @@ namespace despensa
             app.UseRouting();
             app.UseAuthorization();
             app.UseSession();
+            app.UseAuthentication();
+            app.UseSession();
+            app.UseCookiePolicy();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
