@@ -35,7 +35,7 @@
 
 
 
-.modal {
+.mimodal {
     position: fixed;
     top: 0;
     left: 0;
@@ -48,7 +48,7 @@
     transition: background-color 0.25s ease;
 }
 
-    .modal.open {
+    .mimodal.open {
         position: fixed;
         width: 100%;
         height: 100vh;
@@ -56,11 +56,11 @@
         transition: background-color 0.25s;
     }
 
-        .modal.open > .content-wrapper {
+        .mimodal.open > .content-wrapper {
             transform: scale(1);
         }
 
-    .modal .content-wrapper {
+    .mimodal .content-wrapper {
         position: relative;
         display: flex;
         flex-direction: column;
@@ -77,7 +77,7 @@
         transition-delay: 0.15s;
     }
 
-        .modal .content-wrapper .close {
+        .mimodal .content-wrapper .close {
             position: absolute;
             top: 0.5rem;
             right: 0.5rem;
@@ -92,7 +92,7 @@
             transition: 0.25s linear;
         }
 
-            .modal .content-wrapper .close:before, .modal .content-wrapper .close:after {
+            .mimodal .content-wrapper .close:before, .mimodal .content-wrapper .close:after {
                 position: absolute;
                 content: "";
                 width: 1.25rem;
@@ -100,23 +100,23 @@
                 background-color: black;
             }
 
-            .modal .content-wrapper .close:before {
+            .mimodal .content-wrapper .close:before {
                 transform: rotate(-45deg);
             }
 
-            .modal .content-wrapper .close:after {
+            .mimodal .content-wrapper .close:after {
                 transform: rotate(45deg);
             }
 
-            .modal .content-wrapper .close:hover {
+            .mimodal .content-wrapper .close:hover {
                 transform: rotate(360deg);
             }
 
-                .modal .content-wrapper .close:hover:before, .modal .content-wrapper .close:hover:after {
+                .mimodal .content-wrapper .close:hover:before, .mimodal .content-wrapper .close:hover:after {
                     background-color: tomato;
                 }
 
-        .modal .content-wrapper .modal-header {
+        .mimodal .content-wrapper .mimodal-header {
             position: relative;
             display: flex;
             flex-direction: row;
@@ -127,12 +127,12 @@
             padding: 0 0 1.25rem;
         }
 
-            .modal .content-wrapper .modal-header h2 {
+            .mimodal .content-wrapper .mimodal-header h2 {
                 font-size: 1.5rem;
                 font-weight: bold;
             }
 
-        .modal .content-wrapper .modal-contenido {
+        .mimodal .content-wrapper .mimodal-contenido {
             position: relative;
             display: flex;
             flex-direction: row;
@@ -143,30 +143,29 @@
             padding: 0 0 1.25rem;
         }
 
-#global {
-    height: 300px;
-    width: 100%;
-    border: 1px solid rgb(255, 255, 255);
-    background: #ffffff;
-    overflow-y: scroll;
-}
+        #global {
+            width: 100%;
+            border: 1px solid rgb(255, 255, 255);
+            background: #ffffff;
+            overflow-y: scroll;
+        }
 
-#mensajes {
-    height: auto;
-}
+        #mensajes {
+            height: auto;
+        }
 
 
-.modal .content-wrapper .content {
+.mimodal .content-wrapper .content {
     position: relative;
     display: flex;
 }
 
-    .modal .content-wrapper .content p {
+    .mimodal .content-wrapper .content p {
         font-size: 0.875rem;
         line-height: 1.75;
     }
 
-.modal .content-wrapper .modal-footer {
+.mimodal .content-wrapper .mimodal-footer {
     position: relative;
     display: flex;
     align-items: center;
@@ -176,7 +175,7 @@
     padding: 1.875rem 0 0;
 }
 
-    .modal .content-wrapper .modal-footer .action {
+    .mimodal .content-wrapper .mimodal-footer .action {
         position: relative;
         margin-left: 0.625rem;
         padding: 0.625rem 1.25rem;
@@ -190,7 +189,7 @@
         z-index: 1;
     }
 
-        .modal .content-wrapper .modal-footer .action:before {
+        .mimodal .content-wrapper .mimodal-footer .action:before {
             position: absolute;
             content: "";
             top: 0;
@@ -202,14 +201,14 @@
             z-index: 0;
         }
 
-        .modal .content-wrapper .modal-footer .action:first-child {
+        .mimodal .content-wrapper .mimodal-footer .action:first-child {
             background-color: #2ecc71;
         }
 
-        .modal .content-wrapper .modal-footer .action:last-child {
+        .mimodal .content-wrapper .mimodal-footer .action:last-child {
             background-color: #e74c3c;
         }
 
-        .modal .content-wrapper .modal-footer .action:hover:before {
+        .mimodal .content-wrapper .mimodal-footer .action:hover:before {
             width: 100%;
         }

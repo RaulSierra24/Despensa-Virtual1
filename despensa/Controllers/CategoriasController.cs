@@ -13,11 +13,11 @@ namespace despensa.Controllers
 {
     public class CategoriasController : Controller
     {
-        private readonly despensaContext _context;
+        private readonly despensa1Context _context;
         private readonly IWebHostEnvironment HostEnvironment;
   
 
-        public CategoriasController(despensaContext context, IWebHostEnvironment hostEnvironment)
+        public CategoriasController(despensa1Context context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
             this.HostEnvironment = hostEnvironment;

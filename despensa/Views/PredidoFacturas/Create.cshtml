@@ -1,44 +1,52 @@
-﻿
-@model IEnumerable<despensa.Models.Item>
+﻿@model despensa.Models.PredidoFactura
 
 @{
     ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/vistasincarro.cshtml";
 }
-
-<h2>Create</h2>
-
-<h4>PredidoFactura</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+<div class="privacy">
+    <div class="container">
+        <!-- tittle heading -->
+        <h3 class="tittle-w3l">
+            Mi Pedido
 
 
-            <table id="lstProductos" class="table table-striped  table-hover">
-                <thead>
-                    <tr>
-                        <th>Cantidad</th>
-                        <th>Producto</th>
-                        <th>Precio Unitario</th>
-                        <th>Subtotal</th>
-                        <th>#</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="3">Total</td>
-                        <td class="total"></td>
-                    </tr>
-                </tfoot>
-            </table>
+            <span class="heading-style">
+                <i></i>
+                <i></i>
+                <i></i>
+            </span>
+        </h3>
+        @if (@ViewBag.ErrorCarrito == 1)
+        {
+            <div class="alert alert-danger text-center">
+                <strong>Su Compra Debe Ser Mayor A Q50</strong>
+            </div>
 
+        }
+        else if (@ViewBag.ErrorCarrito == 2)
+        {
+            <div class="alert alert-danger text-center">
+                <strong>En Estos Momentos No Contamos Las Unidades Suficientes De:</strong>
+                <strong>@ViewBag.Inexistencia.Nombre , Quedan @ViewBag.Inexistencia.Cantidad Unidades</strong>
+            </div>
 
+        }
+        else if (@ViewBag.ErrorCarrito == 3)
+        {
+            <div class="alert alert-danger text-center">
+                <strong>El Carrito Se Encuentra Vacio</strong>
+            </div>
+        }
+        <!-- //tittle heading -->
+        <div class="checkout-right">
+            <h4>
+                Usted ha añadido:
+                <span id="cantidad_producntos">0 Productos @ViewBag.ErrorCarrito</span>
+            </h4>
             <div class="table-responsive">
-                <table class="timetable_sub">
+                <table id="lstProductos" class="timetable_sub">
                     <thead>
-
                         <tr>
                             <th>No.</th>
                             <th>Producto</th>
@@ -49,35 +57,6 @@
                         </tr>
                     </thead>
                     <tbody>
-
-                        @foreach (var item in Model)
-                        {
-                            <tr class="rem1">
-                                <td class="invert">1</td>
-                                <td class="invert-image">
-                                    <a href="single2.html">
-                                        <img src="@Url.Content("~/image/" + item.Product.Imagen)" alt=" " class="img-responsive">
-                                    </a>
-                                </td>
-                                <td class="invert">
-                                    <div class="pikachu">
-
-                                            <input type="number" min="0" step="1" value="@item.Quantity" class="cantidad form-control" onchange="calcular2(this,@item.Product.CodProducto);">
-
-                                    </div>
-                                </td>
-                                <td class="invert">@item.Product.Nombre @item.Product.Peso</td>
-                                <td class="invert">
-                                    <input type="hidden" value="@item.Product.PrecioVenta" class="precio_unitario form-control">
-                                    <input class="form-control subtotal" type="text" disabled>
-
-                                </td>
-                                <td class="invert">
-                                    <button class='btn btn-danger' onclick='eliminarFila(this,@item.Product.CodProducto)'>Eliminar</button>
-                                </td>
-                            </tr>
-                        }
-
                     </tbody>
                     <tfoot>
                         <tr>
@@ -87,16 +66,18 @@
                     </tfoot>
                 </table>
             </div>
-
-
-
-
-            
-        </form>
+        </div>
+        <div class="checkout-left">
+            <div class="address_form_agile">
+                <h4>Corrobore Sus Datos</h4>
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="checkout-right-basket">
+                        <input type="submit" value="Realizar Pedido" class="btn btn-default" />
+                    </div>
+                </form>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-

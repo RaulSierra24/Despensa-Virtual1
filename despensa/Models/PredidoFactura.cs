@@ -18,8 +18,8 @@ namespace despensa.Models
         public int? CodCliente { get; set; }
         public int? CodEstado { get; set; }
 
-        public virtual Cliente CodClienteNavigation { get; set; }
-        public virtual Empleado CodEmpleadoNavigation { get; set; }
+        public virtual Usuario CodClienteNavigation { get; set; }
+        public virtual Usuario CodEmpleadoNavigation { get; set; }
         public virtual EstadoPedido CodEstadoNavigation { get; set; }
         public virtual ICollection<DetalleFactura> DetalleFactura { get; set; }
     }

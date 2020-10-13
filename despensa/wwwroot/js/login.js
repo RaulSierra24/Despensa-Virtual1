@@ -1,7 +1,6 @@
 $(document).ready(function(){
     
     $(".contenedor-formularios").find("input, textarea").on("keyup blur focus", function (e) {
-
         var $this = $(this),
           label = $this.prev("label");
 
@@ -13,7 +12,7 @@ $(document).ready(function(){
             }
         } else if (e.type === "blur") {
             if($this.val() === "") {
-                label.removeClass("active highlight");  
+                label.removeClass("active highlight"); 
                 } else {
                 label.removeClass("highlight");   
                 }   
@@ -24,6 +23,8 @@ $(document).ready(function(){
             else if($this.val() !== "") {
                 label.addClass("highlight");
             }
+        } if ($this.val() !== "") {
+            label.addClass("active highlight");
         }
 
     });

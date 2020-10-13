@@ -10758,11 +10758,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\proyectosvisual\\Despensa-Virtual1\\despensa\\despensa.csproj",
+      "projectUniqueName": "D:\\proyectosvisual\\despensa2\\despensa\\despensa\\despensa.csproj",
       "projectName": "despensa",
-      "projectPath": "D:\\proyectosvisual\\Despensa-Virtual1\\despensa\\despensa.csproj",
+      "projectPath": "D:\\proyectosvisual\\despensa2\\despensa\\despensa\\despensa.csproj",
       "packagesPath": "C:\\Users\\allan\\.nuget\\packages\\",
-      "outputPath": "D:\\proyectosvisual\\Despensa-Virtual1\\despensa\\obj\\",
+      "outputPath": "D:\\proyectosvisual\\despensa2\\despensa\\despensa\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"

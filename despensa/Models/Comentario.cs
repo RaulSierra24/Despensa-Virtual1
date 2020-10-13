@@ -9,6 +9,6 @@ namespace despensa.Models
         public string Comentario1 { get; set; }
         public int? CodCliente { get; set; }
 
-        public virtual Cliente CodClienteNavigation { get; set; }
+        public virtual Usuario CodClienteNavigation { get; set; }
     }
 }

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Http;
 
 namespace despensa.Models
 {
@@ -30,6 +30,7 @@ namespace despensa.Models
         public virtual Marca CodMarcaNavigation { get; set; }
         public virtual Proveedor CodProveedorNavigation { get; set; }
         public virtual ICollection<DetalleFactura> DetalleFactura { get; set; }
+
 
         [NotMapped]
         public IFormFile ImageFie { get; set; }

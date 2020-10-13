@@ -11,9 +11,9 @@ namespace despensa.Controllers
 {
     public class EstadoActividadsController : Controller
     {
-        private readonly despensaContext _context;
+        private readonly despensa1Context _context;
 
-        public EstadoActividadsController(despensaContext context)
+        public EstadoActividadsController(despensa1Context context)
         {
             _context = context;
         }

@@ -11,9 +11,9 @@ namespace despensa.Controllers
 {
     public class BitacorasController : Controller
     {
-        private readonly despensaContext _context;
+        private readonly despensa1Context _context;
 
-        public BitacorasController(despensaContext context)
+        public BitacorasController(despensa1Context context)
         {
             _context = context;
         }

@@ -10,6 +10,7 @@ namespace despensa.Models
         public decimal? Precio { get; set; }
         public decimal? Costo { get; set; }
         public int? CodProducto { get; set; }
+        public int Cantidad { get; set; }
 
         public virtual PredidoFactura CodFacturaNavigation { get; set; }
         public virtual Producto CodProductoNavigation { get; set; }

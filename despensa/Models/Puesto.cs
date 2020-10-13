@@ -5,14 +5,10 @@ namespace despensa.Models
 {
     public partial class Puesto
     {
-        public Puesto()
-        {
-            Empleado = new HashSet<Empleado>();
-        }
-
         public int CodPuesto { get; set; }
         public string Puesto1 { get; set; }
+        public int? CodEmpleado { get; set; }
 
-        public virtual ICollection<Empleado> Empleado { get; set; }
+        public virtual Usuario CodEmpleadoNavigation { get; set; }
     }
 }

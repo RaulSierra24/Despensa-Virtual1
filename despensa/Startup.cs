@@ -26,7 +26,7 @@ namespace despensa
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<despensaContext>(options => options.UseMySQL("server=localhost;port=3306;user=root;password=password;database=despensa"));
+            services.AddDbContext<despensa1Context>(options => options.UseMySQL("server=localhost;port=3306;user=root;password=password;database=despensa1"));
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>
             {

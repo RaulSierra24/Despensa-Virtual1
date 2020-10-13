@@ -7,14 +7,12 @@ namespace despensa.Models
     {
         public Rol()
         {
-            Cliente = new HashSet<Cliente>();
-            Empleado = new HashSet<Empleado>();
+            Usuario = new HashSet<Usuario>();
         }
 
         public int CodRol { get; set; }
         public string Rol1 { get; set; }
 
-        public virtual ICollection<Cliente> Cliente { get; set; }
-        public virtual ICollection<Empleado> Empleado { get; set; }
+        public virtual ICollection<Usuario> Usuario { get; set; }
     }
 }

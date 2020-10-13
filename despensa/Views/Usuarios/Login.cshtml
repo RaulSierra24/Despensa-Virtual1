@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+}
+@using despensa.Models;
+@{
+    ViewData["Title"] = "Inciar Sesión";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@model Usuario
+<link rel="stylesheet" href="~/css/login.css">
+<div class="contenedor-formularios">
+    <!-- Links de los formularios -->
+    @if (@ViewBag.Error1 == 1)
+    {
+        <div class="alert alert-danger text-center">
+            <strong>Las Contraseñas No Coinciden</strong>
+        </div>
+
+    }
+    <ul class="contenedor-tabs">
+        <li class="tab tab-segunda active"><a href="#iniciar-sesion">Iniciar Sesión</a></li>
+        <li class="tab tab-primera"><a href="#registrarse">Registrarse</a></li>
+    </ul>
+    <!-- Contenido de los Formularios -->
+    <div class="contenido-tab">
+        <!-- Iniciar Sesion -->
+        <div id="iniciar-sesion">
+            <h1>Iniciar Sesión</h1>
+            <form id="miForm" asp-controller="Usuarios" asp-action="Login" method="post">
+                <div class="contenedor-input">
+                    <label>
+                        Correo Electronico <span class="req">*</span>
+                    </label>
+                    <input asp-for="CorreoElectronico" type="email" value="" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                </div>
+
+                <div class="contenedor-input">
+                    <label>
+                        Contraseña <span class="req">*</span>
+                    </label>
+                    <input asp-for="Contraseña" type="password" value="" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                </div>
+                <p class="forgot"><a href="#">Se te olvidó la contraseña?</a></p>
+                <input type="submit" class="button button-block" value="Iniciar Sesión">
+            </form>
+        </div>
+
+        <!-- Registrarse -->
+        <div id="registrarse">
+            <h1>Registrarse</h1>
+            <form id="miForm1" asp-controller="Usuarios" asp-action="Create" method="post">
+                <div class="fila-arriba">
+                    <div class="contenedor-input">
+                        <label>
+                            Nombre <span class="req">*</span>
+                        </label>
+                        <input asp-for="PrimerNombre" type="text" value="" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                    </div>
+
+                    <div class="contenedor-input">
+                        <label>
+                            Apellido <span class="req">*</span>
+                        </label>
+                        <input asp-for="PrimerApellido" type="text" value="" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                    </div>
+                </div>
+                <div class="contenedor-input">
+                    <label>
+                        Direccion <span class="req">*</span>
+                    </label>
+                    <input asp-for="Direccion" type="text" value="" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                </div>
+                <div class="contenedor-input">
+                    <label>
+                        Email <span class="req">*</span>
+                    </label>
+                    <input asp-for="CorreoElectronico" type="email" value="" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                </div>
+                <div class="contenedor-input">
+                    <label>
+                        Contraseña <span class="req">*</span>
+                    </label>
+                    <input asp-for="Contraseña" type="password" value="" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                </div>
+
+                <div class="contenedor-input">
+                    <label>
+                        Repetir Contraseña <span class="req">*</span>
+                    </label>
+                    <input asp-for="ConfirmarContraseña" type="password" value="" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                </div>
+
+                <input type="submit" class="button button-block" value="Registrarse">
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+            $("form").each(function () { this.reset() });
+        });
+    </script>
+    <script src="~/js/login.js"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

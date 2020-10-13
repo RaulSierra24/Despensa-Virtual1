@@ -14,10 +14,10 @@ namespace despensa.Controllers
 {
     public class ProductoesController : Controller
     {
-        private readonly despensaContext _context;
+        private readonly despensa1Context _context;
         private readonly IWebHostEnvironment HostEnvironment;
         int categoriass;
-        public ProductoesController(despensaContext context, IWebHostEnvironment hostEnvironment)
+        public ProductoesController(despensa1Context context, IWebHostEnvironment hostEnvironment)
         {
             this.HostEnvironment = hostEnvironment;
             _context = context;
@@ -34,7 +34,7 @@ namespace despensa.Controllers
                 var pageNumber = page ?? 1;
 
                 var entradas = (from m in _context.Producto
-                                where m.CodEstado == 1
+                                where m.CodEstado == 3
                                 orderby m.Nombre descending
                                 select m).ToList();
                 Console.WriteLine("holiprr" + categoriass);

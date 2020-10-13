@@ -7,14 +7,12 @@ namespace despensa.Models
     {
         public Genero()
         {
-            Cliente = new HashSet<Cliente>();
-            Empleado = new HashSet<Empleado>();
+            Usuario = new HashSet<Usuario>();
         }
 
         public int CodGenero { get; set; }
         public string Genero1 { get; set; }
 
-        public virtual ICollection<Cliente> Cliente { get; set; }
-        public virtual ICollection<Empleado> Empleado { get; set; }
+        public virtual ICollection<Usuario> Usuario { get; set; }
     }
 }

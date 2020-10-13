@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.30011.22
+VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "despensa", "despensa\despensa.csproj", "{3572B1B3-D394-4A9F-9FC2-9B6CE125BB29}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "despensa", "despensa\despensa.csproj", "{CCB5F53D-F72E-40A2-A67B-A95FECD8740F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3572B1B3-D394-4A9F-9FC2-9B6CE125BB29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3572B1B3-D394-4A9F-9FC2-9B6CE125BB29}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3572B1B3-D394-4A9F-9FC2-9B6CE125BB29}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3572B1B3-D394-4A9F-9FC2-9B6CE125BB29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCB5F53D-F72E-40A2-A67B-A95FECD8740F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCB5F53D-F72E-40A2-A67B-A95FECD8740F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCB5F53D-F72E-40A2-A67B-A95FECD8740F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCB5F53D-F72E-40A2-A67B-A95FECD8740F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {787DB5A9-E5A6-494C-AA02-02E097F643C9}
+		SolutionGuid = {4D5CD8B8-3A49-4B0F-95A6-296E9322212A}
 	EndGlobalSection
 EndGlobal

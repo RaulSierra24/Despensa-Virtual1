@@ -39,7 +39,7 @@ namespace despensa.Controllers
         public JsonResult Get()
         {
             Console.WriteLine("hola mundo 6456524");
-            despensaContext _context = new despensaContext();
+            despensa1Context _context = new despensa1Context();
             var entradas = (from m in _context.Producto
                             where m.CodEstado == 1
                             orderby m.Nombre descending

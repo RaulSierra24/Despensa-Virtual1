@@ -1,0 +1,216 @@
+﻿@model despensa.Models.Usuario
+
+@{
+    ViewData["Title"] = "Details";
+}
+<link rel="stylesheet" href="~/css/Perfil.css">
+<h2>Details</h2>
+<link rel="stylesheet" href="~/css/login.css">
+<div class="ads-grid">
+    <!-- first section (nuts) -->
+    <div class="product-sec1">
+        <div class="col-md-3 product-men ">
+            <div class="user-item">
+                <div class="user-item_photo">
+                    <img src="http://cs627618.vk.me/v627618825/c092/8fhljOvdiEs.jpg" style="border-radius: 20px 20px 0 0;" alt="myphoto" />
+                </div>
+                <div class="user-item_info">
+                    <p class="name">@Html.DisplayFor(model => model.PrimerNombre) @Html.DisplayFor(model => model.PrimerApellido)</p>
+                    <p class="sub"> @Html.DisplayFor(model => model.Cui)</p>
+                    <div class="controls">
+                        <a href="#"><i class="fa  fa-shopping-cart"></i></a>
+                        <a href="#"><i class="glyphicon glyphicon-camera"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9  ">
+            <div class="chat">
+                <div class="head">
+                    <i class="fa fa-address-card-o"></i>
+                    Mis Datos Personales
+                </div>
+                <div class="chat_inner">
+                    <div class="contenedor-formularios" style="max-width: 100%;">
+                        <!-- Links de los formularios -->
+                        @if (@ViewBag.Error1 == 1)
+                        {
+                            <div class="alert alert-danger text-center">
+                                <strong>Las Contraseñas No Coinciden</strong>
+                            </div>
+                        }
+                        <ul class="contenedor-tabs">
+                            <li class="tab tab-segunda active"><a href="#iniciar-sesion">Mis Datos</a></li>
+                            <li class="tab tab-primera"><a href="#registrarse">Cambiar Contraseña</a></li>
+                        </ul>
+                        <!-- Contenido de los Formularios -->
+                        <div class="contenido-tab">
+                            <!-- Iniciar Sesion -->
+                            <div id="iniciar-sesion">
+                                <form id="my-form21" asp-controller="Usuarios" asp-action="Edit">
+                                    <div class="fila-arriba">
+                                        <div class="contenedor-input">
+                                            <label class="active highlight">
+                                                Primer Nombre <span class="req">*</span>
+                                            </label>
+                                            <input asp-for="PrimerNombre" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                                        </div>
+
+                                        <div class="contenedor-input">
+                                            <label class="active highlight">
+                                                Segundo Nombre <span class="req">*</span>
+                                            </label>
+                                            <input asp-for="SegundoNombre" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                                        </div>
+                                    </div>
+                                    <div class="fila-arriba">
+                                        <div class="contenedor-input">
+                                            <label class="active highlight">
+                                                Primer Apellido <span class="req">*</span>
+                                            </label>
+                                            <input asp-for="PrimerApellido" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                                        </div>
+
+                                        <div class="contenedor-input">
+                                            <label class="active highlight">
+                                                Segundo Apellido <span class="req">*</span>
+                                            </label>
+                                            <input asp-for="SegundoApellido" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                                        </div>
+                                    </div>
+                                    <div class="fila-arriba">
+                                        <div class="contenedor-input">
+                                            <label class="active highlight">
+                                                CUI <span class="req">*</span>
+                                            </label>
+                                            <input asp-for="Cui" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                                        </div>
+
+                                        <div class="contenedor-input">
+                                            <label class="active highlight">
+                                                NIT <span class="req">*</span>
+                                            </label>
+                                            <input asp-for="Nit " type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                                        </div>
+                                    </div>
+                                    <div class="fila-arriba">
+                                        <div class="contenedor-input">
+                                            <label class="active highlight">
+                                                Genero <span class="req">*</span>
+                                            </label>
+                                            <select asp-for="CodGeneo" class="select-css" style="width:200%;" asp-items="ViewBag.CodGeneo"></select>
+                                        </div>
+                                        <div class="contenedor-input">
+                                            <label class="active highlight">
+                                                Fecha de Nacimiento <span class="req">*</span>
+                                            </label>
+                                            <input asp-for="FecNac" type="date" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                                        </div>
+                                    </div>
+                                    <div class="contenedor-input">
+                                        <label class="active highlight">
+                                            Direccion <span class="req">*</span>
+                                        </label>
+                                        <input asp-for="Direccion" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                                    </div>
+                                    <div class="contenedor-input">
+                                        <label class="active highlight">
+                                            Email <span class="req">*</span>
+                                        </label>
+                                        <input asp-for="CorreoElectronico" type="email" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                                    </div>
+
+
+                                    <input type="submit" class="button button-block" value="Guardar">
+                                </form>
+                            </div>
+
+                            <!-- Registrarse -->
+                            <div id="registrarse">
+                                <form id="my-form21" asp-controller="Usuarios" asp-action="Cambiar_contaseña">
+                                    <div class="fila-arriba">
+                                        <div class="contenedor-input">
+                                            <label class="active highlight">
+                                                Contraseña <span class="req">*</span>
+                                            </label>
+                                            <input asp-for="Contraseña" type="password" style="width:200%;" ID="txtPassword" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                                        </div>
+                                        <span class="input-group-btn">
+                                            <button id="show_password" class="btn btn-primary" style="float: right;" type="button" onclick="mostrarPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
+                                        </span>
+                                    </div>
+                                    <div class="fila-arriba">
+                                        <div class="contenedor-input">
+                                            <label class="active highlight">
+                                                Contraseña <span class="req">*</span>
+                                            </label>
+                                            <input asp-for="ConfirmarContraseña" type="password" style="width:200%;" ID="txtPassword1" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                                        </div>
+                                        <span class="input-group-btn">
+                                            <button id="show_password1" class="btn btn-primary" style="float: right;" type="button" onclick="mostrarPassword1()"> <span class="fa fa-eye-slash icon"></span> </button>
+                                        </span>
+                                    </div>
+                                    <input type="submit" class="button button-block" value="Guardar">
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer">
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="product-sec1">
+        <div class="col-md-12">
+            <div class="chat">
+                <div class="head">
+                    <i class="fa fa-money"></i>
+                    Mis Pedidos
+                </div>
+                <div class="chat_inner">
+                </div>
+                <div class="footer">
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+    <!-- //product right -->
+</div>
+
+
+
+
+
+<script type="text/javascript">
+    function mostrarPassword() {
+        var cambio = document.getElementById("txtPassword");
+        if (cambio.type == "password") {
+            cambio.type = "text";
+            $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+        } else {
+            cambio.type = "password";
+            $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+        }
+    }
+    function mostrarPassword1() {
+        var cambio = document.getElementById("txtPassword1");
+        if (cambio.type == "password") {
+            cambio.type = "text";
+            $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+        } else {
+            cambio.type = "password";
+            $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+        }
+    }
+</script>
+
+
+@section Scripts {
+    <script src="~/js/login.js"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

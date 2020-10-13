@@ -7,14 +7,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using despensa.Models;
 using despensa.Helpers;
+using System.Security.Claims;
 
 namespace despensa.Controllers
 {
     public class PredidoFacturasController : Controller
     {
-        private readonly despensaContext _context;
+        private readonly despensa1Context _context;
 
-        public PredidoFacturasController(despensaContext context)
+        public PredidoFacturasController(despensa1Context context)
         {
             _context = context;
         }
@@ -50,22 +51,14 @@ namespace despensa.Controllers
         // GET: PredidoFacturas/Create
         public IActionResult Create()
         {
-            ViewData["CodCliente"] = new SelectList(_context.Cliente, "CodCliente", "CodCliente");
-            ViewData["CodEmpleado"] = new SelectList(_context.Empleado, "CodEmpleado", "CodEmpleado");
+            ViewData["CodCliente"] = new SelectList(_context.Usuario, "CodUsuario", "CodUsuario");
+            ViewData["CodEmpleado"] = new SelectList(_context.Usuario, "CodUsuario", "CodUsuario");
             ViewData["CodEstado"] = new SelectList(_context.EstadoPedido, "CodEstado", "CodEstado");
-
-            try
-            {
-                var entradas = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
-             
-                return View(entradas.ToList());
-            }
-            catch
-            {
-                List<Item> cart = new List<Item>();
-                return View(cart.ToList());
-            }
-
+            
+           
+          
+                return View();
+        
            
 
         }
@@ -77,16 +70,82 @@ namespace despensa.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CodFactura,FecEmision,TotalVendido,TotalCosto,CodEmpleado,CodCliente,CodEstado")] PredidoFactura predidoFactura)
         {
+            ClaimsPrincipal currentUser = this.User;
+            var identity = (ClaimsIdentity)currentUser.Identity;
+            decimal? totalxproducto = 0;
+            decimal? totalxproducto1 = 0;
+            decimal? totalventa = 0;
+            decimal? totalcosto = 0;
+            List<DetalleFactura> lista = new List<DetalleFactura>();
+            try
+            {
+                var entradas = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+                if (entradas==null)
+                {
+                    ViewBag.ErrorCarrito = 3;
+                    return View();
+                }
+                foreach (var item in entradas)
+                {
+                    lista.Add(new DetalleFactura { Precio = item.Product.PrecioVenta, Costo = item.Product.PrecioCosto, CodProducto = item.Product.CodProducto, Cantidad = item.Quantity });
+                    totalxproducto = item.Product.PrecioVenta * item.Quantity;
+                    totalxproducto1 = item.Product.PrecioCosto * item.Quantity;
+                    totalventa = totalventa + totalxproducto;
+                    totalcosto = totalcosto + totalxproducto1;
+                    var producto = await _context.Producto.FindAsync(item.Product.CodProducto);
+                    if (producto.Cantidad < item.Quantity)
+                    {
+                        ViewBag.Inexistencia = producto;
+                        ViewBag.ErrorCarrito = 2;
+                        return View();
+                    }
+                }
+                if (totalventa < 50)
+                {
+                    ViewBag.ErrorCarrito = 1;
+                    return View();
+                }
+                else {
+                    foreach (var item in entradas)
+                    {
+                        var producto = await _context.Producto.FindAsync(item.Product.CodProducto);
+                        producto.Cantidad = producto.Cantidad - item.Quantity;
+                        _context.Update(producto);
+                        await _context.SaveChangesAsync();
+                    }
+                }
+            }
+            catch
+            {
+                ViewBag.ErrorCarrito = 3;
+                return View();
+            }
+
+
             if (ModelState.IsValid)
             {
+                predidoFactura.FecEmision= DateTime.Now;
+                predidoFactura.TotalVendido = totalventa;
+                predidoFactura.TotalCosto = totalcosto;
+                predidoFactura.CodCliente = Int32.Parse(identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
+                predidoFactura.CodEstado=1;
+                predidoFactura.DetalleFactura = lista;
                 _context.Add(predidoFactura);
                 await _context.SaveChangesAsync();
+                limpiarCarrito();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CodCliente"] = new SelectList(_context.Cliente, "CodCliente", "CodCliente", predidoFactura.CodCliente);
-            ViewData["CodEmpleado"] = new SelectList(_context.Empleado, "CodEmpleado", "CodEmpleado", predidoFactura.CodEmpleado);
+            ViewBag.Pedidofactura = "entre aqui";
+            ViewData["CodCliente"] = new SelectList(_context.Usuario, "CodUsuario", "CodUsuario", predidoFactura.CodCliente);
+            ViewData["CodEmpleado"] = new SelectList(_context.Usuario, "CodUsuario", "CodUsuario", predidoFactura.CodEmpleado);
             ViewData["CodEstado"] = new SelectList(_context.EstadoPedido, "CodEstado", "CodEstado", predidoFactura.CodEstado);
+            Console.WriteLine("no  entre");
             return View(predidoFactura);
+        }
+        public void limpiarCarrito()
+        {
+            List<Item> cart = new List<Item>();
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
         }
 
         // GET: PredidoFacturas/Edit/5
@@ -102,8 +161,8 @@ namespace despensa.Controllers
             {
                 return NotFound();
             }
-            ViewData["CodCliente"] = new SelectList(_context.Cliente, "CodCliente", "CodCliente", predidoFactura.CodCliente);
-            ViewData["CodEmpleado"] = new SelectList(_context.Empleado, "CodEmpleado", "CodEmpleado", predidoFactura.CodEmpleado);
+            ViewData["CodCliente"] = new SelectList(_context.Usuario, "CodUsuario", "CodUsuario", predidoFactura.CodCliente);
+            ViewData["CodEmpleado"] = new SelectList(_context.Usuario, "CodUsuario", "CodUsuario", predidoFactura.CodEmpleado);
             ViewData["CodEstado"] = new SelectList(_context.EstadoPedido, "CodEstado", "CodEstado", predidoFactura.CodEstado);
             return View(predidoFactura);
         }
@@ -140,8 +199,8 @@ namespace despensa.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CodCliente"] = new SelectList(_context.Cliente, "CodCliente", "CodCliente", predidoFactura.CodCliente);
-            ViewData["CodEmpleado"] = new SelectList(_context.Empleado, "CodEmpleado", "CodEmpleado", predidoFactura.CodEmpleado);
+            ViewData["CodCliente"] = new SelectList(_context.Usuario, "CodUsuario", "CodUsuario", predidoFactura.CodCliente);
+            ViewData["CodEmpleado"] = new SelectList(_context.Usuario, "CodUsuario", "CodUsuario", predidoFactura.CodEmpleado);
             ViewData["CodEstado"] = new SelectList(_context.EstadoPedido, "CodEstado", "CodEstado", predidoFactura.CodEstado);
             return View(predidoFactura);
         }

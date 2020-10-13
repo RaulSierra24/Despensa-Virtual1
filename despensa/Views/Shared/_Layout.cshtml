@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="zxx">
 
 <head>
@@ -19,8 +20,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     </script>
     <!--//tags -->
 
-    <link href="~/css/inputnum.css" rel="stylesheet"  />
-
 
     <link href="~/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
     <link href="~/css/style.css" rel="stylesheet" type="text/css" media="all" />
@@ -32,7 +31,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!-- price range -->
     <link rel="~/stylesheet" type="text/css" href="~/css/jquery-ui1.css">
     <!-- fonts -->
-    <link href="~///fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
     <link rel="stylesheet" href="~/css/modal.css">
     <style>
         .cuadrado_imagen {
@@ -62,7 +61,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <a href="index.html">
                             <span>G</span>rocery
                             <span>S</span>hoppy
-                            <img src="images/logo2.png" alt=" ">
+                            <img src="~/images/logo2.png" alt=" ">
                         </a>
                     </h1>
                 </div>
@@ -83,16 +82,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <li>
                             <span class="fa fa-phone" aria-hidden="true"></span> 001 234 5678
                         </li>
-                        <li>
-                            <a href="#" data-toggle="modal" data-target="#myModal1">
-                                <span class="fa fa-unlock-alt" aria-hidden="true"></span> Sign In
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" data-toggle="modal" data-target="#myModal2">
-                                <span class="fa fa-pencil-square-o" aria-hidden="true"></span> Sign Up
-                            </a>
-                        </li>
+                        @if (@User.Identity.IsAuthenticated)
+                        {
+                            <li>
+                                <a asp-controller="Usuarios" asp-action="Details">
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>  @User.Identity.Name
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="#" data-toggle="modal" data-target="#myModal1">
+                                    <span class="fa fa-unlock-alt" aria-hidden="true"></span> Sign In
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" data-toggle="modal" data-target="#myModal2">
+                                    <span class="fa fa-pencil-square-o" aria-hidden="true"></span> Sign Up
+                                </a>
+                            </li>
+                        }
                     </ul>
                     <!-- //header lists -->
                     <!-- search -->
@@ -498,15 +508,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </div>
     </div>
     <!-- //shop locator (popup) -->
-    <!-- signin Model -->
-    <!-- Modal1 -->
-    <div class="modal" data-modal="trigger-1">
+    <div class="modal mimodal" data-mimodal="trigger-1">
         <article class="content-wrapper">
             <button class="close"></button>
-            <header class="modal-header">
+            <header class="mimodal-header">
                 <h2>Carrito de Compras</h2>
             </header>
-            <div class="modal-contenido">
+            <div class="mimodal-contenido">
                 <div id="global">
                     <div id="mensajes">
                         <table id="lstProductos" class="table table-striped  table-hover">
@@ -530,96 +538,100 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         </table>
                     </div>
                 </div>
-
             </div>
-            <footer class="modal-footer">
-                <a class="action" asp-controller="PredidoFacturas" asp-action="Create">Accept</a>
+            <footer class="mimodal-footer">
+                <a asp-controller="PredidoFacturas" asp-action="Create" class="action">Hacer Pedido</a>
                 <button class="action">Decline</button>
             </footer>
         </article>
     </div>
 
-
-    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body modal-body-sub_agile">
-                    <div class="main-mailposi">
-                        <span class="fa fa-envelope-o" aria-hidden="true"></span>
+    @if (@User.Identity.IsAuthenticated)
+    {
+    }
+    else
+    {
+        <div class="modal fade" id="myModal1" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
-                    <div class="modal_body_left modal_body_left1">
-                        <h3 class="agileinfo_sign">Sign In </h3>
-                        <p>
-                            Sign In now, Let's start your Grocery Shopping. Don't have an account?
-                            <a href="#" data-toggle="modal" data-target="#myModal2">
-                                Sign Up Now
-                            </a>
-                        </p>
-                        <form action="#" method="post">
-                            <div class="styled-input agile-styled-input-top">
-                                <input type="text" placeholder="User Name" name="Name" required="">
-                            </div>
-                            <div class="styled-input">
-                                <input type="password" placeholder="Password" name="password" required="">
-                            </div>
-                            <input type="submit" value="Sign In">
-                        </form>
+                    <div class="modal-body modal-body-sub_agile">
+                        <div class="main-mailposi">
+                            <span class="fa fa-envelope-o" aria-hidden="true"></span>
+                        </div>
+                        <div class="modal_body_left modal_body_left1">
+                            <h3 class="agileinfo_sign">Sign In </h3>
+                            <p>
+                                Sign In now, Let's start your Grocery Shopping. Don't have an account?
+                                <a href="#" data-toggle="modal" data-target="#myModal2">
+                                    Sign Up Now
+                                </a>
+                            </p>
+                            <form action="#" method="post">
+                                <div class="styled-input agile-styled-input-top">
+                                    <input type="text" placeholder="User Name" name="Name" required="">
+                                </div>
+                                <div class="styled-input">
+                                    <input type="password" placeholder="Password" name="password" required="">
+                                </div>
+                                <input type="submit" value="Sign In">
+                            </form>
+                            <div class="clearfix"></div>
+                        </div>
                         <div class="clearfix"></div>
                     </div>
-                    <div class="clearfix"></div>
                 </div>
+                <!-- //Modal content-->
             </div>
-            <!-- //Modal content-->
         </div>
-    </div>
-    <!-- //Modal1 -->
-    <!-- //signin Model -->
-    <!-- signup Model -->
-    <!-- Modal2 -->
-    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body modal-body-sub_agile">
-                    <div class="main-mailposi">
-                        <span class="fa fa-envelope-o" aria-hidden="true"></span>
+        <!-- //Modal1 -->
+        <!-- //signin Model -->
+        <!-- signup Model -->
+        <!-- Modal2 -->
+        <div class="modal fade" id="myModal2" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
-                    <div class="modal_body_left modal_body_left1">
-                        <h3 class="agileinfo_sign">Sign Up</h3>
-                        <p>
-                            Come join the Grocery Shoppy! Let's set up your Account.
-                        </p>
-                        <form action="#" method="post">
-                            <div class="styled-input agile-styled-input-top">
-                                <input type="text" placeholder="Name" name="Name" required="">
-                            </div>
-                            <div class="styled-input">
-                                <input type="email" placeholder="E-mail" name="Email" required="">
-                            </div>
-                            <div class="styled-input">
-                                <input type="password" placeholder="Password" name="password" id="password1" required="">
-                            </div>
-                            <div class="styled-input">
-                                <input type="password" placeholder="Confirm Password" name="Confirm Password" id="password2" required="">
-                            </div>
-                            <input type="submit" value="Sign Up">
-                        </form>
-                        <p>
-                            <a href="#">By clicking register, I agree to your terms</a>
-                        </p>
+                    <div class="modal-body modal-body-sub_agile">
+                        <div class="main-mailposi">
+                            <span class="fa fa-envelope-o" aria-hidden="true"></span>
+                        </div>
+                        <div class="modal_body_left modal_body_left1">
+                            <h3 class="agileinfo_sign">Sign Up</h3>
+                            <p>
+                                Come join the Grocery Shoppy! Let's set up your Account.
+                            </p>
+                            <form action="#" method="post">
+                                <div class="styled-input agile-styled-input-top">
+                                    <input type="text" placeholder="Name" name="Name" required="">
+                                </div>
+                                <div class="styled-input">
+                                    <input type="email" placeholder="E-mail" name="Email" required="">
+                                </div>
+                                <div class="styled-input">
+                                    <input type="password" placeholder="Password" name="password" id="password1" required="">
+                                </div>
+                                <div class="styled-input">
+                                    <input type="password" placeholder="Confirm Password" name="Confirm Password" id="password2" required="">
+                                </div>
+                                <input type="submit" value="Sign Up">
+                            </form>
+                            <p>
+                                <a href="#">By clicking register, I agree to your terms</a>
+                            </p>
+                        </div>
                     </div>
                 </div>
+                <!-- //Modal content-->
             </div>
-            <!-- //Modal content-->
         </div>
-    </div>
+    }
     <!-- //Modal2 -->
     <!-- //signup Model -->
     <!-- //header-bot -->
@@ -734,7 +746,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                                 </ul>
                                             </div>
                                             <div class="col-sm-4 multi-gd-img">
-                                                <img src="images/nav.png" alt="">
+                                                <img src="~/images/nav.png" alt="">
                                             </div>
                                             <div class="clearfix"></div>
                                         </div>
@@ -1001,10 +1013,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <div class="agileits_app-devices">
                         <h5>Download the App</h5>
                         <a href="#">
-                            <img src="images/1.png" alt="">
+                            <img src="~/images/1.png" alt="">
                         </a>
                         <a href="#">
-                            <img src="images/2.png" alt="">
+                            <img src="~/images/2.png" alt="">
                         </a>
                         <div class="clearfix"> </div>
                     </div>
@@ -1146,31 +1158,31 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <h5>Payment Method</h5>
                     <ul>
                         <li>
-                            <img src="images/pay2.png" alt="">
+                            <img src="~/images/pay2.png" alt="">
                         </li>
                         <li>
-                            <img src="images/pay5.png" alt="">
+                            <img src="~/images/pay5.png" alt="">
                         </li>
                         <li>
-                            <img src="images/pay1.png" alt="">
+                            <img src="~/images/pay1.png" alt="">
                         </li>
                         <li>
-                            <img src="images/pay4.png" alt="">
+                            <img src="~/images/pay4.png" alt="">
                         </li>
                         <li>
-                            <img src="images/pay6.png" alt="">
+                            <img src="~/images/pay6.png" alt="">
                         </li>
                         <li>
-                            <img src="images/pay3.png" alt="">
+                            <img src="~/images/pay3.png" alt="">
                         </li>
                         <li>
-                            <img src="images/pay7.png" alt="">
+                            <img src="~/images/pay7.png" alt="">
                         </li>
                         <li>
-                            <img src="images/pay8.png" alt="">
+                            <img src="~/images/pay8.png" alt="">
                         </li>
                         <li>
-                            <img src="images/pay9.png" alt="">
+                            <img src="~/images/pay9.png" alt="">
                         </li>
                     </ul>
                 </div>
@@ -1190,19 +1202,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </div>
     </div>
     <!-- //copyright -->
-
-    <script src="~/js/inputnum.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js%22%3E"></script>
+    @*   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js%22%3E"></script>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <!-- js-files -->
     <!-- jquery -->
-    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="~/js/jquery-2.1.4.min.js"></script>
     <!-- //jquery -->
     <!-- popup modal (for signin & signup)-->
-    <script src="js/jquery.magnific-popup.js"></script>
+    <script src="~/js/jquery.magnific-popup.js"></script>
     <script>
         $(document).ready(function () {
             $('.popup-with-zoom-anim').magnificPopup({
@@ -1271,173 +1280,181 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!-- //flexisel (for special offers) -->
     <script src="~/js/modal.js"></script>
     <!-- password-script -->
-    <script>
-        window.onload = function () {
-            document.getElementById("password1").onchange = validatePassword;
-            document.getElementById("password2").onchange = validatePassword;
+        @if (!@User.Identity.IsAuthenticated)
+        {
+            <script>
+                window.onload = function () {
+                    document.getElementById("password1").onchange = validatePassword;
+                    document.getElementById("password2").onchange = validatePassword;
+                }
+
+                function validatePassword() {
+                    var pass2 = document.getElementById("password2").value;
+                    var pass1 = document.getElementById("password1").value;
+                    if (pass1 != pass2)
+                        document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+                    else
+                        document.getElementById("password2").setCustomValidity('');
+                    //empty string means no validation error
+                }
+            </script>
         }
 
-        function validatePassword() {
-            var pass2 = document.getElementById("password2").value;
-            var pass1 = document.getElementById("password1").value;
-            if (pass1 != pass2)
-                document.getElementById("password2").setCustomValidity("Passwords Don't Match");
-            else
-                document.getElementById("password2").setCustomValidity('');
-            //empty string means no validation error
-        }
-    </script>
-    <!-- //password-script -->
-    <!-- smoothscroll -->
-    <script src="~/js/SmoothScroll.min.js"></script>
-    <!-- //smoothscroll -->
-    <!-- start-smooth-scrolling -->
-    <script src="~/js/move-top.js"></script>
-    <script src="~/js/easing.js"></script>
-    <script>
-        jQuery(document).ready(function ($) {
-            $(".scroll").click(function (event) {
-                event.preventDefault();
+        <!-- //password-script -->
+        <!-- smoothscroll -->
+        <script src="~/js/SmoothScroll.min.js"></script>
+        <!-- //smoothscroll -->
+        <!-- start-smooth-scrolling -->
+        <script src="~/js/move-top.js"></script>
+        <script src="~/js/easing.js"></script>
+        <script>
+            jQuery(document).ready(function ($) {
+                $(".scroll").click(function (event) {
+                    event.preventDefault();
 
-                $('html,body').animate({
-                    scrollTop: $(this.hash).offset().top
-                }, 1000);
+                    $('html,body').animate({
+                        scrollTop: $(this.hash).offset().top
+                    }, 1000);
+                });
             });
-        });
-    </script>
-    <!-- //end-smooth-scrolling -->
-    <!-- smooth-scrolling-of-move-up -->
-    <script>
-        $(document).ready(function () {
-            /*
-            var defaults = {
-                containerID: 'toTop', // fading element id
-                containerHoverID: 'toTopHover', // fading element hover id
-                scrollSpeed: 1200,
-                easingType: 'linear'
-            };
-            */
-            $().UItoTop({
-                easingType: 'easeOutQuart'
+        </script>
+        <!-- //end-smooth-scrolling -->
+        <!-- smooth-scrolling-of-move-up -->
+        <script>
+            $(document).ready(function () {
+                /*
+                var defaults = {
+                    containerID: 'toTop', // fading element id
+                    containerHoverID: 'toTopHover', // fading element hover id
+                    scrollSpeed: 1200,
+                    easingType: 'linear'
+                };
+                */
+                $().UItoTop({
+                    easingType: 'easeOutQuart'
+                });
+
             });
-
-        });
-    </script>
-    <!-- //smooth-scrolling-of-move-up -->
-    <!-- for bootstrap working -->
-    <script src="~/js/bootstrap.js"></script>
-    <!-- //for bootstrap working -->
-    <!-- //js-files -->
-    <script>
-        function obtenerCarrito() {
-            $.ajax({
-                dataType: "json",
-                url: "/cart/get",
-                success: function (data) {
-                    console.log(data);
-                    $("#lstProductos > tbody").html("");
-                    for (n = 0; n < data.length; n++) {
-                        enlistarProducto(data[n].product.codProducto, data[n].product.nombre, data[n].product.precioVenta, data[n].quantity);
-                    }
-                    const trigger = "trigger-1";
-                    const modal = document.querySelector(`[data-modal=${trigger}]`);
-                    const contentWrapper = modal.querySelector('.content-wrapper');
-                    const close = modal.querySelector('.close');
-                    close.addEventListener('click', () => modal.classList.remove('open'));
-                    modal.addEventListener('click', () => modal.classList.remove('open'));
-                    contentWrapper.addEventListener('click', (e) => e.stopPropagation());
-                    modal.classList.toggle('open');
-                }
-            });
-        }
-        var cnt = 0;
-        function enlistarProducto(codProducto, nombre, precio, cantidad) {
-            var fila = '<tr>';
-            fila += '<td>';
-            fila += '<div class ="pikachu">';
-            fila += '<input type="number" min="0" step="1" value="' + cantidad + '" class="cantidad form-control" onchange="calcular2(this,' + codProducto + ');"></td> </div>';
-            fila += '<td>' + nombre + '</td>';
-            fila += '<td ><input type="hidden" value="' + precio + '" class="precio_unitario form-control">' + precio + '</div></td>';
-            fila += '<td><input class="form-control subtotal" type="text" disabled></td>';
-            fila += "<td><button class='btn btn-danger' onclick='eliminarFila(this," + codProducto + ")'>Eliminar</button></td>";
-            fila += '</tr>';
-            $("#lstProductos > tbody").append(fila);
-            cnt++;
-            calcular();
-
-        }
-        function seleccionarCliente(cod_cliente, nombre) {
-            $('#bsqCliente').modal('hide');
-            $('#cod_cliente').val(cod_cliente);
-            $('#nombre_cliente').html(nombre);
-        }
-        function eliminarFila(obj, codigo) {
-            fila = $(obj).parent().parent();
-            $(fila).fadeOut(300).delay(100).remove();
-            $.ajax({
-                url: "/cart/Remove/",
-                data: { "id": codigo },
-                success: function () {
-                }
-            });
-            calcular();
-        }
-        function calcular() {
-            var filas = $("#tblProductos > tbody > tr");
-            var total = 0;
-            $('#lstProductos> tbody').find('tr').each(function (i, tr) {
-                cantidad = parseFloat($(tr).find('.cantidad').val());
-                precio_unitario = $(tr).find('.precio_unitario').val();
-                if (cantidad <= 0 || isNaN(cantidad)) {
-                    $(tr).find('.cantidad').val(0);
-                    cantidad = 0;
-                }
-                if (precio_unitario <= 0 || isNaN(precio_unitario)) {
-                    $(tr).find('.precio_unitario').val(0);
-                    precio_unitario = "0";
-                }
-
-                total += cantidad * precio_unitario;
-                $(".total").html("Q. " + total.toFixed(2));
-                $(tr).find('.subtotal').val("" + (cantidad * precio_unitario).toFixed(2));
-
-            })
-        }
-        function calcular2(obj, codigo) {
-            var x = 0;
-            var total = 0;
-            cantidades = $(obj).val();
-            console.log(cantidades);
-            $('#lstProductos> tbody').find('tr').each(function (i, tr) {
-                cantidad = parseFloat($(tr).find('.cantidad').val());
-                precio_unitario = $(tr).find('.precio_unitario').val();
-                if (cantidad <= 0 || isNaN(cantidad)) {
-                    $(tr).find('.cantidad').val(0);
-                    cantidad = 0;
-                }
-                if (precio_unitario <= 0 || isNaN(precio_unitario)) {
-                    $(tr).find('.precio_unitario').val(0);
-                    precio_unitario = 0;
-                }
-                total += cantidad * precio_unitario;
-                x = cantidad;
-                $(".total").html("Q. " + total.toFixed(2));
-                $(tr).find('.subtotal').val("" + (cantidad * precio_unitario).toFixed(2));
-            })
-            if (x >= 0) {
+        </script>
+        <!-- //smooth-scrolling-of-move-up -->
+        <!-- for bootstrap working -->
+        <script src="~/js/bootstrap.js"></script>
+        <!-- //for bootstrap working -->
+        <!-- //js-files -->
+        <script>
+            var cnt = 0;
+            function obtenerCarrito() {
                 $.ajax({
-                    url: "/cart/Editar/",
-                    data: { "id": codigo, "cantidad": cantidades },
-                    success: function () {
+                    dataType: "json",
+                    url: "/cart/get",
+                    success: function (data) {
+                        console.log(data);
+                        cnt = 0;
+                        $("#lstProductos > tbody").html("");
+                        for (n = 0; n < data.length; n++) {
+                            enlistarProducto(data[n].product.codProducto, data[n].product.nombre, data[n].product.precioVenta, data[n].quantity);
+                        }
+                        const trigger = "trigger-1";
+                        const mimodal = document.querySelector(`[data-mimodal=${trigger}]`);
+                        const contentWrapper = mimodal.querySelector('.content-wrapper');
+                        const close = mimodal.querySelector('.close');
+                        close.addEventListener('click', () => mimodal.classList.remove('open'));
+                        mimodal.addEventListener('click', () => mimodal.classList.remove('open'));
+                        contentWrapper.addEventListener('click', (e) => e.stopPropagation());
+                        mimodal.classList.toggle('open');
                     }
                 });
             }
-        }
-    </script>
+            
+            function enlistarProducto(codProducto, nombre, precio, cantidad) {
+                var fila = '<tr>';
+                fila += '<td>';
+                fila += '<div class ="pikachu">';
+                fila += '<input type="number" min="0" step="1" value="' + cantidad + '" class="cantidad form-control" onchange="calcular2(this,' + codProducto + ');"></td> </div>';
+                fila += '<td>' + nombre + '</td>';
+                fila += '<td ><input type="hidden" value="' + precio + '" class="precio_unitario form-control">' + precio + '</div></td>';
+                fila += '<td><input class="form-control subtotal" type="text" disabled></td>';
+                fila += "<td><button class='btn btn-danger' onclick='eliminarFila(this," + codProducto + ")'>Eliminar</button></td>";
+                fila += '</tr>';
+                $("#lstProductos > tbody").append(fila);
+                cnt++;
+                calcular();
+            }
 
-    @RenderSection("Scripts", required: false)
+            function eliminarFila(obj, codigo) {
+                cnt--;
+                fila = $(obj).parent().parent();
+                $(fila).fadeOut(300).delay(100).remove();
+                $.ajax({
+                    url: "/cart/Remove/",
+                    data: { "id": codigo },
+                    success: function () {
+                    }
+                });
+                if (cnt == 0) {
+                    $(".total").html("Q. " + cnt);
+                    $('#total_factura').html(cnt);
+                    $('#total_factura').html(total.toFixed(2));
+                }
+                calcular();
+            }
+            function calcular() {
+                var filas = $("#tblProductos > tbody > tr");
+                var total = 0;
+                $('#lstProductos> tbody').find('tr').each(function (i, tr) {
+                    cantidad = parseFloat($(tr).find('.cantidad').val());
+                    precio_unitario = $(tr).find('.precio_unitario').val();
+                    if (cantidad <= 0 || isNaN(cantidad)) {
+                        $(tr).find('.cantidad').val(0);
+                        cantidad = 0;
+                    }
+                    if (precio_unitario <= 0 || isNaN(precio_unitario)) {
+                        $(tr).find('.precio_unitario').val(0);
+                        precio_unitario = "0";
+                    }
 
-</body>
+                    total += cantidad * precio_unitario;
+                    $(".total").html("Q. " + total.toFixed(2));
+                    $(tr).find('.subtotal').val("" + (cantidad * precio_unitario).toFixed(2));
+
+                })
+            }
+            function calcular2(obj, codigo) {
+                var x = 0;
+                var total = 0;
+                cantidades = $(obj).val();
+                console.log(cantidades);
+                $('#lstProductos> tbody').find('tr').each(function (i, tr) {
+                    cantidad = parseFloat($(tr).find('.cantidad').val());
+                    precio_unitario = $(tr).find('.precio_unitario').val();
+                    if (cantidad <= 0 || isNaN(cantidad)) {
+                        $(tr).find('.cantidad').val(0);
+                        cantidad = 0;
+                    }
+                    if (precio_unitario <= 0 || isNaN(precio_unitario)) {
+                        $(tr).find('.precio_unitario').val(0);
+                        precio_unitario = 0;
+                    }
+                    total += cantidad * precio_unitario;
+                    x = cantidad;
+                    $(".total").html("Q. " + total.toFixed(2));
+                    console.log("pude impim");
+                    $(tr).find('.subtotal').val("" + (cantidad * precio_unitario).toFixed(2));
+                })
+                if (x >= 0) {
+                    $.ajax({
+                        url: "/cart/Editar/",
+                        data: { "id": codigo, "cantidad": cantidades },
+                        success: function () {
+                        }
+                    });
+                }
+            }
+        </script>
+
+        @RenderSection("Scripts", required: false)
+
+    </body>
 </html>
 
 
