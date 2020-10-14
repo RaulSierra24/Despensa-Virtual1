@@ -35,6 +35,8 @@ namespace despensa.Models
         public virtual Genero CodGeneoNavigation { get; set; }
         public virtual Rol CodRolNavigation { get; set; }
         public virtual ICollection<Comentario> Comentario { get; set; }
+        public virtual ICollection<Factura> FacturaCodClienteNavigation { get; set; }
+        public virtual ICollection<Factura> FacturaCodEmpleadoNavigation { get; set; }
         public virtual ICollection<PredidoFactura> PredidoFacturaCodClienteNavigation { get; set; }
         public virtual ICollection<PredidoFactura> PredidoFacturaCodEmpleadoNavigation { get; set; }
         public virtual ICollection<Puesto> Puesto { get; set; }

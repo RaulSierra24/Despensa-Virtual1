@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear facturas con HTML, CSS y JavaScript</title>
+    <link rel="stylesheet" href="~/css/main.css">
+</head>
+<body>
+    <header class="row">
+        <div class="logoholder text-center">
+            <img src="assets/img/logo.png">
+        </div><!--.logoholder-->
+
+        <div class="me">
+            <p contenteditable>
+                <strong>Sistema Web S.A. de C.V.</strong><br>
+                234/90, New York Street<br>
+                United States.<br>
+
+            </p>
+        </div><!--.me-->
+
+        <div class="info">
+            <p contenteditable>
+                Web: <a href="http://volkerotto.net">www.sistemasweb.la</a><br>
+                E-mail: <a href="mailto:info@obedalvarado.pw">info@obedalvarado.pw</a><br>
+                Tel: +456-345-908-559<br>
+                Twitter:
+
+            </p>
+        </div><!-- .info -->
+
+        <div class="bank">
+            <p contenteditable>
+                Datos bacarios: <br>
+                Titular de la cuenta: <br>
+                IBAN: <br>
+                BIC:
+            </p>
+        </div><!--.bank-->
+
+    </header>
+
+
+    @RenderBody()
+
+
+
+    <footer class="row">
+        <div class="col-1 text-center">
+            <p class="notaxrelated" contenteditable>El monto de la factura no incluye el impuesto sobre las ventas.</p>
+
+        </div>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="assets/bower_components/jquery/dist/jquery.min.js"><\/script>')</script>
+    <script src="~/js/main.js"></script>
+</body>
+</html>

@@ -39,6 +39,19 @@ namespace despensa.Controllers
                 return NotFound();
             }
 
+            ViewBag.mispendientes = (from m in _context.PredidoFactura
+                                     where m.CodCliente == id && m.CodEstado == 1
+                                     orderby m.FecEmision descending
+                                     select m).ToList();
+            ViewBag.misEntregados = (from m in _context.PredidoFactura
+                                     where m.CodCliente == id  && m.CodEstado == 2
+                                     orderby m.FecEmision descending
+                                     select m).ToList();
+            ViewBag.misCancelados = (from m in _context.PredidoFactura
+                                     where m.CodCliente == id  && m.CodEstado == 3
+                                     orderby m.FecEmision descending
+                                     select m).ToList();
+
             var usuario = await _context.Usuario
                 .Include(u => u.CodEstadoNavigation)
                 .Include(u => u.CodGeneoNavigation)
@@ -69,6 +82,7 @@ namespace despensa.Controllers
             {
                 if (ModelState.IsValid)
                 {
+
                     usuario.CodEstado = 3;
                     usuario.CodRol = 1;
                     usuario.Contraseña = Crypto.Hash(usuario.Contraseña);

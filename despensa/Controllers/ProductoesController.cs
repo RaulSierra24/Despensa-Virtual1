@@ -34,7 +34,7 @@ namespace despensa.Controllers
                 var pageNumber = page ?? 1;
 
                 var entradas = (from m in _context.Producto
-                                where m.CodEstado == 3
+                                where m.CodEstado == 3 && m.Cantidad > 0
                                 orderby m.Nombre descending
                                 select m).ToList();
                 Console.WriteLine("holiprr" + categoriass);
@@ -42,7 +42,7 @@ namespace despensa.Controllers
 
                 if (idcat > 0)
                 {
-                    Console.WriteLine("laskjdfljasdkl" + idcat);
+                   
                     entradas = entradas.Where(a => a.CodCategoria == idcat).ToList();
 
                 }

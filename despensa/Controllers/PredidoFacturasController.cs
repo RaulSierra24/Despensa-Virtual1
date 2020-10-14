@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using despensa.Models;
 using despensa.Helpers;
 using System.Security.Claims;
+using MySql.Data.MySqlClient.Memcached;
 
 namespace despensa.Controllers
 {
@@ -61,6 +62,29 @@ namespace despensa.Controllers
         
            
 
+        }
+        public async Task<IActionResult> Factura(int? id)
+        {
+            Console.WriteLine("hola "+id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["detalle_factura"] = _context.DetalleFactura.Where(a => a.CodFactura == id);
+            var factura = await _context.PredidoFactura
+                .Include(f => f.CodClienteNavigation)
+                .Include(f => f.CodEmpleadoNavigation)
+                .FirstOrDefaultAsync(m => m.CodFactura == id);
+            var aux = _context.Usuario.Where(a => a.CodUsuario == factura.CodEmpleado);
+            
+
+            if (factura == null)
+            {
+                return NotFound();
+            }
+
+            return View(factura);
         }
 
         // POST: PredidoFacturas/Create
@@ -133,7 +157,7 @@ namespace despensa.Controllers
                 _context.Add(predidoFactura);
                 await _context.SaveChangesAsync();
                 limpiarCarrito();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Usuarios");
             }
             ViewBag.Pedidofactura = "entre aqui";
             ViewData["CodCliente"] = new SelectList(_context.Usuario, "CodUsuario", "CodUsuario", predidoFactura.CodCliente);

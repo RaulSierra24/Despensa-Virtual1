@@ -21,6 +21,7 @@ namespace despensa.Models
         public virtual DbSet<DetalleFactura> DetalleFactura { get; set; }
         public virtual DbSet<EstadoActividad> EstadoActividad { get; set; }
         public virtual DbSet<EstadoPedido> EstadoPedido { get; set; }
+        public virtual DbSet<Factura> Factura { get; set; }
         public virtual DbSet<Genero> Genero { get; set; }
         public virtual DbSet<Marca> Marca { get; set; }
         public virtual DbSet<PredidoFactura> PredidoFactura { get; set; }
@@ -35,7 +36,7 @@ namespace despensa.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySql("server=localhost;database=despensa1;user=root;password=password", x => x.ServerVersion("5.7.28-mysql"));
+                optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=password;database=despensa1", x => x.ServerVersion("5.7.28-mysql"));
             }
         }
 
@@ -153,6 +154,10 @@ namespace despensa.Models
                     .HasColumnName("cod_detalle")
                     .HasColumnType("int(11)");
 
+                entity.Property(e => e.Cantidad)
+                    .HasColumnName("cantidad")
+                    .HasColumnType("int(11)");
+
                 entity.Property(e => e.CodFactura)
                     .HasColumnName("cod_factura")
                     .HasColumnType("int(11)");
@@ -168,10 +173,6 @@ namespace despensa.Models
                 entity.Property(e => e.Precio)
                     .HasColumnName("precio")
                     .HasColumnType("decimal(10,2)");
-
-                entity.Property(e => e.Cantidad)
-                    .HasColumnName("cantidad")
-                    .HasColumnType("int(11)");
 
                 entity.HasOne(d => d.CodFacturaNavigation)
                     .WithMany(p => p.DetalleFactura)
@@ -220,6 +221,47 @@ namespace despensa.Models
                     .HasColumnType("varchar(45)")
                     .HasCharSet("latin1")
                     .HasCollation("latin1_swedish_ci");
+            });
+
+            modelBuilder.Entity<Factura>(entity =>
+            {
+                entity.HasKey(e => e.CodFactura)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("factura");
+
+                entity.HasIndex(e => e.CodCliente)
+                    .HasName("factura_usuario_cliente_idx");
+
+                entity.HasIndex(e => e.CodEmpleado)
+                    .HasName("factura_empleados_idx");
+
+                entity.Property(e => e.CodFactura)
+                    .HasColumnName("cod_factura")
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.CodCliente)
+                    .HasColumnName("cod_cliente")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.CodEmpleado)
+                    .HasColumnName("cod_empleado")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Fecha)
+                    .HasColumnName("fecha")
+                    .HasColumnType("date");
+
+                entity.HasOne(d => d.CodClienteNavigation)
+                    .WithMany(p => p.FacturaCodClienteNavigation)
+                    .HasForeignKey(d => d.CodCliente)
+                    .HasConstraintName("factura_usuario_cliente");
+
+                entity.HasOne(d => d.CodEmpleadoNavigation)
+                    .WithMany(p => p.FacturaCodEmpleadoNavigation)
+                    .HasForeignKey(d => d.CodEmpleado)
+                    .HasConstraintName("factura_usuario_empleados");
             });
 
             modelBuilder.Entity<Genero>(entity =>
@@ -512,7 +554,8 @@ namespace despensa.Models
 
                 entity.Property(e => e.CodEstado)
                     .HasColumnName("cod_estado")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'3'");
 
                 entity.Property(e => e.CodGeneo)
                     .HasColumnName("cod_geneo")
@@ -526,7 +569,8 @@ namespace despensa.Models
 
                 entity.Property(e => e.CodRol)
                     .HasColumnName("cod_rol")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'1'");
 
                 entity.Property(e => e.Contraseña)
                     .HasColumnName("contraseña")
@@ -559,6 +603,7 @@ namespace despensa.Models
                 entity.Property(e => e.Nit)
                     .HasColumnName("nit")
                     .HasColumnType("varchar(45)")
+                    .HasDefaultValueSql("'C/F'")
                     .HasCharSet("latin1")
                     .HasCollation("latin1_swedish_ci");
 

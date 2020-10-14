@@ -22,7 +22,7 @@
             <div class="wrapper">
                 <!-- first section (nuts) -->
                 <div class="product-sec1">
-                    <h3 class="heading-tittle">Nuts</h3>
+                    <h3 class="heading-tittle">Productos</h3>
                     @foreach (var item in ViewBag.pagina)
                     {
                         <div class="col-md-4 product-men">
@@ -55,6 +55,7 @@
 
                     <div class="clearfix"></div>
                 </div>
+                @Html.PagedListPager((IPagedList)ViewBag.pagina, page => Url.Action("Index", new { page = page }))
             </div>
         </div>
         <!-- //product right -->

@@ -152,7 +152,6 @@
                                     </div>
                                     <input type="submit" class="button button-block" value="Guardar">
                                 </form>
-
                             </div>
                         </div>
                     </div>
@@ -168,9 +167,28 @@
             <div class="chat">
                 <div class="head">
                     <i class="fa fa-money"></i>
-                    Mis Pedidos
+                    Mis Pedidos En Espera
                 </div>
                 <div class="chat_inner">
+                        @foreach (var item in ViewBag.mispendientes)
+                        {
+                            <div class="col-md-4 product-men">
+                                <div class="men-pro-item simpleCart_shelfItem">
+                                    <div class="item-info-product ">
+                                        <h4>
+                                            <a href="single.html"> Factura realizada el: @item.FecEmision</a>
+                                        </h4>
+                                        <div class="info-product-price">
+                                            <span class="item_price">$@item.TotalVendido</span>
+
+                                        </div>
+                                        <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                                            <a target="_blank" class="button2" asp-controller="PredidoFacturas" asp-action="Factura" asp-route-id="@item.CodFactura">Ver Factura</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
                 </div>
                 <div class="footer">
                 </div>
@@ -178,6 +196,87 @@
         </div>
         <div class="clearfix"></div>
     </div>
+
+
+
+
+
+    <div class="product-sec1">
+        <div class="col-md-12">
+            <div class="chat">
+                <div class="head">
+                    <i class="fa fa-money"></i>
+                    Mis Pedidos Entregados
+                </div>
+                <div class="chat_inner">
+                    <div class="product-sec1">
+                        @foreach (var item in ViewBag.misEntregados)
+                        {
+                            <div class="col-md-4 product-men">
+                                <div class="men-pro-item simpleCart_shelfItem">
+                                    <div class="item-info-product ">
+                                        <h4>
+                                            <a href="single.html"> Factura realizada el: @item.FecEmision</a>
+                                        </h4>
+                                        <div class="info-product-price">
+                                            <span class="item_price">$@item.TotalVendido</span>
+
+                                        </div>
+                                        <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                                            <a target="_blank" class="button2" asp-controller="PredidoFacturas" asp-action="Factura" asp-route-id="@item.CodFactura">Ver Factura</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="footer">
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+
+    <div class="product-sec1">
+        <div class="col-md-12">
+            <div class="chat">
+                <div class="head">
+                    <i class="fa fa-money"></i>
+                    Mis Pedidos Cancelados
+                </div>
+                <div class="chat_inner">
+                    <div class="product-sec1">
+                        @foreach (var item in ViewBag.misCancelados)
+                        {
+                            <div class="col-md-4 product-men">
+                                <div class="men-pro-item simpleCart_shelfItem">
+                                    <div class="item-info-product ">
+                                        <h4>
+                                            <a > Factura realizada el: @item.FecEmision</a>
+                                        </h4>
+                                        <div class="info-product-price">
+                                            <span class="item_price">$@item.TotalVendido</span>
+
+                                        </div>
+                                        <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                                            <a target="_blank" class="button2" asp-controller="PredidoFacturas" asp-action="Factura" asp-route-id="@item.CodFactura">Ver Factura</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="footer">
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+
     <div class="clearfix"></div>
     <!-- //product right -->
 </div>

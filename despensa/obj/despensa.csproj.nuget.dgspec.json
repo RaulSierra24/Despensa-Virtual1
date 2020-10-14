@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\proyectosvisual\\despensa2\\despensa\\despensa\\despensa.csproj": {}
+    "D:\\proyectosvisual\\Despensa-Virtual1\\despensa\\despensa.csproj": {}
   },
   "projects": {
-    "D:\\proyectosvisual\\despensa2\\despensa\\despensa\\despensa.csproj": {
+    "D:\\proyectosvisual\\Despensa-Virtual1\\despensa\\despensa.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\proyectosvisual\\despensa2\\despensa\\despensa\\despensa.csproj",
+        "projectUniqueName": "D:\\proyectosvisual\\Despensa-Virtual1\\despensa\\despensa.csproj",
         "projectName": "despensa",
-        "projectPath": "D:\\proyectosvisual\\despensa2\\despensa\\despensa\\despensa.csproj",
+        "projectPath": "D:\\proyectosvisual\\Despensa-Virtual1\\despensa\\despensa.csproj",
         "packagesPath": "C:\\Users\\allan\\.nuget\\packages\\",
-        "outputPath": "D:\\proyectosvisual\\despensa2\\despensa\\despensa\\obj\\",
+        "outputPath": "D:\\proyectosvisual\\Despensa-Virtual1\\despensa\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
