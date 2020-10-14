@@ -34,7 +34,7 @@ namespace despensa.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-
+        /*
         [HttpGet]
         public JsonResult Get()
         {
@@ -45,7 +45,7 @@ namespace despensa.Controllers
                             orderby m.Nombre descending
                             select m).ToList();
             return Json(entradas);
-        }
+        }*/
 
 
 

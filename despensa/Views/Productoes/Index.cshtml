@@ -35,11 +35,11 @@
                                             <a asp-action="Details" asp-route-id="@item.CodProducto" class="link-product-add-cart">ver más</a>
                                         </div>
                                     </div>
-                                    <span class="product-new-top">New</span>
+                                    <a class="product-new-top" asp-action="Edit" asp-route-id="@item.CodProducto">New</a>
                                 </div>
                                 <div class="item-info-product ">
                                     <h4>
-                                        <a href="single.html"> @item.Nombre, @item.Peso</a>
+                                        <a asp-action="Details" asp-route-id="@item.CodProducto"> @item.Nombre, @item.Peso</a>
                                     </h4>
                                     <div class="info-product-price">
                                         <span class="item_price">$@item.PrecioVenta</span>

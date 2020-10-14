@@ -9,6 +9,7 @@ using despensa.Models;
 using despensa.Helpers;
 using System.Security.Claims;
 using MySql.Data.MySqlClient.Memcached;
+using Microsoft.AspNetCore.Authorization;
 
 namespace despensa.Controllers
 {
@@ -20,7 +21,7 @@ namespace despensa.Controllers
         {
             _context = context;
         }
-
+        [Authorize(Roles = "3,2")]
         // GET: PredidoFacturas
         public async Task<IActionResult> Index()
         {
@@ -29,6 +30,7 @@ namespace despensa.Controllers
         }
 
         // GET: PredidoFacturas/Details/5
+        [Authorize(Roles = "3,2,1")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -50,6 +52,7 @@ namespace despensa.Controllers
         }
 
         // GET: PredidoFacturas/Create
+        [Authorize(Roles = "3,2,1")]
         public IActionResult Create()
         {
             ViewData["CodCliente"] = new SelectList(_context.Usuario, "CodUsuario", "CodUsuario");
@@ -63,6 +66,8 @@ namespace despensa.Controllers
            
 
         }
+
+        [Authorize(Roles = "3,2,1")]
         public async Task<IActionResult> Factura(int? id)
         {
             Console.WriteLine("hola "+id);
@@ -92,6 +97,7 @@ namespace despensa.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "3,2,1")]
         public async Task<IActionResult> Create([Bind("CodFactura,FecEmision,TotalVendido,TotalCosto,CodEmpleado,CodCliente,CodEstado")] PredidoFactura predidoFactura)
         {
             ClaimsPrincipal currentUser = this.User;
@@ -173,6 +179,7 @@ namespace despensa.Controllers
         }
 
         // GET: PredidoFacturas/Edit/5
+        [Authorize(Roles = "3,2")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -196,6 +203,7 @@ namespace despensa.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "3,1")]
         public async Task<IActionResult> Edit(int id, [Bind("CodFactura,FecEmision,TotalVendido,TotalCosto,CodEmpleado,CodCliente,CodEstado")] PredidoFactura predidoFactura)
         {
             if (id != predidoFactura.CodFactura)
@@ -230,6 +238,7 @@ namespace despensa.Controllers
         }
 
         // GET: PredidoFacturas/Delete/5
+        [Authorize(Roles = "3")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -251,6 +260,7 @@ namespace despensa.Controllers
         }
 
         // POST: PredidoFacturas/Delete/5
+        [Authorize(Roles = "3")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

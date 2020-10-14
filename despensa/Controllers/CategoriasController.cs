@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using despensa.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace despensa.Controllers
 {
@@ -24,6 +26,7 @@ namespace despensa.Controllers
         }
 
         // GET: Categorias
+        [Authorize(Roles = "3,2,1")]
         public async Task<IActionResult> Index()
         {
             var despensaContext = _context.Categoria.Include(c => c.EstadoNavigation);
@@ -31,6 +34,8 @@ namespace despensa.Controllers
         }
 
         // GET: Categorias/Details/5
+
+        [Authorize(Roles = "3")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -50,6 +55,7 @@ namespace despensa.Controllers
         }
 
         // GET: Categorias/Create
+        [Authorize(Roles = "3")]
         public IActionResult Create()
         {
             ViewData["Estado"] = new SelectList(_context.EstadoActividad, "CodEstado", "Estado");
@@ -59,6 +65,7 @@ namespace despensa.Controllers
         // POST: Categorias/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "3")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CodCategoria,Nombre,Estado,ImageFie")] Categoria categoria)
@@ -90,6 +97,7 @@ namespace despensa.Controllers
         }
 
         // GET: Categorias/Edit/5
+        [Authorize(Roles = "3")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -111,6 +119,7 @@ namespace despensa.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "3")]
         public async Task<IActionResult> Edit(int id, [Bind("CodCategoria,Nombre,Estado,ImageFie")] Categoria categoria)
         {
             if (id != categoria.CodCategoria)
@@ -158,6 +167,7 @@ namespace despensa.Controllers
         }
 
         // GET: Categorias/Delete/5
+        [Authorize(Roles = "3")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -177,6 +187,7 @@ namespace despensa.Controllers
         }
 
         // POST: Categorias/Delete/5
+        [Authorize(Roles = "3")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

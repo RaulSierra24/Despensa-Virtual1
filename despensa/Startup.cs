@@ -30,8 +30,8 @@ namespace despensa
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>
             {
-                options.LoginPath = "/Cliente/login";
-                options.LogoutPath = "/Cliente/logout";
+                options.LoginPath = "/Usuarios/login";
+                options.LogoutPath = "/Usuarios/logout";
                 options.AccessDeniedPath = "/home/index";
             });
             services.AddControllersWithViews();
@@ -55,12 +55,10 @@ namespace despensa
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseAuthorization();
-            app.UseSession();
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseSession();
             app.UseCookiePolicy();
-            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

@@ -9,6 +9,9 @@ using despensa.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using despensa;
+using despensa.Helpers;
 
 namespace despensa.Controllers
 {
@@ -22,6 +25,7 @@ namespace despensa.Controllers
         }
 
         // GET: Usuarios
+        [Authorize(Roles = "3")]
         public async Task<IActionResult> Index()
         {
             var despensa1Context = _context.Usuario.Include(u => u.CodEstadoNavigation).Include(u => u.CodGeneoNavigation).Include(u => u.CodRolNavigation);
@@ -29,6 +33,7 @@ namespace despensa.Controllers
         }
 
         // GET: Usuarios/Details/5
+        [Authorize(Roles = "3,2,1")]
         public async Task<IActionResult> Details(int? id)
         {
             ClaimsPrincipal currentUser = this.User;
@@ -66,6 +71,7 @@ namespace despensa.Controllers
         }
 
         // GET: Usuarios/Create
+        [Authorize(Roles = "3")]
         public IActionResult Create()
         {
             return View();
@@ -76,6 +82,7 @@ namespace despensa.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "3")]
         public async Task<IActionResult> Create([Bind("PrimerNombre,PrimerApellido,Direccion,CorreoElectronico,Contraseña,ConfirmarContraseña")] Usuario usuario)
         {
             if (usuario.Contraseña.Equals(usuario.ConfirmarContraseña))
@@ -100,6 +107,7 @@ namespace despensa.Controllers
         }
 
         // GET: Usuarios/Edit/6
+        [Authorize(Roles = "3,2,1")]
         public async Task<IActionResult> Edit(int? id)
         {
             ClaimsPrincipal currentUser = this.User;
@@ -130,6 +138,7 @@ namespace despensa.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "3,2,1")]
         public async Task<IActionResult> Edit(int id, [Bind("CodUsuario,PrimerNombre,SegundoNombre,PrimerApellido,SegundoApellido,Contraseña,CodGenero,Cui,Telefono,Direccion,Nit,CorreoElectronico,FecNac,CodGeneo,CodRol,CodEstado")] Usuario usuario)
         {
             
@@ -170,6 +179,8 @@ namespace despensa.Controllers
             ViewData["CodRol"] = new SelectList(_context.Rol, "CodRol", "CodRol", usuario.CodRol);
             return View(usuario);
         }
+
+        [Authorize(Roles = "3,2,1")]
         public async Task<IActionResult> Cambiar_contaseña(int id, [Bind("CodUsuario,PrimerNombre,SegundoNombre,PrimerApellido,SegundoApellido,Contraseña,ConfirmarContraseña,CodGenero,Cui,Telefono,Direccion,Nit,CorreoElectronico,FecNac,CodGeneo,CodRol,CodEstado")] Usuario usuario)
         {
             ClaimsPrincipal currentUser = this.User;
@@ -219,6 +230,7 @@ namespace despensa.Controllers
         }
 
         // GET: Usuarios/Delete/5
+        [Authorize(Roles = "3")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -241,6 +253,7 @@ namespace despensa.Controllers
 
         // POST: Usuarios/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "3")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -301,13 +314,13 @@ namespace despensa.Controllers
 
                             Console.WriteLine("id_ROL:" + pers.CodRol);
                         System.Diagnostics.Debug.WriteLine("id_ROL:" + pers.CodRol);
-
                         identity = new ClaimsIdentity(new[] {
-                        new Claim(ClaimTypes.Email, c.CorreoElectronico),
                         new Claim(ClaimTypes.Name, c.PrimerNombre),
                         new Claim(ClaimTypes.NameIdentifier, ""+c.CodUsuario),
-                        new Claim(ClaimTypes.Role, pers.Rol1)
+                        new Claim(ClaimTypes.Role, pers.CodRol+"")
                         }, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                        Console.WriteLine("rol \"" + pers.Rol1 + "\"");
                         isAuthenticated = true;
 
 
@@ -316,7 +329,7 @@ namespace despensa.Controllers
                             //contador_sesion++;
                             var principal = new ClaimsPrincipal(identity);
                             var loginA = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Details", "Usuarios");
                         }
 
                         //int timeout = login.RememberMe ? 525600 : 20;  //52600 min=1año
@@ -346,7 +359,8 @@ namespace despensa.Controllers
         [HttpGet]
         public ActionResult Logout()
         {
-
+            List<Item> cart = new List<Item>();
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
 
             var loginA = HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -363,6 +377,8 @@ namespace despensa.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Logout(string j)
         {
+            List<Item> cart = new List<Item>();
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             var loginA = HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login");
         }

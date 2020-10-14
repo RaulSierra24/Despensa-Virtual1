@@ -9,6 +9,7 @@ using despensa.Models;
 using X.PagedList;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace despensa.Controllers
 {
@@ -24,6 +25,7 @@ namespace despensa.Controllers
         }
 
         // GET: Productoes
+        [Authorize(Roles = "2,1,3")]
         public async Task<IActionResult> Index(int? page, int idcat)
         {
            // if (idcat==0)
@@ -55,6 +57,7 @@ namespace despensa.Controllers
         }
 
         // GET: Productoes/Details/5
+        [Authorize(Roles = "3,2,1")]
         public async Task<IActionResult> Details(int? id, int idcat)
         {
             ViewData["codigo_cat"] = idcat;
@@ -76,7 +79,8 @@ namespace despensa.Controllers
             return View(producto);
         }
 
-        // GET: Productoes/Create
+        // GET: Productoes/Create[Authorize(Roles = "Administrador,Cliente,Empleado")]
+        [Authorize(Roles = "3,2")]
         public IActionResult Create(int idcat)
         {
             
@@ -93,6 +97,7 @@ namespace despensa.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "3,2")]
         public async Task<IActionResult> Create([Bind("CodProducto,Nombre,FecCaducidad,PrecioCosto,PrecioVenta,ImageFie,Peso,CodEstado,Cantidad,CodProveedor,CodMarca,CodCategoria")] Producto producto)
         {
             if (ModelState.IsValid)
@@ -125,6 +130,7 @@ namespace despensa.Controllers
         }
 
         // GET: Productoes/Edit/5
+        [Authorize(Roles = "3,2")]
         public async Task<IActionResult> Edit(int? id, int idcat)
         {
             
@@ -150,6 +156,7 @@ namespace despensa.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "3,2")]
         public async Task<IActionResult> Edit(int id, [Bind("CodProducto,Nombre,FecCaducidad,PrecioCosto,PrecioVenta,Imagen,Peso,CodEstado,Cantidad,CodProveedor,CodMarca,CodCategoria")] Producto producto)
         {
             if (id != producto.CodProducto)
@@ -196,6 +203,7 @@ namespace despensa.Controllers
         }
 
         // GET: Productoes/Delete/5
+        [Authorize(Roles = "3,2")]
         public async Task<IActionResult> Delete(int? id, int idcat)
         {
             ViewData["codig_cat"] = idcat;
@@ -218,6 +226,7 @@ namespace despensa.Controllers
         }
 
         // POST: Productoes/Delete/5
+        [Authorize(Roles = "3,2")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
