@@ -84,7 +84,7 @@ namespace despensa.Controllers
         public IActionResult Create(int idcat)
         {
             
-            ViewData["codig_cat"] = idcat;
+            ViewBag.codig_cat = idcat;
             ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "CodEstado");
             ViewData["CodCategoria"] = new SelectList(_context.Categoria, "CodCategoria", "CodCategoria");
             ViewData["CodMarca"] = new SelectList(_context.Marca, "CodMarca", "CodMarca");

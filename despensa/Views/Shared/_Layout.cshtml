@@ -84,9 +84,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         </li>
                         @if (@User.Identity.IsAuthenticated)
                         {
+
                             <li>
                                 <a asp-controller="Usuarios" asp-action="Details">
                                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>  @User.Identity.Name
+                                </a>
+                            </li>
+
+                            <li>
+                                <a asp-controller="Usuarios" asp-action="Logout">
+                                    <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>  Cerrar Sesion
                                 </a>
                             </li>
                         }
@@ -570,12 +577,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     Sign Up Now
                                 </a>
                             </p>
-                            <form action="#" method="post">
+                            <form asp-controller="Usuarios" asp-action="Login" method="post">
                                 <div class="styled-input agile-styled-input-top">
-                                    <input type="text" placeholder="User Name" name="Name" required="">
+                                    <input name="CorreoElectronico" type="email" placeholder="Correo Electronico" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
                                 </div>
                                 <div class="styled-input">
-                                    <input type="password" placeholder="Password" name="password" required="">
+                                    <input name="Contraseña" type="password" placeholder="Contraseña" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
                                 </div>
                                 <input type="submit" value="Sign In">
                             </form>
@@ -607,18 +614,31 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <p>
                                 Come join the Grocery Shoppy! Let's set up your Account.
                             </p>
-                            <form action="#" method="post">
+                            <form asp-controller="Usuarios" asp-action="Create" method="post">
+                                <div class="row" style="max-width: 100%;">
+                                    <div class="col-lg-6 in-gp-tl">
+                                        <div class="styled-input">
+                                            <input name="PrimerNombre" type="text" placeholder="Primer Nombre" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required style="border-right: rgb(239,239,239) 2px solid;">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 in-gp-tl">
+                                        <div class="styled-input">
+                                            <input name="PrimerApellido" type="text" placeholder="Primer Apellido" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required style="border-left: rgb(239,239,239) 2px solid;">
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="styled-input agile-styled-input-top">
-                                    <input type="text" placeholder="Name" name="Name" required="">
+                                    <input name="Direccion" type="text" placeholder="Direccion" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
                                 </div>
                                 <div class="styled-input">
-                                    <input type="email" placeholder="E-mail" name="Email" required="">
+                                    <span id="comprobaciones" class="text-danger"></span>
+                                    <input name="CorreoElectronico" type="email" placeholder="Correo Electronico" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" onchange="buscar_correo(this);" required>
                                 </div>
                                 <div class="styled-input">
-                                    <input type="password" placeholder="Password" name="password" id="password1" required="">
+                                    <input name="Contraseña" type="password" placeholder="Contraseña" id="password1" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
                                 </div>
                                 <div class="styled-input">
-                                    <input type="password" placeholder="Confirm Password" name="Confirm Password" id="password2" required="">
+                                    <input name="ConfirmarContraseña" type="password" placeholder="Confirmar Contraseña" id="password2" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
                                 </div>
                                 <input type="submit" value="Sign Up">
                             </form>
@@ -632,10 +652,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </div>
         </div>
     }
-    <!-- //Modal2 -->
-    <!-- //signup Model -->
-    <!-- //header-bot -->
-    <!-- navigation -->
+
     <div class="ban-top">
         <div class="container">
             <div class="agileits-navi_search">
@@ -672,16 +689,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse menu--shylock" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav menu__list">
-                                <li class="dropdown">
-                                    <a class="nav-stylehead" asp-controller="categorias" asp-action="Index">
-                                        Categorias
+
+
+                                <li class="active">
+                                    <a class="nav-stylehead" asp-controller="Home" asp-action="Index">
+                                        Home
                                         <span class="sr-only">(current)</span>
                                     </a>
                                 </li>
-
-                                <li class="active">
-                                    <a class="nav-stylehead" href="index.html">
-                                        Home
+                                <li class="dropdown">
+                                    <a class="nav-stylehead" asp-controller="categorias" asp-action="Index">
+                                        Categorias
                                         <span class="sr-only">(current)</span>
                                     </a>
                                 </li>
@@ -752,67 +770,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         </div>
                                     </ul>
                                 </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle nav-stylehead" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                        Household
-                                        <span class="caret"></span>
-                                    </a>
-                                    <ul class="dropdown-menu multi-column columns-3">
-                                        <div class="agile_inner_drop_nav_info">
-                                            <div class="col-sm-6 multi-gd-img">
-                                                <ul class="multi-column-dropdown">
-                                                    <li>
-                                                        <a href="product2.html">Kitchen & Dining</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="product2.html">Detergents</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="product2.html">Utensil Cleaners</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="product2.html">Floor & Other Cleaners</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="product2.html">Disposables, Garbage Bag</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="product2.html">Repellents & Fresheners</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="product2.html"> Dishwash</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-sm-6 multi-gd-img">
-                                                <ul class="multi-column-dropdown">
-                                                    <li>
-                                                        <a href="product2.html">Pet Care</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="product2.html">Cleaning Accessories</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="product2.html">Pooja Needs</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="product2.html">Crackers</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="product2.html">Festive Decoratives</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="product2.html">Plasticware</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="product2.html">Home Care</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </ul>
-                                </li>
+
                                 <li class="">
                                     <a class="nav-stylehead" href="faqs.html">Faqs</a>
                                 </li>
@@ -840,8 +798,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </div>
         </div>
     </div>
-    <!-- //navigation -->
-    <!-- banner -->
 
     <div>
 
@@ -1280,181 +1236,196 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!-- //flexisel (for special offers) -->
     <script src="~/js/modal.js"></script>
     <!-- password-script -->
-        @if (!@User.Identity.IsAuthenticated)
-        {
-            <script>
-                window.onload = function () {
-                    document.getElementById("password1").onchange = validatePassword;
-                    document.getElementById("password2").onchange = validatePassword;
-                }
+    @if (!@User.Identity.IsAuthenticated)
+    {
+        <script>
+            window.onload = function () {
+                document.getElementById("password1").onchange = validatePassword;
+                document.getElementById("password2").onchange = validatePassword;
+            }
 
-                function validatePassword() {
-                    var pass2 = document.getElementById("password2").value;
-                    var pass1 = document.getElementById("password1").value;
-                    if (pass1 != pass2)
-                        document.getElementById("password2").setCustomValidity("Passwords Don't Match");
-                    else
-                        document.getElementById("password2").setCustomValidity('');
-                    //empty string means no validation error
+            function validatePassword() {
+                var pass2 = document.getElementById("password2").value;
+                var pass1 = document.getElementById("password1").value;
+                if (pass1 != pass2)
+                    document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+                else
+                    document.getElementById("password2").setCustomValidity('');
+                //empty string means no validation error
+            }
+        </script>
+    }
+
+    <!-- //password-script -->
+    <!-- smoothscroll -->
+    <script src="~/js/SmoothScroll.min.js"></script>
+    <!-- //smoothscroll -->
+    <!-- start-smooth-scrolling -->
+    <script src="~/js/move-top.js"></script>
+    <script src="~/js/easing.js"></script>
+    <script>
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+
+                $('html,body').animate({
+                    scrollTop: $(this.hash).offset().top
+                }, 1000);
+            });
+        });
+    </script>
+    <!-- //end-smooth-scrolling -->
+    <!-- smooth-scrolling-of-move-up -->
+    <script>
+        $(document).ready(function () {
+            /*
+            var defaults = {
+                containerID: 'toTop', // fading element id
+                containerHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 1200,
+                easingType: 'linear'
+            };
+            */
+            $().UItoTop({
+                easingType: 'easeOutQuart'
+            });
+
+        });
+    </script>
+    <!-- //smooth-scrolling-of-move-up -->
+    <!-- for bootstrap working -->
+    <script src="~/js/bootstrap.js"></script>
+    <!-- //for bootstrap working -->
+    <!-- //js-files -->
+    <script>
+        var cnt = 0;
+        function obtenerCarrito() {
+            $.ajax({
+                dataType: "json",
+                url: "/cart/get",
+                success: function (data) {
+                    console.log(data);
+                    cnt = 0;
+                    $("#lstProductos > tbody").html("");
+                    for (n = 0; n < data.length; n++) {
+                        enlistarProducto(data[n].product.codProducto, data[n].product.nombre, data[n].product.precioVenta, data[n].quantity);
+                    }
+                    const trigger = "trigger-1";
+                    const mimodal = document.querySelector(`[data-mimodal=${trigger}]`);
+                    const contentWrapper = mimodal.querySelector('.content-wrapper');
+                    const close = mimodal.querySelector('.close');
+                    close.addEventListener('click', () => mimodal.classList.remove('open'));
+                    mimodal.addEventListener('click', () => mimodal.classList.remove('open'));
+                    contentWrapper.addEventListener('click', (e) => e.stopPropagation());
+                    mimodal.classList.toggle('open');
                 }
-            </script>
+            });
         }
 
-        <!-- //password-script -->
-        <!-- smoothscroll -->
-        <script src="~/js/SmoothScroll.min.js"></script>
-        <!-- //smoothscroll -->
-        <!-- start-smooth-scrolling -->
-        <script src="~/js/move-top.js"></script>
-        <script src="~/js/easing.js"></script>
-        <script>
-            jQuery(document).ready(function ($) {
-                $(".scroll").click(function (event) {
-                    event.preventDefault();
-
-                    $('html,body').animate({
-                        scrollTop: $(this.hash).offset().top
-                    }, 1000);
-                });
-            });
-        </script>
-        <!-- //end-smooth-scrolling -->
-        <!-- smooth-scrolling-of-move-up -->
-        <script>
-            $(document).ready(function () {
-                /*
-                var defaults = {
-                    containerID: 'toTop', // fading element id
-                    containerHoverID: 'toTopHover', // fading element hover id
-                    scrollSpeed: 1200,
-                    easingType: 'linear'
-                };
-                */
-                $().UItoTop({
-                    easingType: 'easeOutQuart'
-                });
-
-            });
-        </script>
-        <!-- //smooth-scrolling-of-move-up -->
-        <!-- for bootstrap working -->
-        <script src="~/js/bootstrap.js"></script>
-        <!-- //for bootstrap working -->
-        <!-- //js-files -->
-        <script>
-            var cnt = 0;
-            function obtenerCarrito() {
-                $.ajax({
-                    dataType: "json",
-                    url: "/cart/get",
-                    success: function (data) {
-                        console.log(data);
-                        cnt = 0;
-                        $("#lstProductos > tbody").html("");
-                        for (n = 0; n < data.length; n++) {
-                            enlistarProducto(data[n].product.codProducto, data[n].product.nombre, data[n].product.precioVenta, data[n].quantity);
-                        }
-                        const trigger = "trigger-1";
-                        const mimodal = document.querySelector(`[data-mimodal=${trigger}]`);
-                        const contentWrapper = mimodal.querySelector('.content-wrapper');
-                        const close = mimodal.querySelector('.close');
-                        close.addEventListener('click', () => mimodal.classList.remove('open'));
-                        mimodal.addEventListener('click', () => mimodal.classList.remove('open'));
-                        contentWrapper.addEventListener('click', (e) => e.stopPropagation());
-                        mimodal.classList.toggle('open');
+        function enlistarProducto(codProducto, nombre, precio, cantidad) {
+            var fila = '<tr>';
+            fila += '<td>';
+            fila += '<div class ="pikachu">';
+            fila += '<input type="number" min="0" step="1" value="' + cantidad + '" class="cantidad form-control" onchange="calcular2(this,' + codProducto + ');"></td> </div>';
+            fila += '<td>' + nombre + '</td>';
+            fila += '<td ><input type="hidden" value="' + precio + '" class="precio_unitario form-control">' + precio + '</div></td>';
+            fila += '<td><input class="form-control subtotal" type="text" disabled></td>';
+            fila += "<td><button class='btn btn-danger' onclick='eliminarFila(this," + codProducto + ")'>Eliminar</button></td>";
+            fila += '</tr>';
+            $("#lstProductos > tbody").append(fila);
+            cnt++;
+            calcular();
+        }
+        function buscar_correo(obj) {
+            valor = $(obj).val();
+            $.ajax({
+                url: "/Home/VerificarCorreo/",
+                data: { "CorreoElectronico": valor },
+                success: function (data) {
+                    if (data == false) {
+                        $("#comprobaciones").html("El correo: " + valor + " ya fue registrado ;)");
+                        valor = $(obj).val("");
+                    } else {
+                        $("#comprobaciones").html("");
                     }
-                });
-            }
-            
-            function enlistarProducto(codProducto, nombre, precio, cantidad) {
-                var fila = '<tr>';
-                fila += '<td>';
-                fila += '<div class ="pikachu">';
-                fila += '<input type="number" min="0" step="1" value="' + cantidad + '" class="cantidad form-control" onchange="calcular2(this,' + codProducto + ');"></td> </div>';
-                fila += '<td>' + nombre + '</td>';
-                fila += '<td ><input type="hidden" value="' + precio + '" class="precio_unitario form-control">' + precio + '</div></td>';
-                fila += '<td><input class="form-control subtotal" type="text" disabled></td>';
-                fila += "<td><button class='btn btn-danger' onclick='eliminarFila(this," + codProducto + ")'>Eliminar</button></td>";
-                fila += '</tr>';
-                $("#lstProductos > tbody").append(fila);
-                cnt++;
-                calcular();
-            }
 
-            function eliminarFila(obj, codigo) {
-                cnt--;
-                fila = $(obj).parent().parent();
-                $(fila).fadeOut(300).delay(100).remove();
+                }
+            });
+        }
+        function eliminarFila(obj, codigo) {
+            cnt--;
+            fila = $(obj).parent().parent();
+            $(fila).fadeOut(300).delay(100).remove();
+            $.ajax({
+                url: "/cart/Remove/",
+                data: { "id": codigo },
+                success: function () {
+                }
+            });
+            if (cnt == 0) {
+                $(".total").html("Q. " + cnt);
+                $('#total_factura').html(cnt);
+                $('#total_factura').html(total.toFixed(2));
+            }
+            calcular();
+        }
+        function calcular() {
+            var filas = $("#tblProductos > tbody > tr");
+            var total = 0;
+            $('#lstProductos> tbody').find('tr').each(function (i, tr) {
+                cantidad = parseFloat($(tr).find('.cantidad').val());
+                precio_unitario = $(tr).find('.precio_unitario').val();
+                if (cantidad <= 0 || isNaN(cantidad)) {
+                    $(tr).find('.cantidad').val(0);
+                    cantidad = 0;
+                }
+                if (precio_unitario <= 0 || isNaN(precio_unitario)) {
+                    $(tr).find('.precio_unitario').val(0);
+                    precio_unitario = "0";
+                }
+
+                total += cantidad * precio_unitario;
+                $(".total").html("Q. " + total.toFixed(2));
+                $(tr).find('.subtotal').val("" + (cantidad * precio_unitario).toFixed(2));
+
+            })
+        }
+        function calcular2(obj, codigo) {
+            var x = 0;
+            var total = 0;
+            cantidades = $(obj).val();
+            console.log(cantidades);
+            $('#lstProductos> tbody').find('tr').each(function (i, tr) {
+                cantidad = parseFloat($(tr).find('.cantidad').val());
+                precio_unitario = $(tr).find('.precio_unitario').val();
+                if (cantidad <= 0 || isNaN(cantidad)) {
+                    $(tr).find('.cantidad').val(0);
+                    cantidad = 0;
+                }
+                if (precio_unitario <= 0 || isNaN(precio_unitario)) {
+                    $(tr).find('.precio_unitario').val(0);
+                    precio_unitario = 0;
+                }
+                total += cantidad * precio_unitario;
+                x = cantidad;
+                $(".total").html("Q. " + total.toFixed(2));
+                console.log("pude impim");
+                $(tr).find('.subtotal').val("" + (cantidad * precio_unitario).toFixed(2));
+            })
+            if (x >= 0) {
                 $.ajax({
-                    url: "/cart/Remove/",
-                    data: { "id": codigo },
+                    url: "/cart/Editar/",
+                    data: { "id": codigo, "cantidad": cantidades },
                     success: function () {
                     }
                 });
-                if (cnt == 0) {
-                    $(".total").html("Q. " + cnt);
-                    $('#total_factura').html(cnt);
-                    $('#total_factura').html(total.toFixed(2));
-                }
-                calcular();
             }
-            function calcular() {
-                var filas = $("#tblProductos > tbody > tr");
-                var total = 0;
-                $('#lstProductos> tbody').find('tr').each(function (i, tr) {
-                    cantidad = parseFloat($(tr).find('.cantidad').val());
-                    precio_unitario = $(tr).find('.precio_unitario').val();
-                    if (cantidad <= 0 || isNaN(cantidad)) {
-                        $(tr).find('.cantidad').val(0);
-                        cantidad = 0;
-                    }
-                    if (precio_unitario <= 0 || isNaN(precio_unitario)) {
-                        $(tr).find('.precio_unitario').val(0);
-                        precio_unitario = "0";
-                    }
+        }
+    </script>
 
-                    total += cantidad * precio_unitario;
-                    $(".total").html("Q. " + total.toFixed(2));
-                    $(tr).find('.subtotal').val("" + (cantidad * precio_unitario).toFixed(2));
+    @RenderSection("Scripts", required: false)
 
-                })
-            }
-            function calcular2(obj, codigo) {
-                var x = 0;
-                var total = 0;
-                cantidades = $(obj).val();
-                console.log(cantidades);
-                $('#lstProductos> tbody').find('tr').each(function (i, tr) {
-                    cantidad = parseFloat($(tr).find('.cantidad').val());
-                    precio_unitario = $(tr).find('.precio_unitario').val();
-                    if (cantidad <= 0 || isNaN(cantidad)) {
-                        $(tr).find('.cantidad').val(0);
-                        cantidad = 0;
-                    }
-                    if (precio_unitario <= 0 || isNaN(precio_unitario)) {
-                        $(tr).find('.precio_unitario').val(0);
-                        precio_unitario = 0;
-                    }
-                    total += cantidad * precio_unitario;
-                    x = cantidad;
-                    $(".total").html("Q. " + total.toFixed(2));
-                    console.log("pude impim");
-                    $(tr).find('.subtotal').val("" + (cantidad * precio_unitario).toFixed(2));
-                })
-                if (x >= 0) {
-                    $.ajax({
-                        url: "/cart/Editar/",
-                        data: { "id": codigo, "cantidad": cantidades },
-                        success: function () {
-                        }
-                    });
-                }
-            }
-        </script>
-
-        @RenderSection("Scripts", required: false)
-
-    </body>
+</body>
 </html>
 
 

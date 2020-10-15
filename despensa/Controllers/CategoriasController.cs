@@ -110,7 +110,7 @@ namespace despensa.Controllers
             {
                 return NotFound();
             }
-            ViewData["Estado"] = new SelectList(_context.EstadoActividad, "CodEstado", "CodEstado", categoria.Estado);
+            ViewData["Estado"] = new SelectList(_context.EstadoActividad, "CodEstado", "Estado", categoria.Estado);
             return View(categoria);
         }
 
@@ -122,6 +122,7 @@ namespace despensa.Controllers
         [Authorize(Roles = "3")]
         public async Task<IActionResult> Edit(int id, [Bind("CodCategoria,Nombre,Estado,ImageFie")] Categoria categoria)
         {
+            Console.WriteLine("entre");
             if (id != categoria.CodCategoria)
             {
                 return NotFound();
@@ -167,7 +168,7 @@ namespace despensa.Controllers
         }
 
         // GET: Categorias/Delete/5
-        [Authorize(Roles = "3")]
+        [Authorize(Roles = "4")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -187,7 +188,7 @@ namespace despensa.Controllers
         }
 
         // POST: Categorias/Delete/5
-        [Authorize(Roles = "3")]
+        [Authorize(Roles = "4")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

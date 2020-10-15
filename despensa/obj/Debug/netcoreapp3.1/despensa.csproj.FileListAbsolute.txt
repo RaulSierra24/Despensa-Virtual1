@@ -854,7 +854,6 @@ D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\View
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Bitacoras\Index.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Cart\Index.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Categorias\Create.cshtml.g.cs
-D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Categorias\Delete.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Categorias\Details.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Categorias\Edit.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Categorias\Index.cshtml.g.cs
@@ -871,7 +870,6 @@ D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\View
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\PredidoFacturas\Edit.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\PredidoFacturas\Index.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Productoes\Create.cshtml.g.cs
-D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Productoes\Delete.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Productoes\Details.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Productoes\Edit.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Productoes\Index.cshtml.g.cs

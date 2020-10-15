@@ -82,7 +82,6 @@ namespace despensa.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "3")]
         public async Task<IActionResult> Create([Bind("PrimerNombre,PrimerApellido,Direccion,CorreoElectronico,Contraseña,ConfirmarContraseña")] Usuario usuario)
         {
             if (usuario.Contraseña.Equals(usuario.ConfirmarContraseña))
@@ -95,7 +94,26 @@ namespace despensa.Controllers
                     usuario.Contraseña = Crypto.Hash(usuario.Contraseña);
                     _context.Add(usuario);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    ClaimsIdentity identity = null;
+                    bool isAuthenticated = false;
+                    identity = new ClaimsIdentity(new[] {
+                        new Claim(ClaimTypes.Name, usuario.PrimerNombre),
+                        new Claim(ClaimTypes.NameIdentifier, ""+usuario.CodUsuario),
+                        new Claim(ClaimTypes.Role, usuario.CodRol+"")
+                        }, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    isAuthenticated = true;
+
+
+                    if (isAuthenticated)
+                    {
+                        //contador_sesion++;
+                        var principal = new ClaimsPrincipal(identity);
+                        var loginA = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                            return RedirectToAction("Details", "Usuarios");
+                    }
+
+
                 }
             }
             else
@@ -133,6 +151,56 @@ namespace despensa.Controllers
             return View(usuario);
         }
 
+
+        [Authorize(Roles = "3,2,1")]
+        public async Task<IActionResult> Cambiar_foto(int id, [Bind("CodUsuario,PrimerNombre,SegundoNombre,PrimerApellido,SegundoApellido,Contraseña,ConfirmarContraseña,CodGenero,Cui,Telefono,Direccion,Nit,CorreoElectronico,FecNac,CodGeneo,CodRol,CodEstado")] Usuario usuario)
+        {
+            ClaimsPrincipal currentUser = this.User;
+            var identity = (ClaimsIdentity)currentUser.Identity;
+            id = Int32.Parse(identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
+            Console.WriteLine("entre al editar" + id);
+            if (ModelState.IsValid)
+            {
+
+
+                if (usuario.Contraseña.Equals(usuario.ConfirmarContraseña))
+                {
+                    var contraseña = usuario.Contraseña;
+                    try
+                    {
+                        despensa1Context db = new despensa1Context();
+                        var anterior = await db.Usuario.FindAsync(id);
+                        usuario = anterior;
+                        usuario.Contraseña = contraseña;
+                        _context.Update(usuario);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!UsuarioExists(usuario.CodUsuario))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+
+                    ViewBag.Error1 = 1;
+                    return View("Details");
+                }
+
+            }
+            ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "CodEstado", usuario.CodEstado);
+            ViewData["CodGeneo"] = new SelectList(_context.Genero, "CodGenero", "CodGenero", usuario.CodGeneo);
+            ViewData["CodRol"] = new SelectList(_context.Rol, "CodRol", "CodRol", usuario.CodRol);
+            return View("Details");
+        }
         // POST: Usuarios/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -179,6 +247,8 @@ namespace despensa.Controllers
             ViewData["CodRol"] = new SelectList(_context.Rol, "CodRol", "CodRol", usuario.CodRol);
             return View(usuario);
         }
+
+        
 
         [Authorize(Roles = "3,2,1")]
         public async Task<IActionResult> Cambiar_contaseña(int id, [Bind("CodUsuario,PrimerNombre,SegundoNombre,PrimerApellido,SegundoApellido,Contraseña,ConfirmarContraseña,CodGenero,Cui,Telefono,Direccion,Nit,CorreoElectronico,FecNac,CodGeneo,CodRol,CodEstado")] Usuario usuario)
@@ -286,20 +356,19 @@ namespace despensa.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(Usuario login, string ReturnUrl = "")
+        public ActionResult Login(Usuario login, string ReturnUrl)
         {
 
             Console.WriteLine("\""+login.Contraseña+"\"  \""+login.CorreoElectronico+"\"");
             using (despensa1Context dc = new despensa1Context())
             {
-
                 ClaimsIdentity identity = null;
                 bool isAuthenticated = false;
                 var ad = dc.Usuario.FirstOrDefault();
                 var c = dc.Usuario.Where(w => w.CorreoElectronico == login.CorreoElectronico).FirstOrDefault();
-                Console.WriteLine("\"" + c.Contraseña + "\"  \"" + c.CorreoElectronico + "\"");
+            //    Console.WriteLine("\"" + c.Contraseña + "\"  \"" + c.CorreoElectronico + "\"");
                 if (c != null)
-                {
+                {   
                     if (string.Compare(Crypto.Hash(login.Contraseña), c.Contraseña) == 0)
                     {
                         var nombres = ad.PrimerNombre;
@@ -329,7 +398,16 @@ namespace despensa.Controllers
                             //contador_sesion++;
                             var principal = new ClaimsPrincipal(identity);
                             var loginA = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-                            return RedirectToAction("Details", "Usuarios");
+                            Console.WriteLine("este es el return"+ReturnUrl);
+                            if (ReturnUrl!="")
+                            {
+                                return RedirectToAction("Details", "Usuarios");
+                            }
+                            else
+                            {
+                                return RedirectToAction(ReturnUrl);
+                            }
+                            
                         }
 
                         //int timeout = login.RememberMe ? 525600 : 20;  //52600 min=1año
@@ -382,11 +460,6 @@ namespace despensa.Controllers
             var loginA = HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login");
         }
-
-
-
-
-
     }
 }
 

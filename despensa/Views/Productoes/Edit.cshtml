@@ -3,80 +3,122 @@
 @{
     ViewData["Title"] = "Edit";
 }
+<link rel="stylesheet" href="~/css/login.css">
+<div class="contenedor-formularios" style="max-width: 75%;">
+    <!-- Links de los formularios -->
+    <!-- Contenido de los Formularios -->
+    <div class="contenido-tab">
+        <h3 class="tittle-w3l">
+            Crear Producto
+            <span class="heading-style">
+                <i></i>
+                <i></i>
+                <i></i>
+            </span>
+        </h3>
+        <!-- Iniciar Sesion -->
+        <div id="iniciar-sesion">
+            <form id="my-form21" asp-action="Edit" enctype="multipart/form-data">
+                <input type="hidden" asp-for="CodProducto" />
+                <div class="contenedor-input">
+                    <label class="active highlight">
+                        Primer Categoria <span class="req">*</span>
+                    </label>
+                    <input asp-for="Nombre" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" >
+                </div>
+                <br />
+                <div class="contenedor-input">
+                    <label class="active highlight">
+                        Fecha Caducidad <span class="req">*</span>
+                    </label>
+                    <input asp-for="FecCaducidad" type="date" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" >
+                </div>
+                <br />
+                <div id="iniciar-sesion">
+                    <div class="contenedor-input">
+                        <label class="active highlight">
+                            Precio Costo <span class="req">*</span>
+                        </label>
+                        <input asp-for="PrecioCosto" type="number" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" >
+                    </div>
+                    <br />
+                    <div class="contenedor-input">
+                        <label class="active highlight">
+                            Precio Venta<span class="req">*</span>
+                        </label>
+                        <input asp-for="PrecioVenta" type="number" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" >
+                    </div>
+                    <br />
+                </div>
+                <div class="contenedor-input">
+                    <label class="active highlight">
+                        Cantidad <span class="req">*</span>
+                    </label>
+                    <input asp-for="Cantidad" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" >
+                </div>
+                <br />
+                <div class="contenedor-input">
+                    <label class="active highlight">
+                        Peso <span class="req">*</span>
+                    </label>
+                    <input asp-for="Peso" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" >
+                </div>
+                <br />
 
-<h2>Edit</h2>
 
-<h4>Producto</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="CodProducto" />
-            <div class="form-group">
-                <input asp-for="CodCategoria" class="form-control" type="hidden" value="@ViewData["codig_cat"]" />
-            </div>
-            <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FecCaducidad" class="control-label"></label>
-                <input asp-for="FecCaducidad" class="form-control" />
-                <span asp-validation-for="FecCaducidad" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PrecioCosto" class="control-label"></label>
-                <input asp-for="PrecioCosto" class="form-control" />
-                <span asp-validation-for="PrecioCosto" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PrecioVenta" class="control-label"></label>
-                <input asp-for="PrecioVenta" class="form-control" />
-                <span asp-validation-for="PrecioVenta" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Imagen" class="control-label"></label>
-                <input asp-for="Imagen" class="form-control" />
-                <span asp-validation-for="Imagen" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Peso" class="control-label"></label>
-                <input asp-for="Peso" class="form-control" />
-                <span asp-validation-for="Peso" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CodEstado" class="control-label"></label>
-                <select asp-for="CodEstado" class="form-control" asp-items="ViewBag.CodEstado"></select>
-                <span asp-validation-for="CodEstado" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Cantidad" class="control-label"></label>
-                <input asp-for="Cantidad" class="form-control" />
-                <span asp-validation-for="Cantidad" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CodProveedor" class="control-label"></label>
-                <select asp-for="CodProveedor" class="form-control" asp-items="ViewBag.CodProveedor"></select>
-                <span asp-validation-for="CodProveedor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CodMarca" class="control-label"></label>
-                <select asp-for="CodMarca" class="form-control" asp-items="ViewBag.CodMarca"></select>
-                <span asp-validation-for="CodMarca" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
+                <div class="contenedor-input">
+
+                    <input asp-for="ImageFie" accept="image/*" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" >
+                </div>
+                <br />
+                <div class="contenedor-input">
+                    <label class="active highlight">
+                        Categoria <span class="req">*</span>
+                    </label>
+                    <select asp-for="CodCategoria" class="select-css" style="width:100%;" asp-items="ViewBag.CodCategoria"></select>
+                </div>
+                <br />
+                <div class="contenedor-input">
+                    <label class="active highlight">
+                        Proveedor <span class="req">*</span>
+                    </label>
+                    <select asp-for="CodProveedor" class="select-css" style="width:100%;" asp-items="ViewBag.CodProveedor"></select>
+                </div>
+                <br />
+                <div class="contenedor-input">
+                    <label class="active highlight">
+                        Marca <span class="req">*</span>
+                    </label>
+                    <select asp-for="CodMarca" class="select-css" style="width:100%;" asp-items="ViewBag.CodMarca"></select>
+                </div>
+                <br />
+                <div class="contenedor-input">
+                    <label class="active highlight">
+                        Estado <span class="req">*</span>
+                    </label>
+                    <select asp-for="CodEstado" class="select-css" style="width:100%;" asp-items="ViewBag.CodEstado"></select>
+                </div>
+                <br />
+
+                <br />
+                <input type="submit" class="button button-block" value="Guardar">
+            </form>
+        </div>
+
+        <!-- Registrarse -->
+        <div id="registrarse">
+
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-controller="Productoes" asp-action="Index" asp-route-idcat="@ViewData["codigo_cat"]">Back to List</a>
-</div>
+    <div>
+        <a class="button2" style="background-color: darkslateblue" asp-controller="Categorias" asp-action="Index">regresar</a>
+    </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+
+
+    @section Scripts {
+        <script src="~/js/login.js"></script>
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

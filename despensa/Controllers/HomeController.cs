@@ -9,12 +9,15 @@ using despensa.Models;
 
 namespace despensa.Controllers
 {
+
     public class HomeController : Controller
     {
+        private readonly despensa1Context _context;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, despensa1Context context)
         {
+            _context = context;
             _logger = logger;
         }
 
@@ -46,7 +49,17 @@ namespace despensa.Controllers
                             select m).ToList();
             return Json(entradas);
         }*/
+   
 
+        [HttpGet]
+        public JsonResult VerificarCorreo(string CorreoElectronico)
+        {
+            if (_context.Usuario.Any(u => u.CorreoElectronico == CorreoElectronico))
+            {
+                return Json(false);
+            }
+            return Json(true);
+        }
 
 
     }

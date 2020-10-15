@@ -3,34 +3,61 @@
 @{
     ViewData["Title"] = "Details";
 }
-
-<h2>Details</h2>
-
-<div>
-    <h4>Categoria</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-        <dd>
+<link rel="stylesheet" href="~/css/flexslider.css" type="text/css" media="screen" />
+<div class="banner-bootom-w3-agileits">
+    <div class="container">
+        <!-- tittle heading -->
+        <h3 class="tittle-w3l">
             @Html.DisplayFor(model => model.Nombre)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Imagen)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Imagen)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EstadoNavigation)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EstadoNavigation.CodEstado)
-        </dd>
-    </dl>
+            <span class="heading-style">
+                <i></i>
+                <i></i>
+                <i></i>
+            </span>
+        </h3>
+        <!-- //tittle heading -->
+        <div class="col-md-5 single-right-left ">
+            <div class="grid images_3_of_2">
+                <div class="flexslider">
+                    <ul class="slides">
+                        <div class="thumb-image">
+                            <img src="@Url.Content("~/image/" + Model.Imagen)" data-imagezoom="true" class="img-responsive" alt="">
+                        </div>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7 single-right-left simpleCart_shelfItem">
+            <h3>esta categoria se encuentra: @Html.DisplayFor(model => model.EstadoNavigation.Estado)</h3>
+            <div class="occasion-cart">
+                <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                    <a class="button2" asp-action="Edit" asp-route-id="@Model.CodCategoria">Edit</a>
+                </div>
+
+            </div>
+
+        </div>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <a class="button2" style="background-color: darkslateblue" asp-action="Index">regresar</a>
+        <div class="clearfix"> </div>
+    </div>
+
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.CodCategoria">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+@section Scripts {
+
+    <script src="@Url.Content("~/js/imagezoom.js")"></script>
+    <script src="~/js/jquery.flexslider.js"></script>
+    <script>
+        // Can also be used with $(document).ready()
+        $(window).load(function () {
+            $('.flexslider').flexslider({
+                animation: "slide",
+                controlNav: "thumbnails"
+            });
+        });
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
