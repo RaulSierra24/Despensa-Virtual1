@@ -17,7 +17,6 @@ namespace despensa.Controllers
     {
         private readonly despensa1Context _context;
         private readonly IWebHostEnvironment HostEnvironment;
-        int categoriass;
         public ProductoesController(despensa1Context context, IWebHostEnvironment hostEnvironment)
         {
             this.HostEnvironment = hostEnvironment;
@@ -28,18 +27,17 @@ namespace despensa.Controllers
         [Authorize(Roles = "2,1,3")]
         public async Task<IActionResult> Index(int? page, int idcat)
         {
-           // if (idcat==0)
-            //{
-             //   return RedirectToAction("","Categorias");
-            //}
-                categoriass = idcat;
+            if (idcat<0)
+            {
+                return RedirectToAction("Index","Categorias");
+            }
+                ViewBag.categoriass = idcat;
                 var pageNumber = page ?? 1;
 
                 var entradas = (from m in _context.Producto
                                 where m.CodEstado == 3 && m.Cantidad > 0
                                 orderby m.Nombre descending
                                 select m).ToList();
-                Console.WriteLine("holiprr" + categoriass);
 
 
                 if (idcat > 0)
@@ -83,13 +81,18 @@ namespace despensa.Controllers
         [Authorize(Roles = "3,2")]
         public IActionResult Create(int idcat)
         {
+            if (idcat>0)
+            {
+                ViewBag.nombre_cat = _context.Categoria.Where(a => a.CodCategoria == idcat);
+                ViewBag.codig_cat = idcat;
+                ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "CodEstado");
+                ViewData["CodCategoria"] = new SelectList(_context.Categoria, "CodCategoria", "CodCategoria");
+                ViewData["CodMarca"] = new SelectList(_context.Marca, "CodMarca", "CodMarca");
+                ViewData["CodProveedor"] = new SelectList(_context.Proveedor, "CodProveedor", "CodProveedor");
+                return View();
+            }
+            return RedirectToAction("Index", "Categorias");
             
-            ViewBag.codig_cat = idcat;
-            ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "CodEstado");
-            ViewData["CodCategoria"] = new SelectList(_context.Categoria, "CodCategoria", "CodCategoria");
-            ViewData["CodMarca"] = new SelectList(_context.Marca, "CodMarca", "CodMarca");
-            ViewData["CodProveedor"] = new SelectList(_context.Proveedor, "CodProveedor", "CodProveedor");
-            return View();
         }
 
         // POST: Productoes/Create
@@ -121,6 +124,7 @@ namespace despensa.Controllers
                 
                 _context.Add(producto);
                 await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "Productoes", new { idcat = producto.CodCategoria });
                 return RedirectToAction(nameof(Index), new { idcat = producto.CodCategoria });
             }
             ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "CodEstado", producto.CodEstado);
@@ -157,7 +161,7 @@ namespace despensa.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "3,2")]
-        public async Task<IActionResult> Edit(int id, [Bind("CodProducto,Nombre,FecCaducidad,PrecioCosto,PrecioVenta,Imagen,Peso,CodEstado,Cantidad,CodProveedor,CodMarca,CodCategoria")] Producto producto)
+        public async Task<IActionResult> Edit(int id, [Bind("CodProducto,Nombre,FecCaducidad,PrecioCosto,PrecioVenta,ImageFie,Peso,CodEstado,Cantidad,CodProveedor,CodMarca,CodCategoria")] Producto producto)
         {
             if (id != producto.CodProducto)
             {

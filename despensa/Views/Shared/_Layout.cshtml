@@ -101,12 +101,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         {
                             <li>
                                 <a href="#" data-toggle="modal" data-target="#myModal1">
-                                    <span class="fa fa-unlock-alt" aria-hidden="true"></span> Sign In
+                                    <span class="fa fa-unlock-alt" aria-hidden="true"></span> Iniciar Sesion
                                 </a>
                             </li>
                             <li>
                                 <a href="#" data-toggle="modal" data-target="#myModal2">
-                                    <span class="fa fa-pencil-square-o" aria-hidden="true"></span> Sign Up
+                                    <span class="fa fa-pencil-square-o" aria-hidden="true"></span> Regístrate
                                 </a>
                             </li>
                         }
@@ -572,9 +572,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <div class="modal_body_left modal_body_left1">
                             <h3 class="agileinfo_sign">Sign In </h3>
                             <p>
-                                Sign In now, Let's start your Grocery Shopping. Don't have an account?
+                                Inicie sesión ahora, comencemos su compra de comestibles. ¿No tienes una cuenta?
                                 <a href="#" data-toggle="modal" data-target="#myModal2">
-                                    Sign Up Now
+                                    Regístrate ahora!
                                 </a>
                             </p>
                             <form asp-controller="Usuarios" asp-action="Login" method="post">
@@ -584,7 +584,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <div class="styled-input">
                                     <input name="Contraseña" type="password" placeholder="Contraseña" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
                                 </div>
-                                <input type="submit" value="Sign In">
+                                <input type="submit" value="Iniciar Sesion">
                             </form>
                             <div class="clearfix"></div>
                         </div>
@@ -612,7 +612,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <div class="modal_body_left modal_body_left1">
                             <h3 class="agileinfo_sign">Sign Up</h3>
                             <p>
-                                Come join the Grocery Shoppy! Let's set up your Account.
+                                ¡Únase al Grocery Shoppy! Configuremos su cuenta.
                             </p>
                             <form asp-controller="Usuarios" asp-action="Create" method="post">
                                 <div class="row" style="max-width: 100%;">
@@ -643,7 +643,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <input type="submit" value="Sign Up">
                             </form>
                             <p>
-                                <a href="#">By clicking register, I agree to your terms</a>
                             </p>
                         </div>
                     </div>
@@ -1343,10 +1342,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 data: { "CorreoElectronico": valor },
                 success: function (data) {
                     if (data == false) {
-                        $("#comprobaciones").html("El correo: " + valor + " ya fue registrado ;)");
+                        $("#comprobaciones").html("El correo: " + valor + " ya fue registrado &#128521");
+                        $("#comprobaciones1").html("El correo: " + valor + " ya fue registrado &#128521");
                         valor = $(obj).val("");
                     } else {
                         $("#comprobaciones").html("");
+                        $("#comprobaciones1").html("");
                     }
 
                 }

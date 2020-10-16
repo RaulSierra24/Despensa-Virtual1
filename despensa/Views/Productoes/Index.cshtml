@@ -20,6 +20,7 @@
         <!-- product right -->
         <div class="agileinfo-ads-display col-md-16">
             <div class="wrapper">
+                @if (User.IsInRole("3") ||User.IsInRole("2")){<a class="button2" asp-controller="Productoes" asp-action="Create" asp-route-idcat="@ViewBag.categoriass">Agregar produto</a>}
                 <!-- first section (nuts) -->
                 <div class="product-sec1">
                     <h3 class="heading-tittle">Productos</h3>
@@ -35,7 +36,12 @@
                                             <a asp-action="Details" asp-route-id="@item.CodProducto" class="link-product-add-cart">ver más</a>
                                         </div>
                                     </div>
-                                    <a class="product-new-top" asp-action="Edit" asp-route-id="@item.CodProducto">Editar</a>
+                                    @if (User.IsInRole("3") || User.IsInRole("2"))
+                                    {<a class="product-new-top" asp-action="Edit" asp-route-id="@item.CodProducto">Editar</a>}
+                                    else
+                                    {
+                                        <span class="product-new-top">@item.Cantidad</span>
+                                    }
                                 </div>
                                 <div class="item-info-product ">
                                     <h4>

@@ -21,6 +21,7 @@
         <!-- Iniciar Sesion -->
         <div id="iniciar-sesion">
             <form id="my-form21" asp-action="Create" enctype="multipart/form-data">
+                <input type="number" asp-for="CodCategoria" value="@ViewBag.codig_cat" hidden/>
                 <div class="contenedor-input">
                     <label class="active highlight">
                         Primer Categoria <span class="req">*</span>
@@ -69,16 +70,13 @@
 
                 <div class="contenedor-input">
 
-                    <input asp-for="ImageFie" accept="image/*" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                    <input asp-for="ImageFie" accept="image/*" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
                 </div>
                 <br />
-                <div class="contenedor-input">
-                    <label class="active highlight">
-                        Categoria <span class="req">*</span>
-                    </label>
-                    <select asp-for="CodCategoria" class="select-css" style="width:100%;" asp-items="ViewBag.CodCategoria"></select>
-                </div>
-                <br />
+
+
+
+
                 <div class="contenedor-input">
                     <label class="active highlight">
                         Proveedor <span class="req">*</span>

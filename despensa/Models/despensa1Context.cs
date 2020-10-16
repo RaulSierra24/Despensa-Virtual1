@@ -423,7 +423,9 @@ namespace despensa.Models
 
                 entity.Property(e => e.Peso)
                     .HasColumnName("peso")
-                    .HasColumnType("decimal(9,2)");
+                    .HasColumnType("varchar(100)")
+                    .HasCharSet("latin1")
+                    .HasCollation("latin1_swedish_ci");
 
                 entity.Property(e => e.PrecioCosto)
                     .HasColumnName("precio_costo")

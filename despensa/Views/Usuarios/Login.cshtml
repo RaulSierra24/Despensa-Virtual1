@@ -72,11 +72,14 @@
                     </label>
                     <input asp-for="Direccion" type="text" value="" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
                 </div>
+
+                
                 <div class="contenedor-input">
                     <label>
                         Email <span class="req">*</span>
+                        <span id="comprobaciones1" class="text-danger"></span>
                     </label>
-                    <input asp-for="CorreoElectronico" type="email" value="" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                    <input asp-for="CorreoElectronico" type="email" value="" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" onchange="buscar_correo(this);" required>
                 </div>
                 <div class="contenedor-input">
                     <label>
@@ -84,7 +87,6 @@
                     </label>
                     <input asp-for="Contraseña" type="password" value="" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
                 </div>
-
                 <div class="contenedor-input">
                     <label>
                         Repetir Contraseña <span class="req">*</span>

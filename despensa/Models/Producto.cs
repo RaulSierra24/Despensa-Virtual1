@@ -18,7 +18,7 @@ namespace despensa.Models
         public decimal? PrecioCosto { get; set; }
         public decimal? PrecioVenta { get; set; }
         public string Imagen { get; set; }
-        public decimal? Peso { get; set; }
+        public string Peso { get; set; }
         public int? CodEstado { get; set; }
         public int? Cantidad { get; set; }
         public int? CodProveedor { get; set; }
