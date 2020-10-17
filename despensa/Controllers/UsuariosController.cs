@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using despensa;
 using despensa.Helpers;
+using System.Net.Http;
 
 namespace despensa.Controllers
 {
@@ -437,10 +438,8 @@ namespace despensa.Controllers
         [HttpGet]
         public ActionResult Logout()
         {
-            List<Item> cart = new List<Item>();
-            SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-
             var loginA = HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Session.Clear();
 
             //    contador_inicio_sesion++;
             //Console.WriteLine("contador index:"+TbEstudiantexcursoesController.contador3);
@@ -455,9 +454,8 @@ namespace despensa.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Logout(string j)
         {
-            List<Item> cart = new List<Item>();
-            SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             var loginA = HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Session.Clear();
             return RedirectToAction("Login");
         }
     }

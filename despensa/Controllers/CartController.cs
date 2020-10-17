@@ -6,14 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using despensa.Models;
 using Microsoft.AspNetCore.Http;
 using despensa.Helpers;
-
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace despensa.Controllers
 {
     public class CartController : Controller
     {
         [Route("index")]
+        [Authorize(Roles = "3,2,1")]
         public IActionResult Index()
         {
             var cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
@@ -40,6 +40,7 @@ namespace despensa.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "3,2,1")]
         //   public async Task<IActionResult> DeleteConfirmed(int id)
         public async Task compra(int id)
         {
@@ -69,6 +70,7 @@ namespace despensa.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "3,2,1")]
         public void Remove(int id)
         {
             List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");

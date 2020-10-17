@@ -23,10 +23,23 @@ namespace despensa.Controllers
         }
         [Authorize(Roles = "3,2")]
         // GET: PredidoFacturas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> PedidosPendientes()
         {
+            var entradas = (from m in _context.PredidoFactura.Include(p => p.CodClienteNavigation).Include(p => p.CodEmpleadoNavigation).Include(p => p.CodEstadoNavigation)
+                            where m.CodEstado == 1 
+                            orderby m.FecEmision ascending
+                            select m).ToList();
             var despensaContext = _context.PredidoFactura.Include(p => p.CodClienteNavigation).Include(p => p.CodEmpleadoNavigation).Include(p => p.CodEstadoNavigation);
-            return View(await despensaContext.ToListAsync());
+            return View(entradas);
+        }
+        [Authorize(Roles = "3,2")]
+        public async Task<IActionResult> TodosPedidos()
+        {
+            var entradas = (from m in _context.PredidoFactura.Include(p => p.CodClienteNavigation).Include(p => p.CodEmpleadoNavigation).Include(p => p.CodEstadoNavigation)
+                            orderby m.FecEmision ascending
+                            select m).ToList();
+            var despensaContext = _context.PredidoFactura.Include(p => p.CodClienteNavigation).Include(p => p.CodEmpleadoNavigation).Include(p => p.CodEstadoNavigation);
+            return View(entradas);
         }
 
         // GET: PredidoFacturas/Details/5

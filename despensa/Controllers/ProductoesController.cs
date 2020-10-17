@@ -27,7 +27,8 @@ namespace despensa.Controllers
         [Authorize(Roles = "2,1,3")]
         public async Task<IActionResult> Index(int? page, int idcat)
         {
-            if (idcat<0)
+            Console.WriteLine("hola"+idcat);
+            if (idcat<=0)
             {
                 return RedirectToAction("Index","Categorias");
             }
@@ -47,7 +48,7 @@ namespace despensa.Controllers
 
                 }
 
-                var unaPagina = entradas.ToPagedList(pageNumber, 16);
+                var unaPagina = entradas.ToPagedList(pageNumber, 3);
                 ViewBag.pagina = unaPagina;
             ViewData["codigo_cat"] = idcat;
             var despensaContext = _context.Producto.Include(p => p.CodEstadoNavigation).Include(p => p.CodMarcaNavigation).Include(p => p.CodProveedorNavigation);

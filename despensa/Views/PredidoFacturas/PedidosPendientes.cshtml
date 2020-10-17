@@ -1,0 +1,67 @@
+﻿@model IEnumerable<despensa.Models.PredidoFactura>
+
+@{
+    ViewData["Title"] = "PedidosPendientes";
+}
+
+
+<link rel="stylesheet" href="~/css/login.css">
+<link rel="stylesheet" href="~/css/pedidos.css">
+<div class="container">
+    <!-- tittle heading -->
+    <h3 class="tittle-w3l">
+        Pedidos Pendientes
+        <span class="heading-style">
+            <i></i>
+            <i></i>
+            <i></i>
+        </span>
+    </h3>
+</div>
+<div class="contenedor-formularios" style="margin-top: 0px; max-width: 100%; padding-top: 0px;">
+    <div class="contenido-tab">
+        <div id="iniciar-sesion">
+            <div>
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-2 product-men" style="margin-top: 0px; margin-bottom: 30px;">
+                        <div class="men-pro-item simpleCart_shelfItem">
+                            <div class="item-info-product ">
+                                <a asp-action="Details" asp-route-id="@item.CodFactura">
+                                    <div class="plan basic" onclick="void(0);" style="width: 100%;">
+                                        <div class="title"> @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre) @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerApellido)</div>
+                                        <div class="price">Q.@Html.DisplayFor(modelItem => item.TotalVendido)<span>@Html.DisplayFor(modelItem => item.FecEmision)</span></div>
+                                        <div class="lines">
+                                            <div>@Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre)</div>
+                                            <div>@Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre)</div>
+                                            <div>@Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre)</div>
+                                        </div>
+                                    </div>
+                                    </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+
+        <!-- Registrarse -->
+        <div id="Pedidos Realizados">
+
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+            $("form").each(function () { this.reset() });
+        });
+    </script>
+    <script src="~/js/login.js"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

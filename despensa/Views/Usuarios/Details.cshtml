@@ -162,7 +162,7 @@
         </div>
         <div class="clearfix"></div>
     </div>
-    <div class="product-sec1">
+    <div class="product-sec1" id="pedidosscroll">
         <div class="col-md-12">
             <div class="chat">
                 <div class="head">
@@ -286,6 +286,10 @@
 
 
 <script type="text/javascript">
+
+    
+
+    
     function mostrarPassword() {
         var cambio = document.getElementById("txtPassword");
         if (cambio.type == "password") {
@@ -310,6 +314,18 @@
 
 
 @section Scripts {
+    <script>
+        $(document).ready(function () {
+            var URLactual = jQuery(location).attr('href');
+            console.log(URLactual);
+            substring = "Usuarios/Details?Austoscroll=pedidos";
+            if (URLactual.includes(substring)) {
+                $('html, body').animate({
+                    scrollTop: $("#pedidosscroll").offset().top
+                }, 1000);
+            }
+        });
+    </script>
     <script src="~/js/login.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

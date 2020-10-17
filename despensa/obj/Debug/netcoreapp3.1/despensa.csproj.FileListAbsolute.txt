@@ -856,7 +856,6 @@ D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\View
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Categorias\Create.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Categorias\Details.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Categorias\Edit.cshtml.g.cs
-D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Categorias\Index.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\EstadoActividads\Create.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\EstadoActividads\Delete.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\EstadoActividads\Details.cshtml.g.cs
@@ -868,7 +867,6 @@ D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\View
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\PredidoFacturas\Delete.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\PredidoFacturas\Details.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\PredidoFacturas\Edit.cshtml.g.cs
-D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\PredidoFacturas\Index.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Productoes\Create.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Productoes\Details.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Productoes\Edit.cshtml.g.cs
@@ -1117,7 +1115,6 @@ D:\proyectosvisual\despensa2\despensa\despensa\obj\Debug\netcoreapp3.1\Razor\Vie
 D:\proyectosvisual\despensa2\despensa\despensa\obj\Debug\netcoreapp3.1\despensa.csprojAssemblyReference.cache
 D:\proyectosvisual\despensa2\despensa\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Shared\vistasincarro.cshtml.g.cs
 D:\proyectosvisual\despensa2\despensa\despensa\obj\Debug\netcoreapp3.1\Razor\Views\PredidoFacturas\Create1.cshtml.g.cs
-D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\PredidoFacturas\Create1.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Shared\vistasincarro.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Usuarios\Create.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Usuarios\Delete.cshtml.g.cs
@@ -1128,3 +1125,6 @@ D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\View
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\PredidoFacturas\factura.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Shared\facturaLayout.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\despensa.csprojAssemblyReference.cache
+D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Categorias\Index.cshtml.g.cs
+D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\PredidoFacturas\PedidosPendientes.cshtml.g.cs
+D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\PredidoFacturas\TodosPedidos.cshtml.g.cs
