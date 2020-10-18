@@ -3,52 +3,144 @@
 @{
     ViewData["Title"] = "Details";
 }
+<h3 class="tittle-w3l">
+    Mi Pedido
+    <span class="heading-style">
+        <i></i>
+        <i></i>
+        <i></i>
+    </span>
+</h3>
+<div class="container">
 
-<h2>Details</h2>
+    <style>
+        .dato-cliente {
+            padding: 15px;
+            padding-right: 25px;
+            padding-left: 25px;
+            background-color: transparent;
+            border: 2px solid blue;
+            margin: 10px;
+            border-radius: 10px;
+            background-color: rgba(0, 110, 255, 0.2);
+        }
 
-<div>
-    <h4>PredidoFactura</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FecEmision)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.FecEmision)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalVendido)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TotalVendido)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalCosto)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TotalCosto)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CodClienteNavigation)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CodClienteNavigation.CodUsuario)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CodEmpleadoNavigation)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CodEmpleadoNavigation.CodUsuario)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CodEstadoNavigation)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CodEstadoNavigation.CodEstado)
-        </dd>
-    </dl>
+        .dato-empleado {
+            padding: 15px;
+            padding-right: 25px;
+            padding-left: 25px;
+            background-color: transparent;
+            border: 2px solid #ff5722;
+            margin: 10px;
+            border-radius: 10px;
+            background-color: rgba(255, 87, 34, 0.2);
+        }
+
+        .titulo {
+            width: 50px;
+            font-size: 18px;
+            margin-top: -12px;
+            margin-left: 7px;
+            background: white;
+        }
+    </style>
+    <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+    <div class="dato-cliente">
+        <div class="row">
+            <div class="col-6 col-md-4">
+                <div>Fecha de Emisión</div>
+                <div class="well"><span>@Html.DisplayFor(model => model.FecEmision)</span></div>
+            </div>
+            <div class="col-6 col-md-4">
+                <div>Nombres</div>
+                <div class="well"><span>@Html.DisplayFor(model => model.CodClienteNavigation.PrimerNombre) @Html.DisplayFor(model => model.CodClienteNavigation.SegundoNombre)</span></div>
+            </div>
+            <div class="col-6 col-md-4">
+                <div>Apellidos</div>
+                <div class="well"><span>@Html.DisplayFor(model => model.CodClienteNavigation.PrimerApellido) @Html.DisplayFor(model => model.CodClienteNavigation.SegundoApellido)</span></div>
+            </div>
+        </div>
+    </div>
+    <!-- Columns are always 50% wide, on mobile and desktop -->
+    <div class="dato-empleado">
+        <div class="row">
+            <div class="col-6 col-md-6">
+                <div>Nombres</div>
+                <div class="well"><span>@Html.DisplayFor(model => model.CodEmpleadoNavigation.PrimerNombre) @Html.DisplayFor(model => model.CodEmpleadoNavigation.SegundoNombre)</span></div>
+            </div>
+            <div class="col-6 col-md-6">
+                <div>Apellidos</div>
+                <div class="well"><span>@Html.DisplayFor(model => model.CodEmpleadoNavigation.PrimerApellido) @Html.DisplayFor(model => model.CodEmpleadoNavigation.SegundoApellido)</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="privacy " style="padding-top:0px;">
+    <div class="container">
+        <!-- tittle heading -->
+        <!-- //tittle heading -->
+        <div class="checkout-right">
+            <h4>
+                Este Pedido Tienes
+                <span>@ViewBag.detalleFactura.Count Articulos</span>
+            </h4>
+            <div class="table-responsive">
+                <table class="timetable_sub">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Descripción</th>
+                            <th>Precio Unitario</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{int cont = 1;}
+                        @foreach (var item in ViewBag.detalleFactura)
+                        {
+                            <tr>
+                                <td>
+                                    @(cont++)
+                                </td>
+                                <td class="invert-image">
+                                    <a>
+                                        <img src="@Url.Content("~/image/" + item.CodProductoNavigation.Imagen)" alt=" " class="img-responsive">
+                                    </a>
+                                </td>
+                                <td>
+                                    @item.Cantidad
+                                </td>
+                                <td>
+                                    @item.CodProductoNavigation.Nombre @item.CodProductoNavigation.Peso
+                                </td>
+                                <td>
+                                    @item.CodProductoNavigation.PrecioVenta
+                                </td>
+                                <td>
+                                    @(item.CodProductoNavigation.PrecioVenta * item.Cantidad)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4">Total</td>
+                            <td>@Html.DisplayFor(model => model.TotalCosto)</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="checkout-left">
+            <div class="address_form_agile">    
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.CodFactura">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="PedidosPendientes">Regresar a Pendientes</a>
+    <a asp-action="TodosPedidos">Regresar a Todos</a>
 </div>

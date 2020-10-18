@@ -126,7 +126,6 @@ namespace despensa.Controllers
                 _context.Add(producto);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Productoes", new { idcat = producto.CodCategoria });
-                return RedirectToAction(nameof(Index), new { idcat = producto.CodCategoria });
             }
             ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "CodEstado", producto.CodEstado);
             ViewData["CodMarca"] = new SelectList(_context.Marca, "CodMarca", "CodMarca", producto.CodMarca);

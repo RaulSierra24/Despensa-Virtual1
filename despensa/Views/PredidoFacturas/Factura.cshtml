@@ -1,4 +1,9 @@
-﻿zz<div class="control-bar">
+﻿
+@{
+    ViewData["Title"] = "Factura";
+    Layout = "~/Views/Shared/facturaLayout.cshtml";
+}
+<div class="control-bar">
     <div class="container">
         <div class="row">
             <div class="col-2-4">
@@ -6,11 +11,11 @@
 
                 <label for="config_tax">
                     IVA:
-                    <input type="checkbox" id="config_tax" />
+                    <input type="checkbox" id="config_tax" checked/>
                 </label>
                 <label for="config_tax_rate" class="taxrelated">
                     Tasa:
-                    <input type="text" id="config_tax_rate" value="13" />%
+                    <input type="text" id="config_tax_rate" value="12" hidden/>%
                 </label>
                 <label for="config_note">
                     Nota:
@@ -36,9 +41,8 @@
 
     <div class="col-2 text-right details">
         <p contenteditable>
-            Fecha: <input type="text" class="datePicker" /><br>
-            Factura #: <input type="text" value="100" /><br>
-            Vence: <input class="twoweeks" type="text" />
+            Fecha: <input type="date"  value="@ViewBag.factura.FecEmision"/><br>
+            Factura #: <input type="text" value="@ViewBag.factura.CodFactura" /><br>
         </p>
     </div><!--.col-->
 
@@ -49,10 +53,10 @@
 
         <p contenteditable class="client">
             <strong>Facturar a</strong><br>
-            [Nombre cliente]<br>
-            [Nombre emmpresa]<br>
-            [Dirección empresa]<br>
-            [Tel empresa]
+            Nombre: @ViewBag.factura.CodClienteNavigation.PrimerNombre <br>
+            Apellido: @ViewBag.factura.CodClienteNavigation.SegundoNombre<br>
+            Direccion: @ViewBag.factura.CodClienteNavigation.Direccion<br>
+            Telefoo: @ViewBag.factura.CodClienteNavigation.Telefono
         </p>
     </div><!--.col-->
 
@@ -61,11 +65,10 @@
 
 
         <p contenteditable class="client">
-            <strong>Enviar a</strong><br>
-            [Nombre cliente]<br>
-            [Nombre emmpresa]<br>
-            [Dirección empresa]<br>
-            [Tel empresa]
+            <strong></strong><br>
+            DPI: @ViewBag.factura.CodClienteNavigation.Cui<br>
+            NIT: @ViewBag.factura.CodClienteNavigation.Nit<br>
+            Correo: @ViewBag.factura.CodClienteNavigation.CorreoElectronico<br>
         </p>
     </div><!--.col-->
 
@@ -78,18 +81,14 @@
         <table style='width:100%'>
             <thead contenteditable>
                 <tr class="invoice_detail">
-                    <th width="25%" style="text-align">Vendedor</th>
-                    <th width="25%">Orden de compra </th>
-                    <th width="20%">Enviar por</th>
+                    <th width="70%" style="text-align:center">Empleado</th>
                     <th width="30%">Términos y condiciones</th>
                 </tr>
             </thead>
             <tbody contenteditable>
                 <tr class="invoice_detail">
-                    <td width="25%" style="text-align">John Doe</td>
-                    <td width="25%">#PO-2020 </td>
-                    <td width="20%">DHL</td>
-                    <td width="30%">Pago al contado</td>
+                    <td width="70%" style="text-align:center">@ViewBag.empleado</td>
+                    <td width="30%">Pago A Contra Enctrega</td>
                 </tr>
             </tbody>
         </table>
@@ -100,26 +99,33 @@
 <div class="invoicelist-body">
     <table>
         <thead contenteditable>
-        <th width="5%">Código</th>
-        <th width="60%">Descripción</th>
+            <tr>
+                <th width="5%">Código</th>
+                <th width="60%">Descripción</th>
 
-        <th width="10%">Cant.</th>
-        <th width="15%">Precio</th>
-        <th class="taxrelated">IVA</th>
-        <th width="10%">Total</th>
+                <th width="10%">Cant.</th>
+                <th width="15%">Precio</th>
+                <th class="taxrelated">IVA</th>
+                <th width="10%">Total</th>
+            </tr>
         </thead>
         <tbody>
-            <tr>
-                <td width='5%'><a class="control removeRow" href="#">x</a> <span contenteditable>12345</span></td>
-                <td width='60%'><span contenteditable>Descripción</span></td>
-                <td class="amount"><input type="text" value="1" /></td>
-                <td class="rate"><input type="text" value="99" /></td>
-                <td class="tax taxrelated"></td>
-                <td class="sum"></td>
-            </tr>
+            @{int cont = 1;}
+            @foreach (var item in ViewBag.detalleFactura)
+            {
+                <tr>
+                    <td width='5%'><span contenteditable>@item.CodFactura</span></td>
+                    <td width='60%'><span contenteditable>@item.CodProductoNavigation.Nombre @item.CodProductoNavigation.Peso</span></td>
+                    <td class="amount"><input type="text" value="@item.Cantidad" /></td>
+                    <td class="rate"><input type="text" value="@item.CodProductoNavigation.PrecioVenta" /></td>
+                    <td class="tax taxrelated"></td>
+                    <td class="sum">@(item.CodProductoNavigation.PrecioVenta * item.Cantidad)</td>
+                </tr>
+            }
+
+
         </tbody>
     </table>
-    <a class="control newRow" href="#">+ Nueva fila</a>
 </div><!--.invoice-body-->
 
 <div class="invoicelist-footer">
@@ -130,7 +136,7 @@
         </tr>
         <tr>
             <td><strong>Total:</strong></td>
-            <td id="total_price"></td>
+            <td>Q.@ViewBag.factura.TotalVendido</td>
         </tr>
     </table>
 </div>

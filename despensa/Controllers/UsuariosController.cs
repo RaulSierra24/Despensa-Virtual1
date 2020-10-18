@@ -67,7 +67,7 @@ namespace despensa.Controllers
             {
                 return NotFound();
             }
-            ViewData["CodGeneo"] = new SelectList(_context.Genero, "CodGenero", "CodGenero", usuario.CodGeneo);
+            ViewData["CodGeneo"] = new SelectList(_context.Genero, "CodGenero", "Genero1", usuario.CodGeneo);
             return View(usuario);
         }
 
@@ -385,7 +385,8 @@ namespace despensa.Controllers
                             Console.WriteLine("id_ROL:" + pers.CodRol);
                         System.Diagnostics.Debug.WriteLine("id_ROL:" + pers.CodRol);
                         identity = new ClaimsIdentity(new[] {
-                        new Claim(ClaimTypes.Name, c.PrimerNombre),
+                        new Claim(ClaimTypes.Name, ""+c.PrimerNombre),
+                        new Claim(ClaimTypes.Email, ""+c.SegundoNombre),
                         new Claim(ClaimTypes.NameIdentifier, ""+c.CodUsuario),
                         new Claim(ClaimTypes.Role, pers.CodRol+"")
                         }, CookieAuthenticationDefaults.AuthenticationScheme);

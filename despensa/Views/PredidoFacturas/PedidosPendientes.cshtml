@@ -27,7 +27,7 @@
                     <div class="col-md-2 product-men" style="margin-top: 0px; margin-bottom: 30px;">
                         <div class="men-pro-item simpleCart_shelfItem">
                             <div class="item-info-product ">
-                                <a asp-action="Details" asp-route-id="@item.CodFactura">
+                                <a asp-action="Edit" asp-route-id="@item.CodFactura">
                                     <div class="plan basic" onclick="void(0);" style="width: 100%;">
                                         <div class="title"> @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre) @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerApellido)</div>
                                         <div class="price">Q.@Html.DisplayFor(modelItem => item.TotalVendido)<span>@Html.DisplayFor(modelItem => item.FecEmision)</span></div>

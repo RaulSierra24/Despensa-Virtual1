@@ -351,7 +351,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <li class="">
                                     <a asp-controller="Usuarios" asp-action="Details" asp-route-Austoscroll="pedidos">About Us</a>
                                 </li>
-                                @if (@User.Identity.IsAuthenticated)
+                                @if (@User.IsInRole("3")||User.IsInRole("2"))
                                 {
                                     <li class="dropdown">
                                         <a class="nav-stylehead dropdown-toggle" href="#" data-toggle="dropdown">

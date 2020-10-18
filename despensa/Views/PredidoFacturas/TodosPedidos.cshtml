@@ -27,28 +27,46 @@
                     <div class="col-md-2 product-men" style="margin-top: 0px; margin-bottom: 30px;">
                         <div class="men-pro-item simpleCart_shelfItem">
                             <div class="item-info-product ">
-                                <a asp-action="Details" asp-route-id="@item.CodFactura">
-                                    <div class="plan basic" onclick="void(0);" style="width: 100%;">
-                                        @if (item.CodEstado == 1)
-                                        {
+                                @if (item.CodEstado == 1)
+                                {
+                                    <a asp-action="Edit" asp-route-id="@item.CodFactura">
+                                        <div class="plan basic" onclick="void(0);" style="width: 100%;">
                                             <div class="title"> @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre) @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerApellido)</div>
-                                        }
-                                        else if (item.CodEstado == 2)
-                                        {
-                                            <div class="title" style="background-color: #38ee00e5;"> @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre) @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerApellido)</div>
-                                        }
-                                        else if (item.CodEstado == 3)
-                                        {
-                                            <div class="title" style="background-color: #ee0000e5;"> @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre) @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerApellido)</div>
-                                        }
-                                        <div class="price">Q.@Html.DisplayFor(modelItem => item.TotalVendido)<span>@Html.DisplayFor(modelItem => item.FecEmision)</span></div>
-                                        <div class="lines">
-                                            <div>@Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre)</div>
-                                            <div>@Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre)</div>
-                                            <div>@Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre)</div>
+                                            <div class="price">Q.@Html.DisplayFor(modelItem => item.TotalVendido)<span>@Html.DisplayFor(modelItem => item.FecEmision)</span></div>
+                                            <div class="lines">
+                                                <div>@Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre)</div>
+                                                <div>@Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre)</div>
+                                                <div>@Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre)</div>
+                                            </div>
                                         </div>
-                                    </div>
                                     </a>
+                                }
+                                else if (item.CodEstado == 2)
+                                {
+                                    <a asp-action="Details" asp-route-id="@item.CodFactura">
+                                        <div class="plan basic" onclick="void(0);" style="width: 100%;">
+                                            <div class="title" style="background-color: #38ee00e5;"> @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre) @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerApellido)</div>
+                                            <div class="price">Q.@Html.DisplayFor(modelItem => item.TotalVendido)<span>@Html.DisplayFor(modelItem => item.FecEmision)</span></div>
+                                            <div class="lines">
+                                                <a class="button2" asp-action="Factura" asp-route-id="@item.CodFactura" style="margin:0px;"><span>Ver Factura</span></a>
+                                            </div>
+                                        </div>
+                                    </a>
+                                }
+                                else if (item.CodEstado == 3)
+                                {
+                                    <a asp-action="Details" asp-route-id="@item.CodFactura">
+                                        <div class="plan basic" onclick="void(0);" style="width: 100%;">
+                                            <div class="title" style="background-color: #ee0000e5;"> @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre) @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerApellido)</div>
+                                            <div class="price">Q.@Html.DisplayFor(modelItem => item.TotalVendido)<span>@Html.DisplayFor(modelItem => item.FecEmision)</span></div>
+                                            <div class="lines">
+                                                <div>@Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre)</div>
+                                                <div>@Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre)</div>
+                                                <div>@Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre)</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                }
                             </div>
                         </div>
                     </div>
