@@ -133,7 +133,8 @@
                                             <label class="active highlight">
                                                 Contraseña <span class="req">*</span>
                                             </label>
-                                            <input asp-for="Contraseña" type="password" style="width:200%;" ID="txtPassword" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                                            <input asp-for="Contraseña" type="password" style="width:200%;" ID="txtPassword" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$"
+                                           title="Deve tener 8 caracteres e incluir numeros, mayusculas y minusculas">
                                         </div>
                                         <span class="input-group-btn">
                                             <button id="show_password" class="btn btn-primary" style="float: right;" type="button" onclick="mostrarPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
@@ -144,7 +145,8 @@
                                             <label class="active highlight">
                                                 Contraseña <span class="req">*</span>
                                             </label>
-                                            <input asp-for="ConfirmarContraseña" type="password" style="width:200%;" ID="txtPassword1" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                                            <input asp-for="ConfirmarContraseña" type="password" style="width:200%;" ID="txtPassword1" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$"
+                                           title="Deve tener 8 caracteres e incluir numeros, mayusculas y minusculas">
                                         </div>
                                         <span class="input-group-btn">
                                             <button id="show_password1" class="btn btn-primary" style="float: right;" type="button" onclick="mostrarPassword1()"> <span class="fa fa-eye-slash icon"></span> </button>

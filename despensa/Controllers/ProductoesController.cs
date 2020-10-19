@@ -55,6 +55,32 @@ namespace despensa.Controllers
             return View(await despensaContext.ToListAsync());
         }
 
+
+    
+        public async Task<IActionResult> BuscarProducto(int? page, string Buscar)
+        {
+            if (Buscar == null || Buscar =="")
+            {
+                return RedirectToAction("Index", "Categorias");
+            }
+            ViewBag.Buscar = Buscar;
+            var pageNumber = page ?? 1;
+
+            var entradas = (from m in _context.Producto
+                            where m.CodEstado == 3 && m.Cantidad > 0
+                            orderby m.Nombre descending
+                            select m).ToList();
+
+
+                entradas = entradas.Where(a => a.Nombre.ToLower().Contains(Buscar.ToLower())).ToList();
+
+            var unaPagina = entradas.ToPagedList(pageNumber, 20);
+            
+            ViewBag.pagina = unaPagina;
+            var despensaContext = _context.Producto.Include(p => p.CodEstadoNavigation).Include(p => p.CodMarcaNavigation).Include(p => p.CodProveedorNavigation);
+            return View(await despensaContext.ToListAsync());
+        }
+
         // GET: Productoes/Details/5
         [Authorize(Roles = "3,2,1")]
         public async Task<IActionResult> Details(int? id, int idcat)
@@ -143,7 +169,7 @@ namespace despensa.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.codig_cat = idcat;
             var producto = await _context.Producto.FindAsync(id);
             if (producto == null)
             {

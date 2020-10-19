@@ -55,6 +55,17 @@ ul{
 label{
 	margin:0;
 }
+
+.menu-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background-color: #ffffff;
+    transition: 0.5s;
+    box-shadow: 0 15px 19px -19px rgba(0, 0, 0, 0.5);
+}
 /* top-header */
 .header-most-top p {
     text-align: center;

@@ -1128,3 +1128,5 @@ D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\despensa.c
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Categorias\Index.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\PredidoFacturas\PedidosPendientes.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\PredidoFacturas\TodosPedidos.cshtml.g.cs
+D:\proyectosvisual\Despensa-Virtual1\despensa\bin\Debug\netcoreapp3.1\libman.json
+D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Productoes\BuscarProducto.cshtml.g.cs

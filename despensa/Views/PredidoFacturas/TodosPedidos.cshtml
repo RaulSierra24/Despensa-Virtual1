@@ -7,6 +7,7 @@
 
 <link rel="stylesheet" href="~/css/login.css">
 <link rel="stylesheet" href="~/css/pedidos.css">
+<link rel="stylesheet" href="~/css/pikaday.css">
 <div class="container">
     <!-- tittle heading -->
     <h3 class="tittle-w3l">
@@ -18,78 +19,121 @@
         </span>
     </h3>
 </div>
-<div class="contenedor-formularios" style="margin-top: 0px; max-width: 100%; padding-top: 0px;">
-    <div class="contenido-tab">
-        <div id="iniciar-sesion">
-            <div>
-                @foreach (var item in Model)
-                {
-                    <div class="col-md-2 product-men" style="margin-top: 0px; margin-bottom: 30px;">
-                        <div class="men-pro-item simpleCart_shelfItem">
-                            <div class="item-info-product ">
-                                @if (item.CodEstado == 1)
-                                {
-                                    <a asp-action="Edit" asp-route-id="@item.CodFactura">
-                                        <div class="plan basic" onclick="void(0);" style="width: 100%;">
-                                            <div class="title"> @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre) @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerApellido)</div>
-                                            <div class="price">Q.@Html.DisplayFor(modelItem => item.TotalVendido)<span>@Html.DisplayFor(modelItem => item.FecEmision)</span></div>
-                                            <div class="lines">
-                                                <div>@Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre)</div>
-                                                <div>@Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre)</div>
-                                                <div>@Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre)</div>
+<div class="container" style="margin-bottom: 10px;">
+    <form asp-controller="PredidoFacturas" asp-action="TodosPedidos">
+        <div class="pikarange">
+            <div class="col-6 col-md-3"><input id="FecInici" name="FecInici" type="text" class="pikarange-start" placeholder="Fecha Incial" /></div>
+            <div class="col-6 col-md-3"><input id="FecFinal" name="FecFinal" type="text" class="pikarange-end" placeholder="Fecha Final" /></div>
+        </div>
+        <div class="col-6 col-md-3">
+            <input id="Nombre" name="Nombre" type="text" placeholder="Nombre Cliente" />
+        </div>
+        <input type="submit" class="button button-block" value="Filtrar" style="max-width: 10%; max-height: 50px; padding: 0px;">
+    </form>
+</div>
+    <div class="contenedor-formularios" style="margin-top: 0px; max-width: 100%; padding-top: 0px;">
+        <div class="contenido-tab">
+            <div id="iniciar-sesion">
+                <div>
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-2 product-men" style="margin-top: 0px; margin-bottom: 30px;">
+                            <div class="men-pro-item simpleCart_shelfItem">
+                                <div class="item-info-product ">
+                                    @if (item.CodEstado == 1)
+                                    {
+                                        <a asp-action="Edit" asp-route-id="@item.CodFactura">
+                                            <div class="plan basic" onclick="void(0);" style="width: 100%;">
+                                                <div class="title"> @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre) @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerApellido)</div>
+                                                <div class="price">Q.@Html.DisplayFor(modelItem => item.TotalVendido)<span>@Html.DisplayFor(modelItem => item.FecEmision)</span></div>
+                                                <div class="lines">
+                                                    <div>@Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre)</div>
+                                                    <div>@Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre)</div>
+                                                    <div>@Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre)</div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                }
-                                else if (item.CodEstado == 2)
-                                {
-                                    <a asp-action="Details" asp-route-id="@item.CodFactura">
-                                        <div class="plan basic" onclick="void(0);" style="width: 100%;">
-                                            <div class="title" style="background-color: #38ee00e5;"> @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre) @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerApellido)</div>
-                                            <div class="price">Q.@Html.DisplayFor(modelItem => item.TotalVendido)<span>@Html.DisplayFor(modelItem => item.FecEmision)</span></div>
-                                            <div class="lines">
-                                                <a class="button2" asp-action="Factura" asp-route-id="@item.CodFactura" style="margin:0px;"><span>Ver Factura</span></a>
+                                        </a>
+                                    }
+                                    else if (item.CodEstado == 2)
+                                    {
+                                        <a asp-action="Details" asp-route-id="@item.CodFactura">
+                                            <div class="plan basic" onclick="void(0);" style="width: 100%;">
+                                                <div class="title" style="background-color: #38ee00e5;"> @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre) @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerApellido)</div>
+                                                <div class="price">Q.@Html.DisplayFor(modelItem => item.TotalVendido)<span>@Html.DisplayFor(modelItem => item.FecEmision)</span></div>
+                                                <div class="lines">
+                                                    <a class="button2" asp-action="Factura" asp-route-id="@item.CodFactura" style="margin:0px;"><span>Ver Factura</span></a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                }
-                                else if (item.CodEstado == 3)
-                                {
-                                    <a asp-action="Details" asp-route-id="@item.CodFactura">
-                                        <div class="plan basic" onclick="void(0);" style="width: 100%;">
-                                            <div class="title" style="background-color: #ee0000e5;"> @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre) @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerApellido)</div>
-                                            <div class="price">Q.@Html.DisplayFor(modelItem => item.TotalVendido)<span>@Html.DisplayFor(modelItem => item.FecEmision)</span></div>
-                                            <div class="lines">
-                                                <div>@Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre)</div>
-                                                <div>@Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre)</div>
-                                                <div>@Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre)</div>
+                                        </a>
+                                    }
+                                    else if (item.CodEstado == 3)
+                                    {
+                                        <a asp-action="Details" asp-route-id="@item.CodFactura">
+                                            <div class="plan basic" onclick="void(0);" style="width: 100%;">
+                                                <div class="title" style="background-color: #ee0000e5;"> @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre) @Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerApellido)</div>
+                                                <div class="price">Q.@Html.DisplayFor(modelItem => item.TotalVendido)<span>@Html.DisplayFor(modelItem => item.FecEmision)</span></div>
+                                                <div class="lines">
+                                                    <div>@Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre)</div>
+                                                    <div>@Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre)</div>
+                                                    <div>@Html.DisplayFor(modelItem => item.CodClienteNavigation.PrimerNombre)</div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                }
+                                        </a>
+                                    }
+                                </div>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
+
             </div>
 
+            <!-- Registrarse -->
+            <div id="Pedidos Realizados">
+            </div>
         </div>
-
-        <!-- Registrarse -->
-        <div id="Pedidos Realizados">
-        </div>
+        <div class="clearfix"></div>
     </div>
-    <div class="clearfix"></div>
-</div>
 
 
-@section Scripts {
+    @section Scripts {
 
-    <script>
-        $(document).ready(function () {
-            $("form").each(function () { this.reset() });
-        });
-    </script>
-    <script src="~/js/login.js"></script>
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+        <script>
+            $(document).ready(function () {
+                $("form").each(function () { this.reset() });
+            });
+        </script>
+        <script src="~/js/login.js"></script>
+        <script src="~/js/pikaday.js"></script>
+        <script src="~/js/pikarange.js"></script>
+        <script>
+            document.querySelectorAll('.pikarange').forEach(function (el) {
+                var options = {
+                    numberOfMonths: 2,
+                    start: {
+                        field: el.querySelector('input.pikarange-start'),
+                        trigger: el.querySelector('button.pikarange-start')
+                    },
+                    end: {
+                        field: el.querySelector('input.pikarange-end'),
+                        trigger: el.querySelector('button.pikarange-end')
+                    },
+                    positionTarget: el,
+                    position: 'bottom center'
+                };
+                var optionAttr = el.getAttribute('data-options');
+                if (optionAttr) {
+                    optionAttr = JSON.parse(optionAttr);
+                    for (var i in optionAttr) {
+                        if (typeof optionAttr[i] === 'string' && optionAttr[i].match(/^[\d\-]+/)) {
+                            options[i] = new Date(optionAttr[i]);
+                        } else {
+                            options[i] = optionAttr[i];
+                        }
+                    }
+                }
+                var range = new Pikarange(options);
+            });
+        </script>
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

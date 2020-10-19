@@ -20,18 +20,19 @@
         <div id="iniciar-sesion">
             <form id="my-form21" asp-action="Edit" enctype="multipart/form-data">
                 <input type="hidden" asp-for="CodProducto" />
+                <input type="number" asp-for="CodCategoria" value="@ViewBag.codig_cat" hidden />
                 <div class="contenedor-input">
                     <label class="active highlight">
                         Primer Categoria <span class="req">*</span>
                     </label>
-                    <input asp-for="Nombre" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" >
+                    <input asp-for="Nombre" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
                 </div>
                 <br />
                 <div class="contenedor-input">
                     <label class="active highlight">
                         Fecha Caducidad <span class="req">*</span>
                     </label>
-                    <input asp-for="FecCaducidad" type="date" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" >
+                    <input asp-for="FecCaducidad" type="date" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
                 </div>
                 <br />
                 <div id="iniciar-sesion">
@@ -39,14 +40,14 @@
                         <label class="active highlight">
                             Precio Costo <span class="req">*</span>
                         </label>
-                        <input asp-for="PrecioCosto" type="number" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" >
+                        <input asp-for="PrecioCosto" type="number" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
                     </div>
                     <br />
                     <div class="contenedor-input">
                         <label class="active highlight">
                             Precio Venta<span class="req">*</span>
                         </label>
-                        <input asp-for="PrecioVenta" type="number" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" >
+                        <input asp-for="PrecioVenta" type="number" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
                     </div>
                     <br />
                 </div>
@@ -54,28 +55,21 @@
                     <label class="active highlight">
                         Cantidad <span class="req">*</span>
                     </label>
-                    <input asp-for="Cantidad" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" >
+                    <input asp-for="Cantidad" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
                 </div>
                 <br />
                 <div class="contenedor-input">
                     <label class="active highlight">
                         Peso <span class="req">*</span>
                     </label>
-                    <input asp-for="Peso" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" >
+                    <input asp-for="Peso" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
                 </div>
                 <br />
 
 
                 <div class="contenedor-input">
 
-                    <input asp-for="ImageFie" accept="image/*" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" >
-                </div>
-                <br />
-                <div class="contenedor-input">
-                    <label class="active highlight">
-                        Categoria <span class="req">*</span>
-                    </label>
-                    <select asp-for="CodCategoria" class="select-css" style="width:100%;" asp-items="ViewBag.CodCategoria"></select>
+                    <input asp-for="ImageFie" accept="image/*" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
                 </div>
                 <br />
                 <div class="contenedor-input">

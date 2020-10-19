@@ -11,15 +11,24 @@
 
                 <label for="config_tax">
                     IVA:
-                    <input type="checkbox" id="config_tax" checked/>
+                    <input type="checkbox" id="config_tax" checked />
                 </label>
                 <label for="config_tax_rate" class="taxrelated">
                     Tasa:
-                    <input type="text" id="config_tax_rate" value="12" hidden/>%
+                    <input type="text" id="config_tax_rate" value="12" hidden />%
                 </label>
                 <label for="config_note">
                     Nota:
                     <input type="checkbox" id="config_note" />
+                </label>
+                <label for="config_note">
+                    <a asp-controller="Usuarios" asp-action="Details" asp-route-Austoscroll="pedidos">Mis Pedidos</a>
+                </label>
+                <label for="config_note">
+                    @if (@User.IsInRole("3") || User.IsInRole("2"))
+                    {
+                        <a asp-controller="PredidoFacturas" asp-action="TodosPedidos">Todods los pedidos</a>
+                    }
                 </label>
 
             </div>

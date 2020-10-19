@@ -32,11 +32,23 @@ namespace despensa.Controllers
             return View(entradas);
         }
         [Authorize(Roles = "3,2")]
-        public IActionResult TodosPedidos()
+        public IActionResult TodosPedidos(string Nombre, string FecFinal, string FecInici)
         {
             var entradas = (from m in _context.PredidoFactura.Include(p => p.CodClienteNavigation).Include(p => p.CodEmpleadoNavigation).Include(p => p.CodEstadoNavigation)
                             orderby m.FecEmision ascending
                             select m).ToList();
+            Console.WriteLine("Filtro de predido factura: nombre: '"+Nombre+"' fecini: '"+FecFinal+"' fecfin: '"+FecInici+"'");
+
+            if (Nombre!=""&&Nombre!=null){entradas = entradas.Where(a=>a.CodClienteNavigation.PrimerNombre.ToLower().Contains(Nombre.ToLower())||a.CodClienteNavigation.PrimerApellido.ToLower().Contains(Nombre.ToLower())).ToList();}
+            if (FecInici != "" && FecFinal!="" && FecInici != null && FecFinal != null) {
+                try
+                {
+                    DateTime fecini = DateTime.ParseExact(FecInici, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+                    DateTime fecfin = DateTime.ParseExact(FecFinal, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+                    entradas = entradas.Where(a => a.FecEmision>=fecini && a.FecEmision <= fecfin).ToList();
+                }
+                catch (Exception ex) { }
+            }
             return View(entradas);
         }
 
@@ -147,6 +159,10 @@ namespace despensa.Controllers
                         ViewBag.Inexistencia = producto;
                         ViewBag.ErrorCarrito = 2;
                         return View();
+                    }
+                    if (item.Quantity == 0)
+                    {
+                        ViewBag.ErrorCarrito = 4;
                     }
                 }
                 if (totalventa < 50)

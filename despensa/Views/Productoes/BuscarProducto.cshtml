@@ -1,0 +1,75 @@
+﻿@model IEnumerable<despensa.Models.Producto>
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+
+@{ ViewData["Title"] = "BuscarProducto"; }
+<div class="ads-grid">
+    <div class="container">
+        <!-- tittle heading -->
+        <h3 class="tittle-w3l">
+            Productos
+            <span class="heading-style">
+                <i></i>
+                <i></i>
+                <i></i>
+            </span>
+        </h3>
+        <div class="agileinfo-ads-display col-md-16">
+            <div class="wrapper">
+                <div class="product-sec1">
+                    <h3 class="heading-tittle">Productos</h3>
+                    @foreach (var item in ViewBag.pagina)
+                    {
+                        <div class="col-md-4 product-men">
+                            <div class="men-pro-item simpleCart_shelfItem">
+                                <div class="men-thumb-item">
+                                    <div class="cuadrado_imagen" style="background-image: url('@Url.Content("~/image/" + item.Imagen)'); background-size: cover;">
+                                    </div>
+                                    <div class="men-cart-pro">
+                                        <div class="inner-men-cart-pro">
+                                            <a asp-action="Details" asp-route-id="@item.CodProducto" class="link-product-add-cart">ver más</a>
+                                        </div>
+                                    </div>
+                                        <span class="product-new-top">@item.Cantidad</span>
+                                </div>
+                                <div class="item-info-product ">
+                                    <h4>
+                                        <a asp-action="Details" asp-route-id="@item.CodProducto"> @item.Nombre, @item.Peso</a>
+                                    </h4>
+                                    <div class="info-product-price">
+                                        <span class="item_price">$@item.PrecioVenta</span>
+
+                                    </div>
+                                    <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                                        <button class="button2" onclick="agregarProducto(@item.CodProducto)">Añadir al Carrito 1</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="clearfix"></div>
+                </div>
+                @Html.PagedListPager((IPagedList)ViewBag.pagina, page => Url.Action("BuscarProducto", new { page = page, Buscar = @ViewBag.Buscar }))
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script>
+        function agregarProducto(txt) {
+            $.ajax({
+                url: "/cart/compra/",
+                data: { "id": txt },
+                success: function () {
+                    obtenerCarrito();
+                }
+            });
+        }
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
