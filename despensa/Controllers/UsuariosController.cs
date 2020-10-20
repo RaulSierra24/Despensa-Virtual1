@@ -30,18 +30,18 @@ namespace despensa.Controllers
         {
             var pageNumber = page ?? 1;
             var entradas = (from m in _context.Usuario.Include(u => u.CodEstadoNavigation).Include(u => u.CodGeneoNavigation).Include(u => u.CodRolNavigation)
-                            orderby m.CodEstado descending
+                            orderby m.CodRol descending
                             select m).ToList();
 
-            if (Nombre != "" && Nombre != null) { ViewBag.nombres=Nombre; entradas = entradas.Where(a => a.PrimerNombre.ToLower().Contains(Nombre.ToLower()) || a.SegundoNombre.ToLower().Contains(Nombre.ToLower())).ToList(); }
-            if (Apellido != "" && Apellido != null) { ViewBag.apellido = Apellido; entradas = entradas.Where(a => a.PrimerApellido.ToLower().Contains(Nombre.ToLower()) || a.SegundoApellido.ToLower().Contains(Nombre.ToLower())).ToList(); }
-            if (cui != "" && cui != null) { ViewBag.cui = cui; entradas = entradas.Where(a => a.Cui.ToLower().Contains(Nombre.ToLower()) || a.Cui.ToLower().Contains(Nombre.ToLower())).ToList(); }
+            if (Nombre != "" && Nombre != null) { ViewBag.nombres=Nombre;            entradas = entradas.Where(a => a.PrimerNombre.ToLower().Contains(Nombre.ToLower()) ).ToList(); }
+            if (Apellido != "" && Apellido != null) { ViewBag.apellido = Apellido; entradas = entradas.Where(a => a.PrimerApellido.ToLower().Contains(Apellido.ToLower()) ).ToList(); }
+            if (cui != "" && cui != null) { ViewBag.cui = cui; entradas = entradas.Where(a => a.Cui.Contains(cui.ToLower())).ToList(); }
             var entrada = entradas.ToPagedList(pageNumber, 3);
             return View(entrada);
         }
 
         // GET: Usuarios/Details/5
-        [Authorize(Roles = "3,2,1")]
+        [Authorize(Roles = "3,2,1")]    
         public async Task<IActionResult> Details(int? id)
         {
             ClaimsPrincipal currentUser = this.User;
@@ -99,6 +99,7 @@ namespace despensa.Controllers
                     string resetCode = Guid.NewGuid().ToString();
                     EnviarEmail(usuario.CorreoElectronico, resetCode);
                     usuario.Grid = resetCode;
+                    usuario.Cui = "";
                     usuario.CodEstado = 4;
                     usuario.CodRol = 1;
                     usuario.Contraseña = Crypto.Hash(usuario.Contraseña);
@@ -123,8 +124,6 @@ namespace despensa.Controllers
                         var loginA = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
                             return RedirectToAction("Details", "Usuarios");
                     }
-
-
                 }
             }
             else
@@ -135,33 +134,6 @@ namespace despensa.Controllers
             return View("Login");
         }
 
-
-
-        // GET: Usuarios/Edit/6
-        [Authorize(Roles = "3,2,1")]
-        public async Task<IActionResult> Edit(int? id)
-        {
-            ClaimsPrincipal currentUser = this.User;
-            var identity = (ClaimsIdentity)currentUser.Identity;
-            id = Int32.Parse(identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
-
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-
-
-
-            var usuario = await _context.Usuario.FindAsync(id);
-            if (usuario == null)
-            {
-                return NotFound();
-            }
-            ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "Estado", usuario.CodEstado);
-            ViewData["CodRol"] = new SelectList(_context.Rol, "CodRol", "Rol1", usuario.CodRol);
-            return View(usuario);
-        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -213,6 +185,32 @@ namespace despensa.Controllers
             ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "Estado", usuario.CodEstado);
             ViewData["CodRol"] = new SelectList(_context.Rol, "CodRol", "Rol1", usuario.CodRol);
             return RedirectToAction("Details", "Usuarios", new { id = id });
+        }
+
+        [Authorize(Roles = "3")]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            /*
+            ClaimsPrincipal currentUser = this.User;
+            var identity = (ClaimsIdentity)currentUser.Identity;
+            var id3 = Int32.Parse(identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);*/
+
+            if (id == null )
+            {
+                return NotFound();
+            }
+
+
+
+
+            var usuario = await _context.Usuario.FindAsync(id);
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+            ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "Estado", usuario.CodEstado);
+            ViewData["CodRol"] = new SelectList(_context.Rol, "CodRol", "Rol1", usuario.CodRol);
+            return View(usuario);
         }
         // POST: Usuarios/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -290,7 +288,7 @@ namespace despensa.Controllers
                         despensa1Context db = new despensa1Context();
                         var anterior = await db.Usuario.FindAsync(id);
                         usuario = anterior;
-                        usuario.Contraseña = contraseña;
+                        usuario.Contraseña = Crypto.Hash(contraseña);
                         _context.Update(usuario);
                         await _context.SaveChangesAsync();
                     }
@@ -325,21 +323,22 @@ namespace despensa.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "3")]
-        public async Task<IActionResult> UsuarioAdmin(int id, [Bind("CodUsuario,PrimerNombre,SegundoNombre,PrimerApellido,SegundoApellido,Contraseña,ConfirmarContraseña,CodGenero,Cui,Telefono,Direccion,Nit,CorreoElectronico,FecNac,CodGeneo,CodRol,CodEstado")] Usuario usuario)
+        public async Task<IActionResult> UsuarioAdmin(int id, [Bind("CodUsuario,CodRol,CodEstado")] Usuario usuario)
         {
+            Console.WriteLine("usuario admin: "+usuario.CodUsuario+" "+usuario.CodRol+" "+usuario.CodEstado+" "+id);
             ClaimsPrincipal currentUser = this.User;
             var identity = (ClaimsIdentity)currentUser.Identity;
-            id = Int32.Parse(identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
-            if (usuario.CodUsuario == id)
+            var id3 = Int32.Parse(identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
+            if (usuario.CodUsuario == id3)
             {
-                return RedirectToAction("Edit", "Usuarios", new { id = id });
+                return RedirectToAction("Index", "Usuarios", new { id = id });
             }
             if (ModelState.IsValid)
             {
                     try
                     {
                         despensa1Context db = new despensa1Context();
-                        var anterior = await db.Usuario.FindAsync(id);
+                        var anterior = await db.Usuario.FindAsync(usuario.CodUsuario);
                         anterior.CodRol = usuario.CodRol;
                         anterior.CodEstado = usuario.CodEstado;
                         _context.Update(anterior);
@@ -356,13 +355,13 @@ namespace despensa.Controllers
                             throw;
                         }
                     }
-                    return RedirectToAction("Edit", "Usuarios", new { id = id });
+                    return RedirectToAction("Index", "Usuarios");
 
             }
             ViewData["CodGeneo"] = new SelectList(_context.Genero, "CodGenero", "Genero1", usuario.CodGeneo);
             ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "Estado", usuario.CodEstado);
             ViewData["CodRol"] = new SelectList(_context.Rol, "CodRol", "Rol1", usuario.CodRol);
-            return RedirectToAction("Edit", "Usuarios", new { id = id });
+            return RedirectToAction("Index", "Usuarios", new { id = id });
         }
 
         // GET: Usuarios/Delete/5
@@ -469,7 +468,7 @@ namespace despensa.Controllers
                                 Console.WriteLine("este es el return"+ReturnUrl);
                                 if (ReturnUrl!="")
                                 {
-                                    return RedirectToAction("Details", "Usuarios");
+                                    return RedirectToAction("Index", "Categorias");
                                 }
                                 else
                                 {
@@ -554,7 +553,6 @@ namespace despensa.Controllers
 
         public async Task<IActionResult> ConfirmarCuenta(string id)
         {
-            Console.WriteLine("confirmarContraseña: " + id);
             if (ModelState.IsValid)
             {
                 using (despensa1Context dc = new despensa1Context())

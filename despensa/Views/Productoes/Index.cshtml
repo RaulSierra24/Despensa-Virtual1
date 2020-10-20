@@ -38,7 +38,7 @@
                                         </div>
                                     </div>
                                     @if (User.IsInRole("3") || User.IsInRole("2"))
-                                    {<a class="product-new-top" asp-action="Edit" asp-route-id="@item.CodProducto">Editar</a>}
+                                    {<a class="product-new-top" asp-action="Edit" asp-route-id="@item.CodProducto" asp-route-idcat="@item.CodCategoria">Editar</a>}
                                     else
                                     {
                                         <span class="product-new-top">@item.Cantidad</span>
@@ -49,7 +49,7 @@
                                         <a asp-action="Details" asp-route-id="@item.CodProducto"> @item.Nombre, @item.Peso</a>
                                     </h4>
                                     <div class="info-product-price">
-                                        <span class="item_price">$@item.PrecioVenta</span>
+                                        <span class="item_price">Q.@item.PrecioVenta</span>
 
                                     </div>
                                     <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
@@ -70,19 +70,21 @@
 </div>
 
 
-
 @section Scripts {
-<script>
-    function agregarProducto(txt) {
-        $.ajax({
-            url: "/cart/compra/",
-            data: { "id": txt },
-            success: function () {
-                obtenerCarrito();
-            }
-        });
-    }
-</script>
+
+    <script src="js/jquery.flexisel.js"></script>
+
+    <script>
+        function agregarProducto(txt) {
+            $.ajax({
+                url: "/cart/compra/",
+                data: { "id": txt },
+                success: function () {
+                    obtenerCarrito();
+                }
+            });
+        }
+    </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 

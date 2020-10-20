@@ -24,7 +24,7 @@
                 <input type="number" asp-for="CodCategoria" value="@ViewBag.codig_cat" hidden/>
                 <div class="contenedor-input">
                     <label class="active highlight">
-                        Primer Categoria <span class="req">*</span>
+                        Nombre <span class="req">*</span>
                     </label>
                     <input asp-for="Nombre" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
                 </div>
@@ -56,7 +56,7 @@
                     <label class="active highlight">
                         Cantidad <span class="req">*</span>
                     </label>
-                    <input asp-for="Cantidad" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                    <input asp-for="Cantidad" type="number" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
                 </div>
                 <br />
                 <div class="contenedor-input">
@@ -73,10 +73,6 @@
                     <input asp-for="ImageFie" accept="image/*" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
                 </div>
                 <br />
-
-
-
-
                 <div class="contenedor-input">
                     <label class="active highlight">
                         Proveedor <span class="req">*</span>

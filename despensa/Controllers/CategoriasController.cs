@@ -29,8 +29,20 @@ namespace despensa.Controllers
         [Authorize(Roles = "3,2,1")]
         public async Task<IActionResult> Index()
         {
-            var despensaContext = _context.Categoria.Include(c => c.EstadoNavigation);
-            return View(await despensaContext.ToListAsync());
+            var entradas = (from m in _context.Categoria.Include(c => c.EstadoNavigation)
+                            where m.Estado == 3 
+                            orderby m.Nombre descending
+                            select m).ToList();
+            return View(entradas);
+        }
+        [Authorize(Roles = "3")]
+        public async Task<IActionResult> IndexDesactivo()
+        {
+            var entradas = (from m in _context.Categoria.Include(c => c.EstadoNavigation)
+                            where m.Estado == 4
+                            orderby m.Nombre descending
+                            select m).ToList();
+            return View(entradas);
         }
 
         // GET: Categorias/Details/5
@@ -120,7 +132,7 @@ namespace despensa.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "3")]
-        public async Task<IActionResult> Edit(int id, [Bind("CodCategoria,Nombre,Estado,ImageFie")] Categoria categoria)
+        public async Task<IActionResult> Edit(int id, [Bind("CodCategoria,Nombre,Estado,Imagen,ImageFie")] Categoria categoria)
         {
             Console.WriteLine("entre");
             if (id != categoria.CodCategoria)

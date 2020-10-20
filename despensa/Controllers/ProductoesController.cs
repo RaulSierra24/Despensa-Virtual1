@@ -10,6 +10,7 @@ using X.PagedList;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Microsoft.AspNetCore.Authorization;
+using System.Diagnostics;
 
 namespace despensa.Controllers
 {
@@ -90,7 +91,18 @@ namespace despensa.Controllers
             {
                 return NotFound();
             }
-
+            int total = _context.Producto.Count();
+            List<Producto> lista = new List<Producto>();
+            Random rnd = new Random();
+            for (int i = 0; i < 10; i++)
+            {
+                int index = rnd.Next(1, total);
+                var aux = await _context.Producto.FindAsync(index);
+                lista.Add(aux);
+                Console.WriteLine("entre al for prr"+aux);
+            }
+            Console.WriteLine("sali del for prr");
+            ViewBag.Alazar = lista;
             var producto = await _context.Producto
                 .Include(p => p.CodEstadoNavigation)
                 .Include(p => p.CodMarcaNavigation)
@@ -164,8 +176,7 @@ namespace despensa.Controllers
         public async Task<IActionResult> Edit(int? id, int idcat)
         {
             
-            ViewData["codig_cat"] = idcat;
-            if (id == null)
+            if (id == null || idcat==0)
             {
                 return NotFound();
             }
@@ -187,8 +198,9 @@ namespace despensa.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "3,2")]
-        public async Task<IActionResult> Edit(int id, [Bind("CodProducto,Nombre,FecCaducidad,PrecioCosto,PrecioVenta,ImageFie,Peso,CodEstado,Cantidad,CodProveedor,CodMarca,CodCategoria")] Producto producto)
+        public async Task<IActionResult> Edit(int id, [Bind("Imagen,CodProducto,Nombre,FecCaducidad,PrecioCosto,PrecioVenta,ImageFie,Peso,CodEstado,Cantidad,CodProveedor,CodMarca,CodCategoria")] Producto producto)
         {
+            Console.WriteLine("edit productos: "+producto.ImageFie);    
             if (id != producto.CodProducto)
             {
                 return NotFound();

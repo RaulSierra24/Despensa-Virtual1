@@ -12,17 +12,18 @@
         <div id="iniciar-sesion">
             <form id="my-form21" asp-action="Edit" enctype="multipart/form-data">
                 <input type="hidden" asp-for="CodCategoria" />
+                <input type="hidden" asp-for="Imagen" />
                 <div class="contenedor-input">
                     <label class="active highlight">
                         Primer Categoria <span class="req">*</span>
                     </label>
-                    <input asp-for="Nombre" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" >
+                    <input asp-for="Nombre" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
                 </div>
                 <br />
 
                 <div class="contenedor-input">
 
-                    <input asp-for="ImageFie" accept="image/*" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" >
+                    <input asp-for="ImageFie" accept="image/*" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
                 </div>
                 <br />
                 <div class="contenedor-input">

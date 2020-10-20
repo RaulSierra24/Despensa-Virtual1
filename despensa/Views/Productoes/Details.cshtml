@@ -95,9 +95,9 @@
             <div class="grid images_3_of_2">
                 <div class="flexslider">
                     <ul class="slides">
-                            <div class="thumb-image">
-                                <img src="@Url.Content("~/image/" + Model.Imagen)" data-imagezoom="true" class="img-responsive" alt="">
-                            </div>
+                        <div class="thumb-image">
+                            <img src="@Url.Content("~/image/" + Model.Imagen)" data-imagezoom="true" class="img-responsive" alt="">
+                        </div>
                     </ul>
                     <div class="clearfix"></div>
                 </div>
@@ -167,7 +167,7 @@
             </div>
             <div class="occasion-cart">
                 <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                    
+
                 </div>
 
             </div>
@@ -182,6 +182,11 @@
 </div>
 
 
+
+
+
+
+
 @section Scripts {
 
     <script src="@Url.Content("~/js/imagezoom.js")"></script>
@@ -193,6 +198,34 @@
                 animation: "slide",
                 controlNav: "thumbnails"
             });
+        });
+    </script>
+    <script src="js/jquery.flexisel.js"></script>
+    <script>
+        $(window).load(function () {
+            $("#flexiselDemo1").flexisel({
+                visibleItems: 4,
+                animationSpeed: 1000,
+                autoPlay: true,
+                autoPlaySpeed: 3000,
+                pauseOnHover: true,
+                enableResponsiveBreakpoints: true,
+                responsiveBreakpoints: {
+                    portrait: {
+                        changePoint: 600,
+                        visibleItems: 1
+                    },
+                    landscape: {
+                        changePoint: 1000,
+                        visibleItems: 2
+                    },
+                    tablet: {
+                        changePoint: 1500,
+                        visibleItems: 3
+                    }
+                }
+            });
+
         });
     </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -372,10 +372,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         <span class="sr-only">(current)</span>
                                     </a>
                                 </li>
-                                <li class="">
-                                    <a asp-controller="Usuarios" asp-action="Details" asp-route-Austoscroll="pedidos">Mis Pedidos</a>
-                                </li>
-                                @if (@User.IsInRole("3")||User.IsInRole("2"))
+
+                                @if (@User.IsInRole("3") || User.IsInRole("2"))
                                 {
                                     <li class="dropdown">
                                         <a class="nav-stylehead dropdown-toggle" href="#" data-toggle="dropdown">
@@ -389,30 +387,53 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                             <li>
                                                 <a asp-controller="PredidoFacturas" asp-action="TodosPedidos">Todods los pedidos</a>
                                             </li>
+                                            <li>
+                                                <a asp-controller="Usuarios" asp-action="Details" asp-route-Austoscroll="pedidos">Mis Pedidos</a>
+                                            </li>
                                         </ul>
-                                    </li>
-                                }
-                                    <li class="">
-                                        <a class="nav-stylehead" href="faqs.html">Faqs</a>
                                     </li>
                                     <li class="dropdown">
                                         <a class="nav-stylehead dropdown-toggle" href="#" data-toggle="dropdown">
-                                            Pages
+                                            Desctivados
                                             <b class="caret"></b>
                                         </a>
                                         <ul class="dropdown-menu agile_short_dropdown">
                                             <li>
-                                                <a href="icons.html">Web Icons</a>
+                                                <a asp-controller="Productoes" asp-action="IndexDesactivo">Productos</a>
                                             </li>
-                                            <li>
-                                                <a href="typography.html">Typography</a>
-                                            </li>
+                                            @if (User.IsInRole("3"))
+                                            {
+                                                <li>
+                                                    <a asp-controller="Categorias" asp-action="IndexDesactivo">Categoria</a>
+                                                </li>
+                                            }
                                         </ul>
                                     </li>
+                                }
+                                else
+                                {
                                     <li class="">
-                                        <a class="nav-stylehead" href="contact.html">Contact</a>
+                                        <a asp-controller="Usuarios" asp-action="Details" asp-route-Austoscroll="pedidos">Mis Pedidos</a>
                                     </li>
-                                </ul>
+                                }
+                                <li class="dropdown">
+                                    <a class="nav-stylehead dropdown-toggle" href="#" data-toggle="dropdown">
+                                        Pages
+                                        <b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu agile_short_dropdown">
+                                        <li>
+                                            <a href="icons.html">Web Icons</a>
+                                        </li>
+                                        <li>
+                                            <a href="typography.html">Typography</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="">
+                                    <a class="nav-stylehead" href="contact.html">Contact</a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </nav>
@@ -835,36 +856,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         }); //]]>
     </script>
     <!-- //price range (top products) -->
-    <!-- flexisel (for special offers) -->
-    <script src="~/js/jquery.flexisel.js"></script>
-    <script>
-        $(window).load(function () {
-            $("#flexiselDemo1").flexisel({
-                visibleItems: 3,
-                animationSpeed: 1000,
-                autoPlay: true,
-                autoPlaySpeed: 3000,
-                pauseOnHover: true,
-                enableResponsiveBreakpoints: true,
-                responsiveBreakpoints: {
-                    portrait: {
-                        changePoint: 480,
-                        visibleItems: 1
-                    },
-                    landscape: {
-                        changePoint: 640,
-                        visibleItems: 2
-                    },
-                    tablet: {
-                        changePoint: 768,
-                        visibleItems: 2
-                    }
-                }
-            });
 
-        });
-    </script>
-    <!-- //flexisel (for special offers) -->
     <script src="~/js/modal.js"></script>
     <!-- password-script -->
     @if (!@User.Identity.IsAuthenticated)
