@@ -30,6 +30,12 @@ namespace despensa.Models
         public int? CodGeneo { get; set; }
         public int? CodRol { get; set; }
         public int? CodEstado { get; set; }
+        public string Grid { get; set; }
+        public string ImagenPerfil { get; set; }
+        public int? PedidoFavorito { get; set; }
+
+
+
 
         public virtual EstadoActividad CodEstadoNavigation { get; set; }
         public virtual Genero CodGeneoNavigation { get; set; }
@@ -43,5 +49,8 @@ namespace despensa.Models
 
         [NotMapped]
         public String ConfirmarContraseña { get; set; }
+
+        [NotMapped]
+        public String imagens { get; set; }
     }
 }

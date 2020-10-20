@@ -1,0 +1,48 @@
+﻿@model IEnumerable<despensa.Models.Marca>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<link rel="stylesheet" href="~/css/login.css">
+
+<p>
+    <a asp-action="Create" class="button2">Crear</a>
+</p>
+<div class="contenedor-formularios">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Marca1)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                         <div class="divinput">   @Html.DisplayFor(modelItem => item.Marca1)</div>
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.CodMarca"class="button2" style="margin:0px;">Edit</a> 
+                        <a asp-action="Details" asp-route-id="@item.CodMarca"class="button2"style="margin:0px;">Details</a> 
+                        <a asp-action="Delete" asp-route-id="@item.CodMarca"class="button2"style="margin:0px;">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
+
+    @section Scripts {
+
+        <script>
+            $(document).ready(function () {
+                $("form").each(function () { this.reset() });
+            });
+        </script>
+        <script src="~/js/login.js"></script>
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

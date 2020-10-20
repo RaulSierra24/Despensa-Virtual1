@@ -1130,3 +1130,13 @@ D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\View
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\PredidoFacturas\TodosPedidos.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\bin\Debug\netcoreapp3.1\libman.json
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Productoes\BuscarProducto.cshtml.g.cs
+D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Marcas\Create.cshtml.g.cs
+D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Marcas\Delete.cshtml.g.cs
+D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Marcas\Details.cshtml.g.cs
+D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Marcas\Edit.cshtml.g.cs
+D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Marcas\Index.cshtml.g.cs
+D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Proveedores\Create.cshtml.g.cs
+D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Proveedores\Delete.cshtml.g.cs
+D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Proveedores\Details.cshtml.g.cs
+D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Proveedores\Edit.cshtml.g.cs
+D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Proveedores\Index.cshtml.g.cs

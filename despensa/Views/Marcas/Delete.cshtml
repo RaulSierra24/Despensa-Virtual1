@@ -1,0 +1,26 @@
+﻿@model despensa.Models.Marca
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<link rel="stylesheet" href="~/css/login.css">
+<h3>¿Estás segura de que quieres eliminar esto?</h3>
+<div>
+    <h4>Marca</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Marca1)
+        </dt>
+        <dd>
+            <div class="divinput">  @Html.DisplayFor(model => model.Marca1)</div>
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="CodMarca" />
+        <input type="submit" value="Delete" class="button2" style="margin:0px;" /> |
+        <a asp-action="Index" class="button2" style="margin:0px;">Back to List</a>
+    </form>
+</div>

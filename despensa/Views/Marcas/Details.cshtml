@@ -1,0 +1,25 @@
+﻿@model despensa.Models.Marca
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+<link rel="stylesheet" href="~/css/login.css">
+<div class="container">
+    <h4>Marca</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Nombre Marca
+        </dt>
+        <dd>
+            <div class="divinput">  @Html.DisplayFor(model => model.Marca1)</div>
+           
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.CodMarca">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

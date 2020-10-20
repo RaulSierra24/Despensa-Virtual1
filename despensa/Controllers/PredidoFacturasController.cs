@@ -148,6 +148,11 @@ namespace despensa.Controllers
                 }
                 foreach (var item in entradas)
                 {
+                    if (item.Quantity == 0)
+                    {
+                        ViewBag.ErrorCarrito = 4;
+                        return View();
+                    }
                     lista.Add(new DetalleFactura { Precio = item.Product.PrecioVenta, Costo = item.Product.PrecioCosto, CodProducto = item.Product.CodProducto, Cantidad = item.Quantity });
                     totalxproducto = item.Product.PrecioVenta * item.Quantity;
                     totalxproducto1 = item.Product.PrecioCosto * item.Quantity;
@@ -159,10 +164,6 @@ namespace despensa.Controllers
                         ViewBag.Inexistencia = producto;
                         ViewBag.ErrorCarrito = 2;
                         return View();
-                    }
-                    if (item.Quantity == 0)
-                    {
-                        ViewBag.ErrorCarrito = 4;
                     }
                 }
                 if (totalventa < 50)

@@ -114,12 +114,34 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <!-- //header lists -->
                     <!-- search -->
                     <div class="agileits_search">
-                        <form asp-controller="Productoes" asp-action="BuscarProducto" method="get">
-                            <input name="Buscar" type="search" placeholder="¿Qué necesitas el día de hoy?" required="">
-                            <button type="submit" class="btn btn-default" aria-label="Left Align">
-                                <span class="fa fa-search" aria-hidden="true"></span>
-                            </button>
-                        </form>
+                        @if (@User.Identity.IsAuthenticated)
+                        {
+                            if (User.IsInRole(""))
+                            {
+                                <div class="alert alert-danger text-center">
+                                    <strong>Confirme su Correo Electronico para Continuar</strong>
+                                </div>
+                            }
+                            else
+                            {
+                                <form asp-controller="Productoes" asp-action="BuscarProducto" method="get">
+                                    <input name="Buscar" type="search" placeholder="¿Qué necesitas el día de hoy?" required="">
+                                    <button type="submit" class="btn btn-default" aria-label="Left Align">
+                                        <span class="fa fa-search" aria-hidden="true"></span>
+                                    </button>
+                                </form>
+                            }
+
+                        }
+                        else
+                        {
+                            <form asp-controller="Productoes" asp-action="BuscarProducto" method="get">
+                                <input name="Buscar" type="search" placeholder="¿Qué necesitas el día de hoy?" required="">
+                                <button type="submit" class="btn btn-default" aria-label="Left Align">
+                                    <span class="fa fa-search" aria-hidden="true"></span>
+                                </button>
+                            </form>
+                        }
                     </div>
                     <!-- //search -->
                     <!-- cart details -->
@@ -184,8 +206,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="3">Total</td>
-                                    <td class="total"></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -193,8 +213,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </div>
             </div>
             <footer class="mimodal-footer">
-                <a asp-controller="PredidoFacturas" asp-action="Create" class="action">Hacer Pedido</a>
-                <button class="action">Decline</button>
+                <div >Total</div>
+                <div class="total"></div>
+                <a asp-controller="PredidoFacturas" asp-action="Create"  class="action">Hacer Pedido</a>
+                <button class="action" >Decline</button>
             </footer>
         </article>
     </div>

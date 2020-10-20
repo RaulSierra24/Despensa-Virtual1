@@ -133,6 +133,7 @@ label {
     }
 
     label.active {
+        bottom: 90px;
         transform: translateY(50px);
         left: 2px;
         font-size: 14px;
@@ -145,6 +146,24 @@ label {
     label.highlight {
         color: #ff5722;
     }
+
+.divinput {
+    font-size: 22px;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 5px 10px;
+    background: none;
+    background-image: none;
+    border: 1px solid #a0b3b0;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    color: #ff5722;
+    border-radius: 0;
+    transition: all 0.2s ease;
+    border-radius: 5px;
+}
 
 input {
     font-size: 22px;

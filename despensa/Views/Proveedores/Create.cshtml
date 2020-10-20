@@ -1,0 +1,34 @@
+﻿@model despensa.Models.Proveedor
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Proveedor</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Proveedor1" class="control-label"></label>
+                <input asp-for="Proveedor1" class="form-control" />
+                <span asp-validation-for="Proveedor1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CodEstado" class="control-label"></label>
+                <select asp-for="CodEstado" class ="form-control" asp-items="ViewBag.CodEstado"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

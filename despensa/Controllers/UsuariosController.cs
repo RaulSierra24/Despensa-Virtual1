@@ -10,9 +10,8 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using despensa;
-using despensa.Helpers;
-using System.Net.Http;
+using X.PagedList;
+using System.Net.Mail;
 
 namespace despensa.Controllers
 {
@@ -27,10 +26,18 @@ namespace despensa.Controllers
 
         // GET: Usuarios
         [Authorize(Roles = "3")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page, string Nombre, string Apellido,string cui)
         {
-            var despensa1Context = _context.Usuario.Include(u => u.CodEstadoNavigation).Include(u => u.CodGeneoNavigation).Include(u => u.CodRolNavigation);
-            return View(await despensa1Context.ToListAsync());
+            var pageNumber = page ?? 1;
+            var entradas = (from m in _context.Usuario.Include(u => u.CodEstadoNavigation).Include(u => u.CodGeneoNavigation).Include(u => u.CodRolNavigation)
+                            orderby m.CodEstado descending
+                            select m).ToList();
+
+            if (Nombre != "" && Nombre != null) { ViewBag.nombres=Nombre; entradas = entradas.Where(a => a.PrimerNombre.ToLower().Contains(Nombre.ToLower()) || a.SegundoNombre.ToLower().Contains(Nombre.ToLower())).ToList(); }
+            if (Apellido != "" && Apellido != null) { ViewBag.apellido = Apellido; entradas = entradas.Where(a => a.PrimerApellido.ToLower().Contains(Nombre.ToLower()) || a.SegundoApellido.ToLower().Contains(Nombre.ToLower())).ToList(); }
+            if (cui != "" && cui != null) { ViewBag.cui = cui; entradas = entradas.Where(a => a.Cui.ToLower().Contains(Nombre.ToLower()) || a.Cui.ToLower().Contains(Nombre.ToLower())).ToList(); }
+            var entrada = entradas.ToPagedList(pageNumber, 3);
+            return View(entrada);
         }
 
         // GET: Usuarios/Details/5
@@ -89,8 +96,10 @@ namespace despensa.Controllers
             {
                 if (ModelState.IsValid)
                 {
-
-                    usuario.CodEstado = 3;
+                    string resetCode = Guid.NewGuid().ToString();
+                    EnviarEmail(usuario.CorreoElectronico, resetCode);
+                    usuario.Grid = resetCode;
+                    usuario.CodEstado = 4;
                     usuario.CodRol = 1;
                     usuario.Contraseña = Crypto.Hash(usuario.Contraseña);
                     _context.Add(usuario);
@@ -98,9 +107,10 @@ namespace despensa.Controllers
                     ClaimsIdentity identity = null;
                     bool isAuthenticated = false;
                     identity = new ClaimsIdentity(new[] {
-                        new Claim(ClaimTypes.Name, usuario.PrimerNombre),
+                        new Claim(ClaimTypes.Name, ""+usuario.PrimerNombre),
+                        new Claim(ClaimTypes.Email, ""+usuario.SegundoNombre),
                         new Claim(ClaimTypes.NameIdentifier, ""+usuario.CodUsuario),
-                        new Claim(ClaimTypes.Role, usuario.CodRol+"")
+                        new Claim(ClaimTypes.Role, "")
                         }, CookieAuthenticationDefaults.AuthenticationScheme);
 
                     isAuthenticated = true;
@@ -125,6 +135,8 @@ namespace despensa.Controllers
             return View("Login");
         }
 
+
+
         // GET: Usuarios/Edit/6
         [Authorize(Roles = "3,2,1")]
         public async Task<IActionResult> Edit(int? id)
@@ -146,13 +158,13 @@ namespace despensa.Controllers
             {
                 return NotFound();
             }
-            ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "CodEstado", usuario.CodEstado);
-            ViewData["CodGeneo"] = new SelectList(_context.Genero, "CodGenero", "CodGenero", usuario.CodGeneo);
-            ViewData["CodRol"] = new SelectList(_context.Rol, "CodRol", "CodRol", usuario.CodRol);
+            ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "Estado", usuario.CodEstado);
+            ViewData["CodRol"] = new SelectList(_context.Rol, "CodRol", "Rol1", usuario.CodRol);
             return View(usuario);
         }
 
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize(Roles = "3,2,1")]
         public async Task<IActionResult> Cambiar_foto(int id, [Bind("CodUsuario,PrimerNombre,SegundoNombre,PrimerApellido,SegundoApellido,Contraseña,ConfirmarContraseña,CodGenero,Cui,Telefono,Direccion,Nit,CorreoElectronico,FecNac,CodGeneo,CodRol,CodEstado")] Usuario usuario)
         {
@@ -187,7 +199,7 @@ namespace despensa.Controllers
                             throw;
                         }
                     }
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Details", "Usuarios", new { id = id });
                 }
                 else
                 {
@@ -197,10 +209,10 @@ namespace despensa.Controllers
                 }
 
             }
-            ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "CodEstado", usuario.CodEstado);
-            ViewData["CodGeneo"] = new SelectList(_context.Genero, "CodGenero", "CodGenero", usuario.CodGeneo);
-            ViewData["CodRol"] = new SelectList(_context.Rol, "CodRol", "CodRol", usuario.CodRol);
-            return View("Details");
+            ViewData["CodGeneo"] = new SelectList(_context.Genero, "CodGenero", "Genero1", usuario.CodGeneo);
+            ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "Estado", usuario.CodEstado);
+            ViewData["CodRol"] = new SelectList(_context.Rol, "CodRol", "Rol1", usuario.CodRol);
+            return RedirectToAction("Details", "Usuarios", new { id = id });
         }
         // POST: Usuarios/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -214,6 +226,10 @@ namespace despensa.Controllers
             ClaimsPrincipal currentUser = this.User;
             var identity = (ClaimsIdentity)currentUser.Identity;
             id = Int32.Parse(identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
+            if (usuario.CodUsuario != id)
+            {
+                return RedirectToAction("Details", "Usuarios", new { id = id });
+            }
             Console.WriteLine("entre al editar" + id);
             if (ModelState.IsValid)
             {
@@ -241,22 +257,27 @@ namespace despensa.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Usuarios", new { id = id });
             }
-            ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "CodEstado", usuario.CodEstado);
-            ViewData["CodGeneo"] = new SelectList(_context.Genero, "CodGenero", "CodGenero", usuario.CodGeneo);
-            ViewData["CodRol"] = new SelectList(_context.Rol, "CodRol", "CodRol", usuario.CodRol);
-            return View(usuario);
+            ViewData["CodGeneo"] = new SelectList(_context.Genero, "CodGenero", "Genero1", usuario.CodGeneo);
+            ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "Estado", usuario.CodEstado);
+            ViewData["CodRol"] = new SelectList(_context.Rol, "CodRol", "Rol1", usuario.CodRol);
+            return RedirectToAction("Details", "Usuarios", new { id = id });
         }
 
-        
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize(Roles = "3,2,1")]
         public async Task<IActionResult> Cambiar_contaseña(int id, [Bind("CodUsuario,PrimerNombre,SegundoNombre,PrimerApellido,SegundoApellido,Contraseña,ConfirmarContraseña,CodGenero,Cui,Telefono,Direccion,Nit,CorreoElectronico,FecNac,CodGeneo,CodRol,CodEstado")] Usuario usuario)
         {
             ClaimsPrincipal currentUser = this.User;
             var identity = (ClaimsIdentity)currentUser.Identity;
             id = Int32.Parse(identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
+            if (usuario.CodUsuario != id)
+            {
+                return RedirectToAction("Details", "Usuarios", new { id = id });
+            }
             Console.WriteLine("entre al editar" + id);
             if (ModelState.IsValid)
             {
@@ -284,7 +305,7 @@ namespace despensa.Controllers
                             throw;
                         }
                     }
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Details", "Usuarios", new { id = id });
                 }
                 else
                 {
@@ -294,10 +315,54 @@ namespace despensa.Controllers
                 }
                 
             }
-            ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "CodEstado", usuario.CodEstado);
-            ViewData["CodGeneo"] = new SelectList(_context.Genero, "CodGenero", "CodGenero", usuario.CodGeneo);
-            ViewData["CodRol"] = new SelectList(_context.Rol, "CodRol", "CodRol", usuario.CodRol);
-            return View("Details");
+            ViewData["CodGeneo"] = new SelectList(_context.Genero, "CodGenero", "Genero1", usuario.CodGeneo);
+            ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "Estado", usuario.CodEstado);
+            ViewData["CodRol"] = new SelectList(_context.Rol, "CodRol", "Rol1", usuario.CodRol);
+            return RedirectToAction("Details", "Usuarios", new { id = id });
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "3")]
+        public async Task<IActionResult> UsuarioAdmin(int id, [Bind("CodUsuario,PrimerNombre,SegundoNombre,PrimerApellido,SegundoApellido,Contraseña,ConfirmarContraseña,CodGenero,Cui,Telefono,Direccion,Nit,CorreoElectronico,FecNac,CodGeneo,CodRol,CodEstado")] Usuario usuario)
+        {
+            ClaimsPrincipal currentUser = this.User;
+            var identity = (ClaimsIdentity)currentUser.Identity;
+            id = Int32.Parse(identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
+            if (usuario.CodUsuario == id)
+            {
+                return RedirectToAction("Edit", "Usuarios", new { id = id });
+            }
+            if (ModelState.IsValid)
+            {
+                    try
+                    {
+                        despensa1Context db = new despensa1Context();
+                        var anterior = await db.Usuario.FindAsync(id);
+                        anterior.CodRol = usuario.CodRol;
+                        anterior.CodEstado = usuario.CodEstado;
+                        _context.Update(anterior);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!UsuarioExists(usuario.CodUsuario))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction("Edit", "Usuarios", new { id = id });
+
+            }
+            ViewData["CodGeneo"] = new SelectList(_context.Genero, "CodGenero", "Genero1", usuario.CodGeneo);
+            ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "Estado", usuario.CodEstado);
+            ViewData["CodRol"] = new SelectList(_context.Rol, "CodRol", "Rol1", usuario.CodRol);
+            return RedirectToAction("Edit", "Usuarios", new { id = id });
         }
 
         // GET: Usuarios/Delete/5
@@ -372,54 +437,60 @@ namespace despensa.Controllers
                 {   
                     if (string.Compare(Crypto.Hash(login.Contraseña), c.Contraseña) == 0)
                     {
-                        var nombres = ad.PrimerNombre;
+                        if (c.CodEstado==3) { 
+                            var nombres = ad.PrimerNombre;
 
-                        Console.WriteLine("Nombre Completo:" + nombres);
-                        var nombre = c.PrimerNombre + c.PrimerApellido;
+                            Console.WriteLine("Nombre Completo:" + nombres);
+                            var nombre = c.PrimerNombre + c.PrimerApellido;
 
-                        Console.WriteLine("Nombre Completo:" + nombre);
-                        System.Diagnostics.Debug.WriteLine("nombre" + nombre);
+                            Console.WriteLine("Nombre Completo:" + nombre);
+                            System.Diagnostics.Debug.WriteLine("nombre" + nombre);
 
-                        var pers = dc.Rol.Where(p => p.CodRol == c.CodRol).FirstOrDefault();
+                            var pers = dc.Rol.Where(p => p.CodRol == c.CodRol).FirstOrDefault();
 
-                            Console.WriteLine("id_ROL:" + pers.CodRol);
-                        System.Diagnostics.Debug.WriteLine("id_ROL:" + pers.CodRol);
-                        identity = new ClaimsIdentity(new[] {
-                        new Claim(ClaimTypes.Name, ""+c.PrimerNombre),
-                        new Claim(ClaimTypes.Email, ""+c.SegundoNombre),
-                        new Claim(ClaimTypes.NameIdentifier, ""+c.CodUsuario),
-                        new Claim(ClaimTypes.Role, pers.CodRol+"")
-                        }, CookieAuthenticationDefaults.AuthenticationScheme);
+                                Console.WriteLine("id_ROL:" + pers.CodRol);
+                            System.Diagnostics.Debug.WriteLine("id_ROL:" + pers.CodRol);
+                            identity = new ClaimsIdentity(new[] {
+                            new Claim(ClaimTypes.Name, ""+c.PrimerNombre),
+                            new Claim(ClaimTypes.Email, ""+c.SegundoNombre),
+                            new Claim(ClaimTypes.NameIdentifier, ""+c.CodUsuario),
+                            new Claim(ClaimTypes.Role, pers.CodRol+"")
+                            }, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                        Console.WriteLine("rol \"" + pers.Rol1 + "\"");
-                        isAuthenticated = true;
+                            Console.WriteLine("rol \"" + pers.Rol1 + "\"");
+                            isAuthenticated = true;
 
 
-                        if (isAuthenticated)
-                        {
-                            //contador_sesion++;
-                            var principal = new ClaimsPrincipal(identity);
-                            var loginA = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-                            Console.WriteLine("este es el return"+ReturnUrl);
-                            if (ReturnUrl!="")
+                            if (isAuthenticated)
                             {
-                                return RedirectToAction("Details", "Usuarios");
-                            }
-                            else
-                            {
-                                return RedirectToAction(ReturnUrl);
-                            }
+                                //contador_sesion++;
+                                var principal = new ClaimsPrincipal(identity);
+                                var loginA = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                                Console.WriteLine("este es el return"+ReturnUrl);
+                                if (ReturnUrl!="")
+                                {
+                                    return RedirectToAction("Details", "Usuarios");
+                                }
+                                else
+                                {
+                                    return RedirectToAction(ReturnUrl);
+                                }
                             
+                            }
+
+                            //int timeout = login.RememberMe ? 525600 : 20;  //52600 min=1año
+                            //var ticket = new FormsAuthenticationTicket(login.Email, login.RememberMe, timeout);
+                            //string encrypted = FormsAuthentication.Encrypt(ticket);
+                            //var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypted);
+                            //cookie.Expires = DateTime.Now.AddMinutes(timeout);
+                            //cookie.HttpOnly = true;
+                            //Response.Cookies.Add(cookie);
                         }
-
-                        //int timeout = login.RememberMe ? 525600 : 20;  //52600 min=1año
-                        //var ticket = new FormsAuthenticationTicket(login.Email, login.RememberMe, timeout);
-                        //string encrypted = FormsAuthentication.Encrypt(ticket);
-                        //var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypted);
-                        //cookie.Expires = DateTime.Now.AddMinutes(timeout);
-                        //cookie.HttpOnly = true;
-                        //Response.Cookies.Add(cookie);
-
+                        else
+                        {
+                            ViewBag.ActividadCuenta = 1;
+                            RedirectToAction("Login");
+                        }
                     }
                     else
                     {
@@ -457,6 +528,72 @@ namespace despensa.Controllers
         {
             var loginA = HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Clear();
+            return RedirectToAction("Login");
+        }
+
+
+
+
+        private void EnviarEmail(string EmailDestino, string token)
+        {
+            string EmailOrigen = "despensavirtual925@gmail.com";
+            string Contraseña = "DespVirtual925";
+
+            string url = "https://localhost:44383/Usuarios/ConfirmarCuenta/" + token;
+            MailMessage oMailMensaje = new MailMessage(EmailOrigen, EmailDestino, "Confirmar Cuenta:", "<a href='" + url + "'>Click aqui para Confirmar tu cuenta</a>");
+            oMailMensaje.IsBodyHtml = true;
+            SmtpClient osmtpClient = new SmtpClient("smtp.gmail.com");
+            osmtpClient.EnableSsl = true;
+            osmtpClient.UseDefaultCredentials = false;
+            osmtpClient.Port = 587;
+            osmtpClient.Credentials = new System.Net.NetworkCredential(EmailOrigen, Contraseña);
+            osmtpClient.Send(oMailMensaje);
+            osmtpClient.Dispose();
+        }
+
+
+        public async Task<IActionResult> ConfirmarCuenta(string id)
+        {
+            Console.WriteLine("confirmarContraseña: " + id);
+            if (ModelState.IsValid)
+            {
+                using (despensa1Context dc = new despensa1Context())
+                {
+                    var user = dc.Usuario.Where(a => a.Grid.Equals(id)).FirstOrDefault();
+                    if (user != null)
+                    {
+                        user.CodEstado = 3;
+                        user.Grid = null;
+                        //  dc.Configuration.ValidateOnSaveEnabled = false;
+                        _context.Update(user);
+                        await _context.SaveChangesAsync();
+
+                        ClaimsIdentity identity = null;
+                        bool isAuthenticated = false;
+                        identity = new ClaimsIdentity(new[] {
+                        new Claim(ClaimTypes.Name, ""+user.PrimerNombre),
+                        new Claim(ClaimTypes.Email, ""+user.SegundoNombre),
+                        new Claim(ClaimTypes.NameIdentifier, ""+user.CodUsuario),
+                        new Claim(ClaimTypes.Role, ""+user.CodRol)
+                        }, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                        isAuthenticated = true;
+
+
+                        if (isAuthenticated)
+                        {
+                            //contador_sesion++;
+                            var principal = new ClaimsPrincipal(identity);
+                            var loginA = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                            return RedirectToAction("Details", "Usuarios");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
             return RedirectToAction("Login");
         }
     }

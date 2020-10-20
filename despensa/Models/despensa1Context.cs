@@ -550,6 +550,9 @@ namespace despensa.Models
                 entity.HasIndex(e => e.CodRol)
                     .HasName("usuario_rol_idx");
 
+                entity.HasIndex(e => e.PedidoFavorito)
+                    .HasName("usuario_facfavorita_idx");
+
                 entity.Property(e => e.CodUsuario)
                     .HasColumnName("cod_usuario")
                     .HasColumnType("int(11)");
@@ -602,12 +605,28 @@ namespace despensa.Models
                     .HasColumnName("fec_nac")
                     .HasColumnType("date");
 
+                entity.Property(e => e.Grid)
+                    .HasColumnName("grid")
+                    .HasColumnType("varchar(1000)")
+                    .HasCharSet("latin1")
+                    .HasCollation("latin1_swedish_ci");
+
+                entity.Property(e => e.ImagenPerfil)
+                    .HasColumnName("imagen_perfil")
+                    .HasColumnType("varchar(100)")
+                    .HasCharSet("latin1")
+                    .HasCollation("latin1_swedish_ci");
+
                 entity.Property(e => e.Nit)
                     .HasColumnName("nit")
                     .HasColumnType("varchar(45)")
                     .HasDefaultValueSql("'C/F'")
                     .HasCharSet("latin1")
                     .HasCollation("latin1_swedish_ci");
+
+                entity.Property(e => e.PedidoFavorito)
+                    .HasColumnName("pedido_favorito")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.PrimerApellido)
                     .HasColumnName("primer_apellido")

@@ -18,7 +18,7 @@
                     <p class="name">@Html.DisplayFor(model => model.PrimerNombre) @Html.DisplayFor(model => model.PrimerApellido)</p>
                     <p class="sub"> @Html.DisplayFor(model => model.Cui)</p>
                     <div class="controls">
-                        <a href="#"><i class="fa  fa-shopping-cart"></i></a>
+                        <a onclick="obtenerCarrito()"><i class="fa  fa-shopping-cart"></i></a>
                         <a href="#"><i class="glyphicon glyphicon-camera"></i></a>
                     </div>
                 </div>
@@ -32,6 +32,7 @@
                 </div>
                 <div class="chat_inner">
                     <div class="contenedor-formularios" style="max-width: 100%;">
+
                         <!-- Links de los formularios -->
                         @if (@ViewBag.Error1 == 1)
                         {
@@ -48,6 +49,7 @@
                             <!-- Iniciar Sesion -->
                             <div id="iniciar-sesion">
                                 <form id="my-form21" asp-controller="Usuarios" asp-action="Edit">
+                                    <input type="hidden" asp-for="CodUsuario" />
                                     <div class="fila-arriba">
                                         <div class="contenedor-input">
                                             <label class="active highlight">
@@ -128,13 +130,14 @@
                             <!-- Registrarse -->
                             <div id="registrarse">
                                 <form id="my-form21" asp-controller="Usuarios" asp-action="Cambiar_contaseña">
+                                    <input type="hidden" asp-for="CodUsuario" />
                                     <div class="fila-arriba">
                                         <div class="contenedor-input">
                                             <label class="active highlight">
                                                 Contraseña <span class="req">*</span>
                                             </label>
                                             <input asp-for="Contraseña" type="password" style="width:200%;" ID="txtPassword" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$"
-                                           title="Deve tener 8 caracteres e incluir numeros, mayusculas y minusculas">
+                                                   title="Deve tener 8 caracteres e incluir numeros, mayusculas y minusculas">
                                         </div>
                                         <span class="input-group-btn">
                                             <button id="show_password" class="btn btn-primary" style="float: right;" type="button" onclick="mostrarPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
@@ -146,7 +149,7 @@
                                                 Contraseña <span class="req">*</span>
                                             </label>
                                             <input asp-for="ConfirmarContraseña" type="password" style="width:200%;" ID="txtPassword1" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$"
-                                           title="Deve tener 8 caracteres e incluir numeros, mayusculas y minusculas">
+                                                   title="Deve tener 8 caracteres e incluir numeros, mayusculas y minusculas">
                                         </div>
                                         <span class="input-group-btn">
                                             <button id="show_password1" class="btn btn-primary" style="float: right;" type="button" onclick="mostrarPassword1()"> <span class="fa fa-eye-slash icon"></span> </button>
@@ -185,7 +188,7 @@
 
                                         </div>
                                         <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                                            <a target="_blank" class="button2" asp-controller="PredidoFacturas" asp-action="Factura" asp-route-id="@item.CodFactura">Ver Factura</a>
+                                            <a target="_blank" class="button2" asp-controller="PredidoFacturas" asp-action="Details" asp-route-id="@item.CodFactura">Ver Factura</a>
                                         </div>
                                     </div>
                                 </div>
@@ -263,7 +266,7 @@
 
                                         </div>
                                         <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                                            <a target="_blank" class="button2" asp-controller="PredidoFacturas" asp-action="Factura" asp-route-id="@item.CodFactura">Ver Factura</a>
+                                            <a target="_blank" class="button2" asp-controller="PredidoFacturas" asp-action="Details" asp-route-id="@item.CodFactura">Ver Factura</a>
                                         </div>
                                     </div>
                                 </div>
