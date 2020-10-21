@@ -148,6 +148,7 @@ label {
     }
 
 .divinput {
+    min-height: 42px;
     font-size: 22px;
     display: block;
     width: 100%;

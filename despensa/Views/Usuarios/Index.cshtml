@@ -4,8 +4,6 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-
 <style>
     #card {
         height: 250px;
@@ -46,8 +44,7 @@
                 margin: -77px 0 0 -57px;
                 border-radius: 100%;
                 box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.8), 0 4px 5px rgba(107, 5, 0, 0.6), 0 0 50px 50px rgba(255, 255, 255, 0.25);
-                background-image: url(http://0.gravatar.com/avatar/fa4df8540bab3cb38f7dfa60c6e0522c?size=2000);
-                background-size: contain;
+                background-size: cover;
                 position: absolute;
                 z-index: 1;
             }
@@ -84,7 +81,6 @@
             text-align: center;
         }
 </style>
-
 <link rel="stylesheet" href="~/css/login.css">
 <p>
     <a asp-action="Create" class="button2">Create New</a>
@@ -92,14 +88,17 @@
 <div class="ads-grid" style="padding-top:0px;">
     <div class="container" style="width: 90%;">
         <!-- tittle heading -->
-        <h3 class="tittle-w3l">
-            Usuarios
-            <span class="heading-style">
-                <i></i>
-                <i></i>
-                <i></i>
-            </span>
-        </h3>
+        <div class="container">
+            <h3 class="tittle-w3l">
+                Usuarios
+                <span class="heading-style">
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                </span>
+            </h3>
+        </div>
+        
         <div class="container" style="margin-bottom: 10px;">
             <form asp-action="Index" method="get">
                 <div class="col-6 col-md-3">
@@ -123,7 +122,7 @@
                             <div id="card" style="width: 99%;">
                                 <div id="front">
                                     <div id="top-pic"></div>
-                                    <div id="avatar" style="top:80px"></div>
+                                    <div id="avatar" style="background-image: url('@Url.Content("~/perfiles/" + item.ImagenPerfil)'); top:80px;"></div>
                                     <div id="info-box">
                                         <div class="info">
                                             <h3> @Html.DisplayFor(modelItem => item.PrimerNombre) @Html.DisplayFor(modelItem => item.PrimerApellido)</h3>

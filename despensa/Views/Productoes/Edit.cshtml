@@ -18,9 +18,9 @@
         </h3>
         <!-- Iniciar Sesion -->
         <div id="iniciar-sesion">
-            <form id="my-form21" asp-action="UsuarioAdmin" enctype="multipart/form-data">
+            <form id="my-form21" asp-action="Edit" enctype="multipart/form-data">
                 <input type="hidden" asp-for="CodProducto" />
-                <input type="number" asp-for="CodCategoria" value="@ViewBag.codig_cat" hidden />
+                <input type="number" asp-for="CodCategoria" hidden />
                 <input type="hidden" asp-for="Imagen" />
                 <div class="contenedor-input">
                     <label class="active highlight">

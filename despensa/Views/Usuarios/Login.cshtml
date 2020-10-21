@@ -42,7 +42,7 @@
                     </label>
                     <input asp-for="Contraseña" type="password" value="" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
                 </div>
-                <p class="forgot"><a href="#">Se te olvidó la contraseña?</a></p>
+                <p class="forgot"><a asp-controller="Usuarios" asp-action="recuperarcontra">Se te olvidó la contraseña?</a></p>
                 <input type="submit" class="button button-block" value="Iniciar Sesión">
             </form>
         </div>

@@ -1,0 +1,77 @@
+﻿@model despensa.Models.Usuario
+
+@{
+    ViewData["Title"] = "cambiar contraseña";
+}
+<link rel="stylesheet" href="~/css/login.css">
+<div class="contenedor-formularios">
+    <div class="contenido-tab">
+        <!-- Iniciar Sesion -->
+        <div id="iniciar-sesion">
+            <h1>Ingrese su Nueva Contraseña</h1>
+            <form id="my-form21" asp-controller="Usuarios" asp-action="cambiarContra">
+                <div class="fila-arriba">
+                    <div class="contenedor-input">
+                        <label class="active highlight">
+                            Contraseña <span class="req">*</span>
+                        </label>
+                        <input name="contra" type="password" style="width:200%;" ID="txtPassword" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$"
+                               title="Deve tener 8 caracteres e incluir numeros, mayusculas y minusculas">
+                    </div>
+                    <span class="input-group-btn">
+                        <button id="show_password" class="btn btn-primary" style="float: right;" type="button" onclick="mostrarPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
+                    </span>
+                </div>
+                <div class="fila-arriba">
+                    <div class="contenedor-input">
+                        <label class="active highlight">
+                            Contraseña <span class="req">*</span>
+                        </label>
+                        <input name="confirmarcontra" type="password" style="width:200%;" ID="txtPassword1" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$"
+                               title="Deve tener 8 caracteres e incluir numeros, mayusculas y minusculas">
+                    </div>
+                    <span class="input-group-btn">
+                        <button id="show_password1" class="btn btn-primary" style="float: right;" type="button" onclick="mostrarPassword1()"> <span class="fa fa-eye-slash icon"></span> </button>
+                    </span>
+                </div>
+                <input type="submit" class="button button-block" value="Guardar">
+            </form>
+        </div>
+        <!-- Registrarse -->
+        <div id="registrarse">
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script type="text/javascript">
+    function mostrarPassword() {
+        var cambio = document.getElementById("txtPassword");
+        if (cambio.type == "password") {
+            cambio.type = "text";
+            $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+        } else {
+            cambio.type = "password";
+            $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+        }
+    }
+    function mostrarPassword1() {
+        var cambio = document.getElementById("txtPassword1");
+        if (cambio.type == "password") {
+            cambio.type = "text";
+            $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+        } else {
+            cambio.type = "password";
+            $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+        }
+    }
+</script>
+
+
+@section Scripts {
+    <script src="~/js/login.js"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

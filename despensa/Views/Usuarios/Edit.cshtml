@@ -3,14 +3,16 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
-<h2>Edit</h2>
-
-<h4>Usuario</h4>
-<hr />
-
-
-
+<div class="container">
+    <h3 class="tittle-w3l">
+        Activar/desctivar
+        <span class="heading-style">
+            <i></i>
+            <i></i>
+            <i></i>
+        </span>
+    </h3>
+</div>
 <link rel="stylesheet" href="~/css/login.css">
 
 <div class="contenedor-formularios" style="max-width: 100%;">
@@ -38,14 +40,14 @@
                         <label class="active highlight">
                             Primer Nombre <span class="req">*</span>
                         </label>
-                        <div class="divinput">  @Html.DisplayFor(model => model.PrimerNombre)</div>
+                        <div class="divinput" style="width:100%;">  @Html.DisplayFor(model => model.PrimerNombre)</div>
                     </div>
 
                     <div class="contenedor-input">
                         <label class="active highlight">
                             Segundo Nombre <span class="req">*</span>
                         </label>
-                        <div class="divinput">  @Html.DisplayFor(model => model.SegundoNombre)</div>
+                        <div class="divinput"style="width:100%;">  @Html.DisplayFor(model => model.SegundoNombre)</div>
                     </div>
                 </div>
                 <div class="fila-arriba">
@@ -53,14 +55,14 @@
                         <label class="active highlight">
                             Primer Apellido <span class="req">*</span>
                         </label>
-                        <div class="divinput">  @Html.DisplayFor(model => model.PrimerApellido)</div>
+                        <div class="divinput" style="width:100%;">  @Html.DisplayFor(model => model.PrimerApellido)</div>
                     </div>
 
                     <div class="contenedor-input">
                         <label class="active highlight">
                             Segundo Apellido <span class="req">*</span>
                         </label>
-                        <div class="divinput">  @Html.DisplayFor(model => model.SegundoApellido)</div>
+                        <div class="divinput" style="width:100%;">  @Html.DisplayFor(model => model.SegundoApellido)</div>
                     </div>
                 </div>
                 <div class="fila-arriba">
@@ -68,14 +70,14 @@
                         <label class="active highlight">
                             CUI <span class="req">*</span>
                         </label>
-                        <div class="divinput">  @Html.DisplayFor(model => model.Cui)</div>
+                        <div class="divinput" style="width:100%;">  @Html.DisplayFor(model => model.Cui)</div>
                     </div>
 
                     <div class="contenedor-input">
                         <label class="active highlight">
                             NIT <span class="req">*</span>
                         </label>
-                        <div class="divinput">  @Html.DisplayFor(model => model.Nit)</div>
+                        <div class="divinput" style="width:100%;">  @Html.DisplayFor(model => model.Nit)</div>
                     </div>
                 </div>
                 <div class="fila-arriba">
@@ -83,20 +85,20 @@
                         <label class="active highlight">
                             Genero <span class="req">*</span>
                         </label>
-                        <div class="divinput">  @Html.DisplayFor(model => model.CodGeneoNavigation.Genero1)</div>
+                        <div class="divinput" style="width:100%;">  @Html.DisplayFor(model => model.CodGeneoNavigation.Genero1)</div>
                     </div>
                     <div class="contenedor-input">
                         <label class="active highlight">
                             Fecha de Nacimiento <span class="req">*</span>
                         </label>
-                        <div class="divinput">  @Html.DisplayFor(model => model.FecNac)</div>
+                        <div class="divinput" style="width:100%;">  @Html.DisplayFor(model => model.FecNac)</div>
                     </div>
                 </div>
                 <div class="contenedor-input">
                     <label class="active highlight">
                         Direccion <span class="req">*</span>
                     </label>
-                    <div class="divinput">  @Html.DisplayFor(model => model.Direccion)</div>
+                    <div class="divinput" >  @Html.DisplayFor(model => model.Direccion)</div>
                 </div>
                 <div class="contenedor-input">
                     <label class="active highlight">

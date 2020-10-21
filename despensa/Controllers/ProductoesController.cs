@@ -49,15 +49,29 @@ namespace despensa.Controllers
 
                 }
 
-                var unaPagina = entradas.ToPagedList(pageNumber, 3);
+                var unaPagina = entradas.ToPagedList(pageNumber, 9);
                 ViewBag.pagina = unaPagina;
             ViewData["codigo_cat"] = idcat;
             var despensaContext = _context.Producto.Include(p => p.CodEstadoNavigation).Include(p => p.CodMarcaNavigation).Include(p => p.CodProveedorNavigation);
             return View(await despensaContext.ToListAsync());
         }
 
+        [Authorize(Roles = "3")]
+        public async Task<IActionResult> IndexDesactivo(int? page)
+        {
+            var pageNumber = page ?? 1;
 
-    
+            var entradas = (from m in _context.Producto
+                            where m.CodEstado == 4 || m.Cantidad < 1
+                            orderby m.Nombre descending
+                            select m).ToList();
+            var unaPagina = entradas.ToPagedList(pageNumber, 9);
+            ViewBag.pagina = unaPagina;
+            var despensaContext = _context.Producto.Include(p => p.CodEstadoNavigation).Include(p => p.CodMarcaNavigation).Include(p => p.CodProveedorNavigation);
+            return View(await despensaContext.ToListAsync());
+        }
+
+
         public async Task<IActionResult> BuscarProducto(int? page, string Buscar)
         {
             if (Buscar == null || Buscar =="")

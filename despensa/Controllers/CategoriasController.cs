@@ -31,7 +31,7 @@ namespace despensa.Controllers
         {
             var entradas = (from m in _context.Categoria.Include(c => c.EstadoNavigation)
                             where m.Estado == 3 
-                            orderby m.Nombre descending
+                            orderby m.Nombre ascending
                             select m).ToList();
             return View(entradas);
         }
@@ -40,7 +40,7 @@ namespace despensa.Controllers
         {
             var entradas = (from m in _context.Categoria.Include(c => c.EstadoNavigation)
                             where m.Estado == 4
-                            orderby m.Nombre descending
+                            orderby m.Nombre ascending
                             select m).ToList();
             return View(entradas);
         }

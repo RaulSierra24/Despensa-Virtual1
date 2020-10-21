@@ -611,6 +611,12 @@ namespace despensa.Models
                     .HasCharSet("latin1")
                     .HasCollation("latin1_swedish_ci");
 
+                entity.Property(e => e.Grid2)
+                    .HasColumnName("grid2")
+                    .HasColumnType("varchar(1000)")
+                    .HasCharSet("latin1")
+                    .HasCollation("latin1_swedish_ci");
+
                 entity.Property(e => e.ImagenPerfil)
                     .HasColumnName("imagen_perfil")
                     .HasColumnType("varchar(100)")

@@ -3,13 +3,21 @@
 @{
     ViewData["Title"] = "Index";
 }
+<div class="container">
+    <h3 class="tittle-w3l">
+        Categorias de productos
+        <span class="heading-style">
+            <i></i>
+            <i></i>
+            <i></i>
+        </span>
+    </h3>
+</div>
 <div class="page-content-product">
     <div class="main-product">
         <div class="container">
             <div class="row clearfix">
                 <div class="find-box">
-                    <h1>Categorias de productos</h1>
-                    <h4>Tenemos todo lo que necesitas</h4>
                     <div class="col-sm-3">
                         @if (User.IsInRole("3")) {<div class="form-sh"> <a class="button2" asp-action="Create">Crear</a> </div>}
                         </div>

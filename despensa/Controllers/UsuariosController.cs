@@ -12,36 +12,39 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using X.PagedList;
 using System.Net.Mail;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace despensa.Controllers
 {
     public class UsuariosController : Controller
     {
         private readonly despensa1Context _context;
-
-        public UsuariosController(despensa1Context context)
+        private readonly IWebHostEnvironment HostEnvironment;
+        public UsuariosController(despensa1Context context, IWebHostEnvironment hostEnvironment)
         {
+            this.HostEnvironment = hostEnvironment;
             _context = context;
         }
 
         // GET: Usuarios
         [Authorize(Roles = "3")]
-        public async Task<IActionResult> Index(int? page, string Nombre, string Apellido,string cui)
+        public async Task<IActionResult> Index(int? page, string Nombre, string Apellido, string cui)
         {
             var pageNumber = page ?? 1;
             var entradas = (from m in _context.Usuario.Include(u => u.CodEstadoNavigation).Include(u => u.CodGeneoNavigation).Include(u => u.CodRolNavigation)
                             orderby m.CodRol descending
                             select m).ToList();
 
-            if (Nombre != "" && Nombre != null) { ViewBag.nombres=Nombre;            entradas = entradas.Where(a => a.PrimerNombre.ToLower().Contains(Nombre.ToLower()) ).ToList(); }
-            if (Apellido != "" && Apellido != null) { ViewBag.apellido = Apellido; entradas = entradas.Where(a => a.PrimerApellido.ToLower().Contains(Apellido.ToLower()) ).ToList(); }
+            if (Nombre != "" && Nombre != null) { ViewBag.nombres = Nombre; entradas = entradas.Where(a => a.PrimerNombre.ToLower().Contains(Nombre.ToLower())).ToList(); }
+            if (Apellido != "" && Apellido != null) { ViewBag.apellido = Apellido; entradas = entradas.Where(a => a.PrimerApellido.ToLower().Contains(Apellido.ToLower())).ToList(); }
             if (cui != "" && cui != null) { ViewBag.cui = cui; entradas = entradas.Where(a => a.Cui.Contains(cui.ToLower())).ToList(); }
             var entrada = entradas.ToPagedList(pageNumber, 3);
             return View(entrada);
         }
 
         // GET: Usuarios/Details/5
-        [Authorize(Roles = "3,2,1")]    
+        [Authorize(Roles = "3,2,1")]
         public async Task<IActionResult> Details(int? id)
         {
             ClaimsPrincipal currentUser = this.User;
@@ -57,11 +60,11 @@ namespace despensa.Controllers
                                      orderby m.FecEmision descending
                                      select m).ToList();
             ViewBag.misEntregados = (from m in _context.PredidoFactura
-                                     where m.CodCliente == id  && m.CodEstado == 2
+                                     where m.CodCliente == id && m.CodEstado == 2
                                      orderby m.FecEmision descending
                                      select m).ToList();
             ViewBag.misCancelados = (from m in _context.PredidoFactura
-                                     where m.CodCliente == id  && m.CodEstado == 3
+                                     where m.CodCliente == id && m.CodEstado == 3
                                      orderby m.FecEmision descending
                                      select m).ToList();
 
@@ -97,11 +100,12 @@ namespace despensa.Controllers
                 if (ModelState.IsValid)
                 {
                     string resetCode = Guid.NewGuid().ToString();
-                    EnviarEmail(usuario.CorreoElectronico, resetCode);
+                    EnviarEmail(usuario.CorreoElectronico, resetCode,1);
                     usuario.Grid = resetCode;
                     usuario.Cui = "";
                     usuario.CodEstado = 4;
                     usuario.CodRol = 1;
+                    usuario.ImagenPerfil = "perfildefect101920952.jpg";
                     usuario.Contraseña = Crypto.Hash(usuario.Contraseña);
                     _context.Add(usuario);
                     await _context.SaveChangesAsync();
@@ -122,7 +126,7 @@ namespace despensa.Controllers
                         //contador_sesion++;
                         var principal = new ClaimsPrincipal(identity);
                         var loginA = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-                            return RedirectToAction("Details", "Usuarios");
+                        return RedirectToAction("Details", "Usuarios");
                     }
                 }
             }
@@ -130,7 +134,7 @@ namespace despensa.Controllers
             {
                 ViewBag.Error1 = 1;
             }
-            
+
             return View("Login");
         }
 
@@ -138,7 +142,7 @@ namespace despensa.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "3,2,1")]
-        public async Task<IActionResult> Cambiar_foto(int id, [Bind("CodUsuario,PrimerNombre,SegundoNombre,PrimerApellido,SegundoApellido,Contraseña,ConfirmarContraseña,CodGenero,Cui,Telefono,Direccion,Nit,CorreoElectronico,FecNac,CodGeneo,CodRol,CodEstado")] Usuario usuario)
+        public async Task<IActionResult> Cambiar_foto(int id, [Bind("imagens")] Usuario usuario)
         {
             ClaimsPrincipal currentUser = this.User;
             var identity = (ClaimsIdentity)currentUser.Identity;
@@ -148,16 +152,23 @@ namespace despensa.Controllers
             {
 
 
-                if (usuario.Contraseña.Equals(usuario.ConfirmarContraseña))
+                if (usuario.imagens!=null)
                 {
-                    var contraseña = usuario.Contraseña;
                     try
                     {
                         despensa1Context db = new despensa1Context();
                         var anterior = await db.Usuario.FindAsync(id);
-                        usuario = anterior;
-                        usuario.Contraseña = contraseña;
-                        _context.Update(usuario);
+
+                        string carpeta = HostEnvironment.WebRootPath;
+                        string nombrearchivo = Path.GetFileNameWithoutExtension(usuario.imagens.FileName);
+                        string extencion = Path.GetExtension(usuario.imagens.FileName);
+                        anterior.ImagenPerfil = nombrearchivo = nombrearchivo + DateTime.Now.ToString("yymmssfff") + extencion;
+                        string path = Path.Combine(carpeta + "/perfiles/", nombrearchivo);
+                        using (var hola = new FileStream(path, FileMode.Create))
+                        {
+                            await usuario.imagens.CopyToAsync(hola);
+                        }
+                        _context.Update(anterior);
                         await _context.SaveChangesAsync();
                     }
                     catch (DbUpdateConcurrencyException)
@@ -195,7 +206,7 @@ namespace despensa.Controllers
             var identity = (ClaimsIdentity)currentUser.Identity;
             var id3 = Int32.Parse(identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);*/
 
-            if (id == null )
+            if (id == null)
             {
                 return NotFound();
             }
@@ -220,7 +231,7 @@ namespace despensa.Controllers
         [Authorize(Roles = "3,2,1")]
         public async Task<IActionResult> Edit(int id, [Bind("CodUsuario,PrimerNombre,SegundoNombre,PrimerApellido,SegundoApellido,Contraseña,CodGenero,Cui,Telefono,Direccion,Nit,CorreoElectronico,FecNac,CodGeneo,CodRol,CodEstado")] Usuario usuario)
         {
-            
+
             ClaimsPrincipal currentUser = this.User;
             var identity = (ClaimsIdentity)currentUser.Identity;
             id = Int32.Parse(identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
@@ -307,11 +318,11 @@ namespace despensa.Controllers
                 }
                 else
                 {
-                    
+
                     ViewBag.Error1 = 1;
                     return View("Details");
                 }
-                
+
             }
             ViewData["CodGeneo"] = new SelectList(_context.Genero, "CodGenero", "Genero1", usuario.CodGeneo);
             ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "Estado", usuario.CodEstado);
@@ -325,7 +336,7 @@ namespace despensa.Controllers
         [Authorize(Roles = "3")]
         public async Task<IActionResult> UsuarioAdmin(int id, [Bind("CodUsuario,CodRol,CodEstado")] Usuario usuario)
         {
-            Console.WriteLine("usuario admin: "+usuario.CodUsuario+" "+usuario.CodRol+" "+usuario.CodEstado+" "+id);
+            Console.WriteLine("usuario admin: " + usuario.CodUsuario + " " + usuario.CodRol + " " + usuario.CodEstado + " " + id);
             ClaimsPrincipal currentUser = this.User;
             var identity = (ClaimsIdentity)currentUser.Identity;
             var id3 = Int32.Parse(identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
@@ -335,27 +346,27 @@ namespace despensa.Controllers
             }
             if (ModelState.IsValid)
             {
-                    try
+                try
+                {
+                    despensa1Context db = new despensa1Context();
+                    var anterior = await db.Usuario.FindAsync(usuario.CodUsuario);
+                    anterior.CodRol = usuario.CodRol;
+                    anterior.CodEstado = usuario.CodEstado;
+                    _context.Update(anterior);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UsuarioExists(usuario.CodUsuario))
                     {
-                        despensa1Context db = new despensa1Context();
-                        var anterior = await db.Usuario.FindAsync(usuario.CodUsuario);
-                        anterior.CodRol = usuario.CodRol;
-                        anterior.CodEstado = usuario.CodEstado;
-                        _context.Update(anterior);
-                        await _context.SaveChangesAsync();
+                        return NotFound();
                     }
-                    catch (DbUpdateConcurrencyException)
+                    else
                     {
-                        if (!UsuarioExists(usuario.CodUsuario))
-                        {
-                            return NotFound();
-                        }
-                        else
-                        {
-                            throw;
-                        }
+                        throw;
                     }
-                    return RedirectToAction("Index", "Usuarios");
+                }
+                return RedirectToAction("Index", "Usuarios");
 
             }
             ViewData["CodGeneo"] = new SelectList(_context.Genero, "CodGenero", "Genero1", usuario.CodGeneo);
@@ -424,19 +435,19 @@ namespace despensa.Controllers
         public ActionResult Login(Usuario login, string ReturnUrl)
         {
 
-            Console.WriteLine("\""+login.Contraseña+"\"  \""+login.CorreoElectronico+"\"");
+            Console.WriteLine("\"" + login.Contraseña + "\"  \"" + login.CorreoElectronico + "\"");
             using (despensa1Context dc = new despensa1Context())
             {
                 ClaimsIdentity identity = null;
                 bool isAuthenticated = false;
                 var ad = dc.Usuario.FirstOrDefault();
                 var c = dc.Usuario.Where(w => w.CorreoElectronico == login.CorreoElectronico).FirstOrDefault();
-            //    Console.WriteLine("\"" + c.Contraseña + "\"  \"" + c.CorreoElectronico + "\"");
+                //    Console.WriteLine("\"" + c.Contraseña + "\"  \"" + c.CorreoElectronico + "\"");
                 if (c != null)
-                {   
+                {
                     if (string.Compare(Crypto.Hash(login.Contraseña), c.Contraseña) == 0)
                     {
-                        if (c.CodEstado==3) { 
+                        if (c.CodEstado == 3) {
                             var nombres = ad.PrimerNombre;
 
                             Console.WriteLine("Nombre Completo:" + nombres);
@@ -447,7 +458,7 @@ namespace despensa.Controllers
 
                             var pers = dc.Rol.Where(p => p.CodRol == c.CodRol).FirstOrDefault();
 
-                                Console.WriteLine("id_ROL:" + pers.CodRol);
+                            Console.WriteLine("id_ROL:" + pers.CodRol);
                             System.Diagnostics.Debug.WriteLine("id_ROL:" + pers.CodRol);
                             identity = new ClaimsIdentity(new[] {
                             new Claim(ClaimTypes.Name, ""+c.PrimerNombre),
@@ -465,8 +476,8 @@ namespace despensa.Controllers
                                 //contador_sesion++;
                                 var principal = new ClaimsPrincipal(identity);
                                 var loginA = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-                                Console.WriteLine("este es el return"+ReturnUrl);
-                                if (ReturnUrl!="")
+                                Console.WriteLine("este es el return" + ReturnUrl);
+                                if (ReturnUrl != "")
                                 {
                                     return RedirectToAction("Index", "Categorias");
                                 }
@@ -474,7 +485,7 @@ namespace despensa.Controllers
                                 {
                                     return RedirectToAction(ReturnUrl);
                                 }
-                            
+
                             }
 
                             //int timeout = login.RememberMe ? 525600 : 20;  //52600 min=1año
@@ -531,23 +542,37 @@ namespace despensa.Controllers
         }
 
 
-
-
-        private void EnviarEmail(string EmailDestino, string token)
+        private void EnviarEmail(string EmailDestino, string token,int accion)
         {
             string EmailOrigen = "despensavirtual925@gmail.com";
             string Contraseña = "DespVirtual925";
 
-            string url = "https://localhost:44383/Usuarios/ConfirmarCuenta/" + token;
-            MailMessage oMailMensaje = new MailMessage(EmailOrigen, EmailDestino, "Confirmar Cuenta:", "<a href='" + url + "'>Click aqui para Confirmar tu cuenta</a>");
-            oMailMensaje.IsBodyHtml = true;
-            SmtpClient osmtpClient = new SmtpClient("smtp.gmail.com");
-            osmtpClient.EnableSsl = true;
-            osmtpClient.UseDefaultCredentials = false;
-            osmtpClient.Port = 587;
-            osmtpClient.Credentials = new System.Net.NetworkCredential(EmailOrigen, Contraseña);
-            osmtpClient.Send(oMailMensaje);
-            osmtpClient.Dispose();
+            if (accion==1)
+            {
+                string url = "https://localhost:44383/Usuarios/ConfirmarCuenta/" + token;
+                MailMessage oMailMensaje = new MailMessage(EmailOrigen, EmailDestino, "Confirmar Cuenta:", "<a href='" + url + "'>Click aqui para Confirmar tu cuenta</a>");
+                oMailMensaje.IsBodyHtml = true;
+                SmtpClient osmtpClient = new SmtpClient("smtp.gmail.com");
+                osmtpClient.EnableSsl = true;
+                osmtpClient.UseDefaultCredentials = false;
+                osmtpClient.Port = 587;
+                osmtpClient.Credentials = new System.Net.NetworkCredential(EmailOrigen, Contraseña);
+                osmtpClient.Send(oMailMensaje);
+                osmtpClient.Dispose();
+            }
+            else if (accion==2)
+            {
+                string url = "https://localhost:44383/Usuarios/cambiarContra/" + token;
+                MailMessage oMailMensaje = new MailMessage(EmailOrigen, EmailDestino, "Recuperar Contraseña", "<a href='" + url + "'>Click aqui para Confirmar tu cuenta</a>");
+                oMailMensaje.IsBodyHtml = true;
+                SmtpClient osmtpClient = new SmtpClient("smtp.gmail.com");
+                osmtpClient.EnableSsl = true;
+                osmtpClient.UseDefaultCredentials = false;
+                osmtpClient.Port = 587;
+                osmtpClient.Credentials = new System.Net.NetworkCredential(EmailOrigen, Contraseña);
+                osmtpClient.Send(oMailMensaje);
+                osmtpClient.Dispose();
+            }
         }
 
 
@@ -594,6 +619,104 @@ namespace despensa.Controllers
             }
             return RedirectToAction("Login");
         }
+
+
+        public IActionResult recuperarcontra()
+        {
+            return View();
+        }
+
+            [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> recuperarcontra (string id)
+        {
+            if (ModelState.IsValid)
+            {
+                using (despensa1Context dc = new despensa1Context())
+                {
+                    var user = dc.Usuario.Where(a => a.CorreoElectronico.Equals(id)).FirstOrDefault();
+                    if (user != null)
+                    {
+                        string resetCode = Guid.NewGuid().ToString();
+                        EnviarEmail(user.CorreoElectronico, resetCode,2);
+                        user.Grid2 = resetCode;
+                        _context.Update(user);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction("Login");
+                    }
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult cambiarContra(string id)
+        {
+            using (despensa1Context dc = new despensa1Context())
+            {
+                var user = dc.Usuario.Where(a => a.Grid2.Equals(id)).FirstOrDefault();
+                if (user != null)
+                {
+                    ViewBag.grid2 = id;
+                    return View(user);
+                }
+            }
+            return RedirectToAction("Error", "Home");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> cambiarContra(string id,string contra,string confirmarcontra)
+        {
+            if (ModelState.IsValid)
+            {
+                if (contra == confirmarcontra)
+                {
+                    using (despensa1Context dc = new despensa1Context())
+                    {
+                        var user = dc.Usuario.Where(a => a.Grid2.Equals(id)).FirstOrDefault();
+                        if (user != null)
+                        {
+                            user.Contraseña = Crypto.Hash(contra); 
+                            user.Grid2 = null;
+                            _context.Update(user);
+                            await _context.SaveChangesAsync();
+                            ClaimsIdentity identity = null;
+                            bool isAuthenticated = false;
+                            identity = new ClaimsIdentity(new[] {
+                            new Claim(ClaimTypes.Name, ""+user.PrimerNombre),
+                            new Claim(ClaimTypes.Email, ""+user.SegundoNombre),
+                            new Claim(ClaimTypes.NameIdentifier, ""+user.CodUsuario),
+                            new Claim(ClaimTypes.Role, ""+user.CodRol)
+                            }, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                            isAuthenticated = true;
+
+
+                            if (isAuthenticated)
+                            {
+                                var principal = new ClaimsPrincipal(identity);
+                                var loginA = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                                return RedirectToAction("Details", "Usuarios");
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("cambiarContra", "Usuarios", new { id = id });
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+            return RedirectToAction("Login");
+        }
+
     }
 }
 

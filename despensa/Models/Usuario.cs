@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -31,6 +32,7 @@ namespace despensa.Models
         public int? CodRol { get; set; }
         public int? CodEstado { get; set; }
         public string Grid { get; set; }
+        public string Grid2 { get; set; }
         public string ImagenPerfil { get; set; }
         public int? PedidoFavorito { get; set; }
 
@@ -51,6 +53,6 @@ namespace despensa.Models
         public String ConfirmarContraseña { get; set; }
 
         [NotMapped]
-        public String imagens { get; set; }
+        public IFormFile imagens { get; set; }
     }
 }

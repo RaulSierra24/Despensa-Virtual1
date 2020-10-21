@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+}
+@using despensa.Models;
+@{
+    ViewData["Title"] = "Inciar Sesión";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@model Usuario
+<link rel="stylesheet" href="~/css/login.css">
+<div class="contenedor-formularios">
+    <div class="contenido-tab">
+        <!-- Iniciar Sesion -->
+        <div id="iniciar-sesion">
+            <h1>Ingrese su correo</h1>
+            <form id="miForm" asp-controller="Usuarios" asp-action="recuperarcontra" method="post">
+                <div class="contenedor-input">
+                    <label>
+                        Correo Electronico <span class="req">*</span>
+                    </label>
+                    <input name="id" type="email" value="" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                </div>
+                <input type="submit" class="button button-block" value="Recuperar contraseña">
+            </form>
+        </div>
+        <!-- Registrarse -->
+        <div id="registrarse">
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+            $("form").each(function () { this.reset() });
+        });
+    </script>
+    <script src="~/js/login.js"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

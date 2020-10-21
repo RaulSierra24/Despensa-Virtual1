@@ -4,22 +4,30 @@
     ViewData["Title"] = "Details";
 }
 <link rel="stylesheet" href="~/css/Perfil.css">
-<h2>Details</h2>
 <link rel="stylesheet" href="~/css/login.css">
+<div class="container">
+    <h3 class="tittle-w3l">
+        Perfil
+        <span class="heading-style">
+            <i></i>
+            <i></i>
+            <i></i>
+        </span>
+    </h3>
+</div>
 <div class="ads-grid">
-    <!-- first section (nuts) -->
     <div class="product-sec1">
         <div class="col-md-3 product-men ">
             <div class="user-item">
                 <div class="user-item_photo">
-                    <img src="http://cs627618.vk.me/v627618825/c092/8fhljOvdiEs.jpg" style="border-radius: 20px 20px 0 0;" alt="myphoto" />
+                    <img src="@Url.Content("~/perfiles/" + Model.ImagenPerfil)" style="border-radius: 20px 20px 0 0;" alt="myphoto" />
                 </div>
                 <div class="user-item_info">
                     <p class="name">@Html.DisplayFor(model => model.PrimerNombre) @Html.DisplayFor(model => model.PrimerApellido)</p>
                     <p class="sub"> @Html.DisplayFor(model => model.Cui)</p>
                     <div class="controls">
                         <a onclick="obtenerCarrito()"><i class="fa  fa-shopping-cart"></i></a>
-                        <a href="#"><i class="glyphicon glyphicon-camera"></i></a>
+                        <a data-toggle="modal" data-target="#myModalimagen"><i class="glyphicon glyphicon-camera"></i></a>
                     </div>
                 </div>
             </div>
@@ -121,8 +129,6 @@
                                         </label>
                                         <input asp-for="CorreoElectronico" type="email" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
                                     </div>
-
-
                                     <input type="submit" class="button button-block" value="Guardar">
                                 </form>
                             </div>
@@ -137,7 +143,7 @@
                                                 Contraseña <span class="req">*</span>
                                             </label>
                                             <input asp-for="Contraseña" type="password" style="width:200%;" ID="txtPassword" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$"
-                                                   title="Deve tener 8 caracteres e incluir numeros, mayusculas y minusculas">
+                                           title="Deve tener 8 caracteres e incluir numeros, mayusculas y minusculas">
                                         </div>
                                         <span class="input-group-btn">
                                             <button id="show_password" class="btn btn-primary" style="float: right;" type="button" onclick="mostrarPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
@@ -149,7 +155,7 @@
                                                 Contraseña <span class="req">*</span>
                                             </label>
                                             <input asp-for="ConfirmarContraseña" type="password" style="width:200%;" ID="txtPassword1" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$"
-                                                   title="Deve tener 8 caracteres e incluir numeros, mayusculas y minusculas">
+                                           title="Deve tener 8 caracteres e incluir numeros, mayusculas y minusculas">
                                         </div>
                                         <span class="input-group-btn">
                                             <button id="show_password1" class="btn btn-primary" style="float: right;" type="button" onclick="mostrarPassword1()"> <span class="fa fa-eye-slash icon"></span> </button>
@@ -286,7 +292,31 @@
     <!-- //product right -->
 </div>
 
+<div class="modal fade" id="myModalimagen" role="dialog">
+    <div class="modal-dialog" style="top: 25%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Imagen de Perfil</h4>
+            </div>
+            <div class="modal-body">
+                <div id="iniciar-sesion">
+                    <form id="my-form21" asp-controller="Usuarios" asp-action="Cambiar_foto"  enctype="multipart/form-data">
+                        <input type="hidden" asp-for="CodUsuario"/>
+                        <div class="contenedor-input">
+                            <input asp-for="imagens" accept="image/*" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');"/>
+                        </div>
+                        <input type="submit" class="button button-block" value="Guardar">
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
 
+    </div>
+</div>
 
 
 
