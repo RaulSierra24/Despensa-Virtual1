@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit";
 }
 <div class="container">
-    <h3 class="tittle-w3l">
+    <h3 class="tittle-w3l" style="margin-bottom:0">
         Activar/desctivar
         <span class="heading-style">
             <i></i>
@@ -15,7 +15,7 @@
 </div>
 <link rel="stylesheet" href="~/css/login.css">
 
-<div class="contenedor-formularios" style="max-width: 100%;">
+<div class="contenedor-formularios" style="max-width: 75%; ">
     <div class="contenido-tab">
         <div id="iniciar-sesion">
             <form id="my-form21" asp-controller="Usuarios" asp-action="UsuarioAdmin">
@@ -47,7 +47,7 @@
                         <label class="active highlight">
                             Segundo Nombre <span class="req">*</span>
                         </label>
-                        <div class="divinput"style="width:100%;">  @Html.DisplayFor(model => model.SegundoNombre)</div>
+                        <div class="divinput" style="width:100%;">  @Html.DisplayFor(model => model.SegundoNombre)</div>
                     </div>
                 </div>
                 <div class="fila-arriba">
@@ -85,7 +85,7 @@
                         <label class="active highlight">
                             Genero <span class="req">*</span>
                         </label>
-                        <div class="divinput" style="width:100%;">  @Html.DisplayFor(model => model.CodGeneoNavigation.Genero1)</div>
+                        <div class="divinput" style="width:100%;">  @ViewBag.genero</div>
                     </div>
                     <div class="contenedor-input">
                         <label class="active highlight">
@@ -98,7 +98,7 @@
                     <label class="active highlight">
                         Direccion <span class="req">*</span>
                     </label>
-                    <div class="divinput" >  @Html.DisplayFor(model => model.Direccion)</div>
+                    <div class="divinput">  @Html.DisplayFor(model => model.Direccion)</div>
                 </div>
                 <div class="contenedor-input">
                     <label class="active highlight">
@@ -106,7 +106,10 @@
                     </label>
                     <div class="divinput">  @Html.DisplayFor(model => model.CorreoElectronico) .</div>
                 </div>
-                <input type="submit" class="button button-block" value="Guardar">
+                <div class="text-center">
+                    <input value="Guardar" type="submit" style="width:150px;" class="botones validar redondear">
+                    <a asp-action="Index" style="width:150px;" class="botones danger redondear">Regresar</a>
+                </div>
             </form>
         </div>
         <div id="registrarse">

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Microsoft.AspNetCore.Authorization;
 using System.Diagnostics;
+using Microsoft.Data.SqlClient;
 
 namespace despensa.Controllers
 {
@@ -18,6 +19,7 @@ namespace despensa.Controllers
     {
         private readonly despensa1Context _context;
         private readonly IWebHostEnvironment HostEnvironment;
+        private readonly SqlConnection _conn;
         public ProductoesController(despensa1Context context, IWebHostEnvironment hostEnvironment)
         {
             this.HostEnvironment = hostEnvironment;
@@ -26,34 +28,32 @@ namespace despensa.Controllers
 
         // GET: Productoes
         [Authorize(Roles = "2,1,3")]
-        public async Task<IActionResult> Index(int? page, int idcat)
+        public ActionResult Index(int? page, int idcat)
         {
             Console.WriteLine("hola"+idcat);
             if (idcat<=0)
             {
                 return RedirectToAction("Index","Categorias");
             }
-                ViewBag.categoriass = idcat;
-                var pageNumber = page ?? 1;
+            ViewBag.categoriass = idcat;
+            var pageNumber = page ?? 1;
 
-                var entradas = (from m in _context.Producto
-                                where m.CodEstado == 3 && m.Cantidad > 0
-                                orderby m.Nombre descending
-                                select m).ToList();
+            var entradas = (from m in _context.Producto.Include(p => p.CodEstadoNavigation).Include(p => p.CodMarcaNavigation).Include(p => p.CodProveedorNavigation).Include(p => p.CodCategoriaNavigation)
+                            where m.CodEstado == 3 && m.Cantidad > 0 && m.CodCategoria == idcat
+                            orderby m.Nombre descending
+                            select m).ToList();
 
-
-                if (idcat > 0)
-                {
-                   
-                    entradas = entradas.Where(a => a.CodCategoria == idcat).ToList();
-
-                }
-
-                var unaPagina = entradas.ToPagedList(pageNumber, 9);
-                ViewBag.pagina = unaPagina;
-            ViewData["codigo_cat"] = idcat;
-            var despensaContext = _context.Producto.Include(p => p.CodEstadoNavigation).Include(p => p.CodMarcaNavigation).Include(p => p.CodProveedorNavigation);
-            return View(await despensaContext.ToListAsync());
+            var unaPagina = entradas.ToPagedList(pageNumber, 9);
+            if (entradas.Count>0)
+            {
+                ViewBag.NombreCat = entradas[0].CodCategoriaNavigation.Nombre;  //cart[i].Product.Id
+            }
+            else
+            {
+                ViewBag.NombreCat = "No Hay Productos En Existencia";
+            }
+           
+            return View(unaPagina);
         }
 
         [Authorize(Roles = "3")]
@@ -70,7 +70,6 @@ namespace despensa.Controllers
             var despensaContext = _context.Producto.Include(p => p.CodEstadoNavigation).Include(p => p.CodMarcaNavigation).Include(p => p.CodProveedorNavigation);
             return View(await despensaContext.ToListAsync());
         }
-
 
         public async Task<IActionResult> BuscarProducto(int? page, string Buscar)
         {
@@ -105,23 +104,19 @@ namespace despensa.Controllers
             {
                 return NotFound();
             }
-            int total = _context.Producto.Count();
-            List<Producto> lista = new List<Producto>();
-            Random rnd = new Random();
-            for (int i = 0; i < 10; i++)
-            {
-                int index = rnd.Next(1, total);
-                var aux = await _context.Producto.FindAsync(index);
-                lista.Add(aux);
-                Console.WriteLine("entre al for prr"+aux);
-            }
-            Console.WriteLine("sali del for prr");
-            ViewBag.Alazar = lista;
+            var r = new Random();
+            var aux = await _context.Producto
+                .Include(p => p.CodCategoriaNavigation)
+                .OrderByDescending(x => x.Cantidad).Take(10).ToArrayAsync();
+            ViewBag.productosExtra = aux;
+
             var producto = await _context.Producto
                 .Include(p => p.CodEstadoNavigation)
                 .Include(p => p.CodMarcaNavigation)
                 .Include(p => p.CodProveedorNavigation)
+                .Include(p => p.CodCategoriaNavigation)   
                 .FirstOrDefaultAsync(m => m.CodProducto == id);
+            
             if (producto == null)
             {
                 return NotFound();
@@ -200,9 +195,9 @@ namespace despensa.Controllers
             {
                 return NotFound();
             }
-            ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "CodEstado", producto.CodEstado);
-            ViewData["CodMarca"] = new SelectList(_context.Marca, "CodMarca", "CodMarca", producto.CodMarca);
-            ViewData["CodProveedor"] = new SelectList(_context.Proveedor, "CodProveedor", "CodProveedor", producto.CodProveedor);
+            ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "Estado", producto.CodEstado);
+            ViewData["CodMarca"] = new SelectList(_context.Marca, "CodMarca", "Marca1", producto.CodMarca);
+            ViewData["CodProveedor"] = new SelectList(_context.Proveedor, "CodProveedor", "Proveedor1", producto.CodProveedor);
             return View(producto);
         }
 

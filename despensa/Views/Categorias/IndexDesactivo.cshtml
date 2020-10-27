@@ -3,16 +3,24 @@
 @{
     ViewData["Title"] = "Index";
 }
+<div class="container">
+    <h3 class="tittle-w3l">
+        Categorias de productos
+        <span class="heading-style">
+            <i></i>
+            <i></i>
+            <i></i>
+        </span>
+    </h3>
+</div>
 <div class="page-content-product">
     <div class="main-product">
         <div class="container">
             <div class="row clearfix">
                 <div class="find-box">
-                    <h1>Categorias de productos</h1>
-                    <h4>Tenemos todo lo que necesitas</h4>
                     <div class="col-sm-3">
                         @if (User.IsInRole("3"))
-                        {<div class="form-sh"> <a class="button2" asp-action="Create">Crear</a> </div>}
+                        {<div class="form-sh"> <a class="botones info cursivo2" asp-action="Create">Crear Categoria</a> </div>}
                     </div>
                 </div>
             </div>
@@ -22,15 +30,18 @@
                     <a asp-controller="Productoes" asp-route-idcat="@item.CodCategoria">
                         <div class="box-img">
                             <div class="text-center">
-                                <h2> @Html.DisplayFor(modelItem => item.Nombre) </h2>
+                                <h2 style="margin-bottom:8px"> @Html.DisplayFor(modelItem => item.Nombre) </h2>
                             </div>
                             <img src=@Url.Content("~/image/" + item.Imagen) alt="" class="img-responsive zoom-img" style="width: 100%;" />
                         </div>
                     </a>
                     @if (User.IsInRole("3"))
                     {
-                        <a class="button2" asp-action="Edit" asp-route-id="@item.CodCategoria">Edit</a>
-                        <a class="button2" asp-action="Details" asp-route-id="@item.CodCategoria">Details</a>
+                        <div class="text-center">
+                            <a class="botones success circle" asp-action="Edit" asp-route-id="@item.CodCategoria" style="margin-top:15px">Editar</a>
+                            <a class="botones warning circle" asp-action="Details" asp-route-id="@item.CodCategoria">Detalles</a>
+                        </div>
+
                     }
                     <br />
                     <br />

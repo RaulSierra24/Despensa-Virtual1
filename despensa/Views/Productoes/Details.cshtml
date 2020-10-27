@@ -83,7 +83,7 @@
     <div class="container">
         <!-- tittle heading -->
         <h3 class="tittle-w3l">
-            @Html.DisplayFor(model => model.Nombre)
+            @Html.DisplayFor(model => model.CodCategoriaNavigation.Nombre)
             <span class="heading-style">
                 <i></i>
                 <i></i>
@@ -104,14 +104,14 @@
             </div>
         </div>
         <div class="col-md-7 single-right-left simpleCart_shelfItem">
-            <h3>Zeeba Premium Basmati Rice - 5 KG</h3>
+            <h3>@Html.DisplayFor(model => model.Nombre) - @Html.DisplayFor(model => model.Peso)</h3>
             <div class="rating1">
                 <span class="starRating">
-                    <input id="rating5" type="radio" name="rating" value="5">
+                    <input id="rating5" type="radio" name="rating" value="5" checked="">
                     <label for="rating5">5</label>
                     <input id="rating4" type="radio" name="rating" value="4">
                     <label for="rating4">4</label>
-                    <input id="rating3" type="radio" name="rating" value="3" checked="">
+                    <input id="rating3" type="radio" name="rating" value="3">
                     <label for="rating3">3</label>
                     <input id="rating2" type="radio" name="rating" value="2">
                     <label for="rating2">2</label>
@@ -120,54 +120,55 @@
                 </span>
             </div>
             <p>
-                <span class="item_price">$950.00</span>
-                <del>$1300.00</del>
-                <label>Free delivery</label>
+                <span class="item_price">Q. @Html.DisplayFor(model => model.PrecioVenta)</span>
+                <del>Q. @(Model.PrecioVenta + 5)</del>
+                <label>Entrega Gratis</label>
             </p>
             <div class="single-infoagile">
                 <ul>
                     <li>
-                        Cash on Delivery Eligible.
+                        Pago contra reembolso Elegible.
                     </li>
                     <li>
-                        Shipping Speed to Delivery.
+                        Velocidad de envío hasta la entrega.
                     </li>
                     <li>
-                        Sold and fulfilled by Supple Tek (3.6 out of 5 | 8 ratings).
-                    </li>
-                    <li>
-                        1 offer from
-                        <span class="item_price">$950.00</span>
+                        1 oferta de:
+                        <span class="item_price">Q. @Html.DisplayFor(model => model.PrecioVenta)</span>
                     </li>
                 </ul>
             </div>
             <div class="product-single-w3l">
                 <p>
-                    <i class="fa fa-hand-o-right" aria-hidden="true"></i>This is a
-                    <label>Vegetarian</label> product.
+                    <i class="fa fa-hand-o-right" aria-hidden="true"></i>Este producto pertenece a
+                    <label>@Html.DisplayFor(model => model.CodCategoriaNavigation.Nombre)</label>
                 </p>
                 <ul>
                     <li>
-                        Best for Biryani and Pulao.
+                        La mejor calidad para Usted!
                     </li>
                     <li>
-                        After cooking, Zeeba Basmati rice grains attain an extra ordinary length of upto 2.4 cm/~1 inch.
+                        Producto fresco hasta: @Html.DisplayFor(model => model.FecCaducidad)
                     </li>
                     <li>
-                        Zeeba Basmati rice adheres to the highest food afety standards as your health is paramount to us.
-                    </li>
-                    <li>
-                        Contains only the best and purest grade of basmati rice grain of Export quality.
+                        Marca: @Html.DisplayFor(model => model.CodMarcaNavigation.Marca1)
                     </li>
                 </ul>
                 <p>
-                    <i class="fa fa-refresh" aria-hidden="true"></i>All food products are
-                    <label>non-returnable.</label>
+                    <i class="fa fa-refresh" aria-hidden="true"></i>Contamos con
+                    <label>@Html.DisplayFor(model => model.Cantidad) Unidades </label> en existencia
                 </p>
             </div>
             <div class="occasion-cart">
-                <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-
+                <div class="text-left">
+                    <button class="botones validar redondear" onclick="agregarProducto(@Model.CodProducto)">
+                        Añadir al Carrito
+                        <i class="fa fa-shopping-cart"></i>
+                    </button>
+                    @if (User.IsInRole("3") || User.IsInRole("2"))
+                    {
+                        <a class="botones success redondear" style="margin-bottom:10px;" asp-action="Edit" asp-route-id="@Model.CodProducto" asp-route-idcat="@Model.CodCategoria">Editar</a>}
+                    <a class="botones danger redondear" asp-controller="Productoes" asp-action="Index" asp-route-idcat="@Model.CodCategoria">Regresar</a>
                 </div>
 
             </div>
@@ -176,31 +177,71 @@
         <div class="clearfix"> </div>
     </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.CodProducto" asp-route-idcat="@ViewData["codigo_cat"]">Edit</a> |
-    <a asp-controller="Productoes" asp-route-idcat="@ViewData["codigo_cat"]">Back to List</a>
+
+
+<div class="featured-section" id="projects">
+    <div class="container">
+        <!-- tittle heading -->
+        <h3 class="tittle-w3l">
+            Productos De Su interés
+            <span class="heading-style">
+                <i></i>
+                <i></i>
+                <i></i>
+            </span>
+        </h3>
+        <!-- //tittle heading -->
+        <div class="content-bottom-in">
+            <ul id="flexiselDemo1">
+                @foreach (var item in ViewBag.productosExtra)
+                {
+                    <li>
+                        <div class="w3l-specilamk">
+                            <div class="speioffer-agile">
+                                <a asp-action="Details" asp-route-id="@item.CodProducto">
+                                    <div class="cuadrado_imagen" style="background-image: url('@Url.Content("~/image/" + item.Imagen)'); background-size: cover;">
+                                </a>
+                            </div>
+                            <div class="product-name-w3l">
+                                <h4>
+                                    <a asp-action="Details" asp-route-id="@item.CodProducto"> @item.Nombre, @item.Peso</a>
+                                </h4>
+                                <div class="w3l-pricehkj">
+                                    <h6>$220.00</h6>
+                                    <p>Unicamente @item.Cantidad unidades</p>
+                                </div>
+                                <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                                    <button class="botones validar redondear" onclick="agregarProducto(@Model.CodProducto)">
+                                        Añadir al Carrito
+                                        <i class="fa fa-shopping-cart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
 </div>
 
 
 
 
-
-
-
 @section Scripts {
-
-    <script src="@Url.Content("~/js/imagezoom.js")"></script>
-    <script src="~/js/jquery.flexslider.js"></script>
     <script>
-        // Can also be used with $(document).ready()
-        $(window).load(function () {
-            $('.flexslider').flexslider({
-                animation: "slide",
-                controlNav: "thumbnails"
+        function agregarProducto(txt) {
+            $.ajax({
+                url: "/cart/compra/",
+                data: { "id": txt },
+                success: function () {
+                    obtenerCarrito();
+                }
             });
-        });
+        }
     </script>
-    <script src="js/jquery.flexisel.js"></script>
+    <script src="@Url.Content("~/js/imagezoom.js")"></script>
+    <script src="~/js/jquery.flexisel.js"></script>
     <script>
         $(window).load(function () {
             $("#flexiselDemo1").flexisel({

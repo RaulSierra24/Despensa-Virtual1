@@ -47,7 +47,7 @@ namespace despensa.Controllers
                     DateTime fecfin = DateTime.ParseExact(FecFinal, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
                     entradas = entradas.Where(a => a.FecEmision>=fecini && a.FecEmision <= fecfin).ToList();
                 }
-                catch (Exception ex) { }
+                catch (Exception ex) { Console.WriteLine(ex); }
             }
             return View(entradas);
         }

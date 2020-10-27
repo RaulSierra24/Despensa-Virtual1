@@ -164,6 +164,7 @@ label {
     border-radius: 0;
     transition: all 0.2s ease;
     border-radius: 5px;
+    margin-bottom:0;
 }
 
 input {
@@ -247,6 +248,11 @@ input {
         .fila-arriba div:last-child {
             margin-bottom: 40px;
         }
+        .fila-arriba .divinput:last-child {
+            margin-bottom: 0px;
+        }
+
+
 }
 
 @media screen and (max-width: 400px) {

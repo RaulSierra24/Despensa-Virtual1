@@ -3,11 +3,11 @@
 @using X.PagedList.Mvc.Core
 
 @{ ViewData["Title"] = "Index"; }
-<div class="ads-grid">
+<div class="ads-grid" style="padding-top:0">
     <div class="container">
         <!-- tittle heading -->
         <h3 class="tittle-w3l">
-            Productos
+            @ViewBag.NombreCat
             <span class="heading-style">
                 <i></i>
                 <i></i>
@@ -21,11 +21,11 @@
         <div class="agileinfo-ads-display col-md-16">
             <div class="wrapper">
                 @if (User.IsInRole("3") || User.IsInRole("2"))
-                {<a class="button2" asp-controller="Productoes" asp-action="Create" asp-route-idcat="@ViewBag.categoriass">Agregar produto</a>}
+                {<a class="botones info cursivo2" asp-controller="Productoes" asp-action="Create" asp-route-idcat="@ViewBag.categoriass">Agregar produto</a>}
                 <!-- first section (nuts) -->
                 <div class="product-sec1">
                     <h3 class="heading-tittle">Productos</h3>
-                    @foreach (var item in ViewBag.pagina)
+                    @foreach (var item in Model)
                     {
                         <div class="col-md-4 product-men">
                             <div class="men-pro-item simpleCart_shelfItem">
@@ -53,7 +53,10 @@
 
                                     </div>
                                     <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                                        <button class="button2" onclick="agregarProducto(@item.CodProducto)">Añadir al Carrito 1</button>
+                                        <button onclick="agregarProducto(@item.CodProducto)" class="botones validar cursivo2">
+                                            Añadir al Carrito
+                                            <i class="fa fa-shopping-cart"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -62,7 +65,7 @@
 
                     <div class="clearfix"></div>
                 </div>
-                @Html.PagedListPager((IPagedList)ViewBag.pagina, page => Url.Action("Index", new { page = page, idcat = @ViewBag.categoriass }))
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page = page, idcat = @ViewBag.categoriass }))
             </div>
         </div>
         <!-- //product right -->

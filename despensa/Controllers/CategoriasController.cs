@@ -27,7 +27,7 @@ namespace despensa.Controllers
 
         // GET: Categorias
         [Authorize(Roles = "3,2,1")]
-        public async Task<IActionResult> Index()
+        public ActionResult Index()
         {
             var entradas = (from m in _context.Categoria.Include(c => c.EstadoNavigation)
                             where m.Estado == 3 
@@ -36,7 +36,7 @@ namespace despensa.Controllers
             return View(entradas);
         }
         [Authorize(Roles = "3")]
-        public async Task<IActionResult> IndexDesactivo()
+        public ActionResult IndexDesactivo()
         {
             var entradas = (from m in _context.Categoria.Include(c => c.EstadoNavigation)
                             where m.Estado == 4

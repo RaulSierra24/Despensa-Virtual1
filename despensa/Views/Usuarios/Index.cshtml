@@ -82,9 +82,6 @@
         }
 </style>
 <link rel="stylesheet" href="~/css/login.css">
-<p>
-    <a asp-action="Create" class="button2">Create New</a>
-</p>
 <div class="ads-grid" style="padding-top:0px;">
     <div class="container" style="width: 90%;">
         <!-- tittle heading -->
@@ -110,7 +107,8 @@
                 <div class="col-6 col-md-3">
                     <input id="cui" name="cui" type="text" placeholder="DPI" />
                 </div>
-                <input type="submit" class="button button-block" value="Filtrar" style="max-width: 10%; max-height: 50px; padding: 0px;">
+                <input type="submit" value="Filtrar" style="max-width: 10%;" class="botones success redondear">
+                <a asp-action="Create" class="botones info redondear">Crear Usuario</a>
             </form>
         </div>
         <div class="agileinfo-ads-display col-md-16">
@@ -138,6 +136,7 @@
                     <div class="clearfix"></div>
                 </div>
             </div>
+
             @if (ViewBag.cui != null || ViewBag.cui != "" || ViewBag.apellido != null || ViewBag.apellido != "" || ViewBag.nombres != null || ViewBag.nombres != "")
             {
                 @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page = page, Nombre = @ViewBag.nombres, Apellido = @ViewBag.apellido, cui= @ViewBag.cui }))
@@ -146,7 +145,6 @@
             {
                 @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page = page}))
             }
-
         </div>
     </div>
 </div>

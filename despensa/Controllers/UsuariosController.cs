@@ -29,7 +29,7 @@ namespace despensa.Controllers
 
         // GET: Usuarios
         [Authorize(Roles = "3")]
-        public async Task<IActionResult> Index(int? page, string Nombre, string Apellido, string cui)
+        public ActionResult Index(int? page, string Nombre, string Apellido, string cui)
         {
             var pageNumber = page ?? 1;
             var entradas = (from m in _context.Usuario.Include(u => u.CodEstadoNavigation).Include(u => u.CodGeneoNavigation).Include(u => u.CodRolNavigation)
@@ -138,6 +138,22 @@ namespace despensa.Controllers
             return View("Login");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAdmin([Bind("CodUsuario,PrimerNombre,SegundoNombre,PrimerApellido,SegundoApellido,Contraseña,CodGenero,Cui,Telefono,Direccion,Nit,CorreoElectronico,FecNac,CodGeneo,CodRol,CodEstado,Grid,Grid2,ImagenPerfil,PedidoFavorito")] Usuario usuario)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(usuario);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "CodEstado", usuario.CodEstado);
+            ViewData["CodGeneo"] = new SelectList(_context.Genero, "CodGenero", "CodGenero", usuario.CodGeneo);
+            ViewData["CodRol"] = new SelectList(_context.Rol, "CodRol", "CodRol", usuario.CodRol);
+            return View(usuario);
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -219,6 +235,16 @@ namespace despensa.Controllers
             {
                 return NotFound();
             }
+            if (usuario.CodGeneo==2)
+            {
+                ViewBag.genero = "Hombre";
+            }else if(usuario.CodGeneo==3){
+                ViewBag.genero = "Mujer";
+            }
+            else
+            {
+                ViewBag.genero = "Prefiero no decirlo";
+            }
             ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "Estado", usuario.CodEstado);
             ViewData["CodRol"] = new SelectList(_context.Rol, "CodRol", "Rol1", usuario.CodRol);
             return View(usuario);
@@ -251,7 +277,7 @@ namespace despensa.Controllers
                     usuario.CodEstado = anterior.CodEstado;
                     usuario.CodRol = anterior.CodRol;
                     usuario.Contraseña = anterior.Contraseña;
-
+                    usuario.ImagenPerfil = anterior.ImagenPerfil;
                     _context.Update(usuario);
                     await _context.SaveChangesAsync();
                 }

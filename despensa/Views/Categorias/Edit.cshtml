@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit";
 }
 <link rel="stylesheet" href="~/css/login.css">
-<div class="contenedor-formularios" style="max-width: 75%;">
+<div class="contenedor-formularios" style="max-width: 50%;">
     <!-- Links de los formularios -->
     <!-- Contenido de los Formularios -->
     <div class="contenido-tab">
@@ -33,7 +33,10 @@
                     <select asp-for="Estado" class="select-css" style="width:100%;" asp-items="ViewBag.Estado"></select>
                 </div>
                 <br />
-                <input type="submit" class="button button-block" value="Guardar">
+                <div class="text-center">
+                    <input value="Guardar" type="submit" style="width:15%" class="botones validar redondear">
+                    <a asp-action="Index" style="width:15%" class="botones danger redondear">Regresar</a>
+                </div>
             </form>
         </div>
 
@@ -42,13 +45,6 @@
 
         </div>
     </div>
-</div>
-
-
-
-
-<div>
-    <a class="button2" style="background-color: darkslateblue" asp-action="Index">regresar</a>
 </div>
 
 
