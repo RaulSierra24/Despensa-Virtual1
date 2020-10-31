@@ -3,28 +3,22 @@
 @{
     ViewData["Title"] = "Details";
 }
-
-<h2>Details</h2>
-
-<div>
-    <h4>Proveedor</h4>
+<link rel="stylesheet" href="~/css/login.css">
+<div class="container">
+    <h4>Marca</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Proveedor1)
+            Nombre Proveedor
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Proveedor1)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CodEstadoNavigation)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CodEstadoNavigation.CodEstado)
+            <div class="divinput"> @Html.DisplayNameFor(model => model.CodEstadoNavigation)</div>
+
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.CodProveedor">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a class="botones success redondear" style="margin-bottom:10px;" asp-action="Edit" asp-route-id="@Model.CodProveedor">Editar</a>
+    <a class="botones danger redondear" asp-action="Index">Regresar</a>
 </div>
+

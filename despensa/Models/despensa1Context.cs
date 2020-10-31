@@ -360,6 +360,12 @@ namespace despensa.Models
                     .WithMany(p => p.PredidoFactura)
                     .HasForeignKey(d => d.CodEstado)
                     .HasConstraintName("pedido_estado");
+
+                entity.Property(e => e.Direccion_entrega)
+                    .HasColumnName("direccion_entrega")
+                    .HasColumnType("varchar(450)")
+                    .HasCharSet("latin1")
+                    .HasCollation("latin1_swedish_ci");
             });
 
             modelBuilder.Entity<Producto>(entity =>

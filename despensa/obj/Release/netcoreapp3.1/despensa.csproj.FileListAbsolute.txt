@@ -415,3 +415,9 @@ D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Release\netcoreapp3.1\staticwe
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Release\netcoreapp3.1\despensa.dll
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Release\netcoreapp3.1\despensa.pdb
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Release\netcoreapp3.1\despensa.genruntimeconfig.cache
+D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Release\netcoreapp3.1\Razor\Views\Shared\_Layout1.cshtml.g.cs
+D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Release\netcoreapp3.1\Razor\Views\Usuarios2\Create.cshtml.g.cs
+D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Release\netcoreapp3.1\Razor\Views\Usuarios2\Delete.cshtml.g.cs
+D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Release\netcoreapp3.1\Razor\Views\Usuarios2\Details.cshtml.g.cs
+D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Release\netcoreapp3.1\Razor\Views\Usuarios2\Edit.cshtml.g.cs
+D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Release\netcoreapp3.1\Razor\Views\Usuarios2\Index.cshtml.g.cs

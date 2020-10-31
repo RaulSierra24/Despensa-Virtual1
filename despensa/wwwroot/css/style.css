@@ -17,14 +17,30 @@ html, body{
     position:relative;
     background:red;
   }
-  
+
+#tambusqueda {
+    width: 92%;
+}
+    @media (max-width:1630px) {
+        #tambusqueda {
+            width: 85%;
+        }
+    }
+
+    @media (max-width:600px) {
+        #tambusqueda {
+            width: 80%;
+        }
+    }
+
+
 body a {
-	text-decoration:none;
-	transition:0.5s all;
-	-webkit-transition:0.5s all;
-	-moz-transition:0.5s all;
-	-o-transition:0.5s all;
-	-ms-transition:0.5s all;
+    text-decoration: none;
+    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    -ms-transition: 0.5s all;
 }
 a:hover{
  text-decoration:none;
@@ -4900,4 +4916,55 @@ input[type="radio"], input[type="checkbox"] {
     
 }
 
-/*--//responsive--*/
+.encabezadopro {
+    font: 700 4em/1 "Oswald", sans-serif;
+    letter-spacing: 0;
+    padding: .25em 0 .325em;
+    display: block;
+    margin: 0 auto;
+    text-shadow: 0 0 80px rgba(255, 255, 255, 0.5);
+    background: url(/img/animated_text_fill.png) repeat-y;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: aitf 80s linear infinite;
+    -webkit-transform: translate3d(-20, -20, -20);
+    -webkit-backface-visibility: hidden;
+}
+
+@-webkit-keyframes aitf {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+
+.encabezadopro1 {
+    font: 700 4em/1 "Oswald", sans-serif;
+    letter-spacing: 0;
+    padding: .25em 0 .325em;
+    display: block;
+    margin: 0 auto;
+    text-shadow: 0 0 80px rgba(255, 255, 255, 0.5);
+    background: url(/img/animated_text_fill2.png) repeat-y;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: aitf2 80s linear infinite;
+    -webkit-transform: translate3d(-20, -20, -20);
+    -webkit-backface-visibility: hidden;
+}
+
+@-webkit-keyframes aitf2 {
+    100% {
+        background-position: 0% 50%;
+    }
+
+    0% {
+        background-position: 100% 50%;
+    }
+}

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using despensa.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace despensa.Controllers
 {
@@ -21,8 +22,18 @@ namespace despensa.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
+            var entradas = (from m in _context.Categoria.Include(c => c.EstadoNavigation)
+                            where m.Estado == 3
+                            orderby m.Nombre ascending
+                            select m).ToList();
+            ViewBag.layoutcategorias = entradas;
+            var aux = await _context.Producto
+                .Where(p => p.CodEstado == 3)
+                .Include(p => p.CodCategoriaNavigation)
+                .OrderByDescending(x => x.Cantidad).Take(10).ToListAsync();
+            ViewBag.productoshome = aux;
             return View();
         }
 

@@ -80,18 +80,20 @@ namespace despensa.Controllers
 
         // GET: PredidoFacturas/Create
         [Authorize(Roles = "3,2,1")]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ClaimsPrincipal currentUser = this.User;
+            var identity = (ClaimsIdentity)currentUser.Identity;
+            int id= Int32.Parse(identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
+            var usuario = await _context.Usuario
+                .Include(u => u.CodEstadoNavigation)
+                .Include(u => u.CodGeneoNavigation)
+                .Include(u => u.CodRolNavigation)
+                .FirstOrDefaultAsync(m => m.CodUsuario == id);
             ViewData["CodCliente"] = new SelectList(_context.Usuario, "CodUsuario", "CodUsuario");
             ViewData["CodEmpleado"] = new SelectList(_context.Usuario, "CodUsuario", "CodUsuario");
             ViewData["CodEstado"] = new SelectList(_context.EstadoPedido, "CodEstado", "CodEstado");
-            
-           
-          
-                return View();
-        
-           
-
+                return View(usuario);
         }
 
         [Authorize(Roles = "3,2,1")]
@@ -129,7 +131,7 @@ namespace despensa.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "3,2,1")]
-        public async Task<IActionResult> Create([Bind("CodFactura,FecEmision,TotalVendido,TotalCosto,CodEmpleado,CodCliente,CodEstado")] PredidoFactura predidoFactura)
+        public async Task<IActionResult> Create([Bind("CodFactura,Direccion_entrega,FecEmision,TotalVendido,TotalCosto,CodEmpleado,CodCliente,CodEstado")] PredidoFactura predidoFactura)
         {
             ClaimsPrincipal currentUser = this.User;
             var identity = (ClaimsIdentity)currentUser.Identity;

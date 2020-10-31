@@ -17,6 +17,7 @@ namespace despensa.Models
         public int? CodEmpleado { get; set; }
         public int? CodCliente { get; set; }
         public int? CodEstado { get; set; }
+        public string Direccion_entrega { get; set; }
 
         public virtual Usuario CodClienteNavigation { get; set; }
         public virtual Usuario CodEmpleadoNavigation { get; set; }

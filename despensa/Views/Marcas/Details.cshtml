@@ -4,7 +4,6 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
 <link rel="stylesheet" href="~/css/login.css">
 <div class="container">
     <h4>Marca</h4>
@@ -20,6 +19,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.CodMarca">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a class="botones success redondear"  asp-action="Edit" asp-route-id="@Model.CodMarca">Editar</a>
+    <a class="botones danger redondear" asp-action="Index">Regresar</a>
 </div>

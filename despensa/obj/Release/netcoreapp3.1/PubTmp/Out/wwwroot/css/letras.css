@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:900&display=swap');
+
+.wrapperletras {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateY(20px) scale(1.5);
+  overflow: hidden;
+}
+@media screen and (max-width: 600px) {
+  .wrapperletras {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+.containerletras {
+  font-family: 'Raleway', sans-serif;
+  position: absolute;
+  width: 300px;
+  height: 300px;
+}
+
+.menu-fixedletras {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background-color: #ffffff;
+    box-shadow: 0 15px 19px -19px rgba(0, 0, 0, 0.5);
+}
+[data-typing] {
+  position: absolute;
+  top: 0;
+  /*   border: 1px solid #f55; */
+  transform-origin: 0% 0%;
+  font-size: 25px;
+  margin: 0;
+  padding: 0;
+  top: 100px;
+  line-height: 1;
+  color: #333;
+}
+[data-typing="d"] {
+  top: 0;
+  left: 20px;
+  font-size: 90px;
+  height: 70px;
+  line-height: 70px;
+  color: #1accfd;
+}
+[data-typing="espensa"] {
+  top: 3px;
+  left: 80px;
+  font-size: 27px;
+  letter-spacing: 1px;
+  color: #1accfd;
+}
+[data-typing="virtual"] {
+  top: 30px;
+  left: 85px;     
+  font-size: 40px;
+  letter-spacing: 1px;
+  color: #FF5722;
+}
+[data-typing="sancristobal"] {
+  top: 74px;
+  left: 255px;
+  font-size: 23px;
+  transform: rotate(90deg);
+  background: #333;
+  color: #FF5722;
+  padding: 0px 4px;
+}
+[data-typing="altaverapaz"] {
+  top: 74px;
+  left: 229px;
+  transform: rotate(90deg);
+  font-size: 30px;
+}
+[data-typing="donde"] {
+  top: 72px;
+  right: 110px;
+  font-size: 25px;
+}
+[data-typing="encuentras"] {
+  top: 100px;
+  right: 110px;
+  font-size: 30px;
+}
+[data-typing="todo"] {
+  top: 130px;
+  right: 110px;
+  font-size: 35px;
+}
+[data-typing="loque"] {
+  top: 160px;
+  right: 110px;
+  font-size: 35px;
+}
+[data-typing="necesitas"] {
+  top: 195px;
+  right: 110px;
+  font-size: 35px;
+}
+[data-typing="compraya"] {
+  top: 230px;
+  right: 110px;
+  font-size: 25px;
+  background: #333;
+  color: #1accfd;
+  padding: 0px 4px;
+}
+a {
+  color: #ffffff;
+  text-decoration: none;
+}

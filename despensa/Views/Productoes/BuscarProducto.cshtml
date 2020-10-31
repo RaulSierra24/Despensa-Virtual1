@@ -30,7 +30,7 @@
                                             <a asp-action="Details" asp-route-id="@item.CodProducto" class="link-product-add-cart">ver más</a>
                                         </div>
                                     </div>
-                                        <span class="product-new-top">@item.Cantidad</span>
+                                    <span class="product-new-top">@item.Cantidad</span>
                                 </div>
                                 <div class="item-info-product ">
                                     <h4>
@@ -41,7 +41,21 @@
 
                                     </div>
                                     <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                                        <button class="button2" onclick="agregarProducto(@item.CodProducto)">Añadir al Carrito 1</button>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <button onclick="agregarProducto(@item.CodProducto)" class="botones validar cursivo2">
+                                                Añadir al Carrito
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <a asp-controller="Usuarios" asp-action="Login" class="botones validar cursivo2">
+                                                Añadir al Carrito
+                                                <i class="fa fa-shopping-cart"></i>
+                                            </a>
+                                        }
+
                                     </div>
                                 </div>
                             </div>
@@ -56,20 +70,20 @@
     </div>
 </div>
 
-
-
-@section Scripts {
-    <script>
-        function agregarProducto(txt) {
-            $.ajax({
-                url: "/cart/compra/",
-                data: { "id": txt },
-                success: function () {
-                    obtenerCarrito();
-                }
-            });
-        }
-    </script>
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@if (User.Identity.IsAuthenticated)
+{
+    @section Scripts {
+        <script>
+            function agregarProducto(txt) {
+                $.ajax({
+                    url: "/cart/compra/",
+                    data: { "id": txt },
+                    success: function () {
+                        obtenerCarrito();
+                    }
+                });
+            }
+        </script>
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
 }
-

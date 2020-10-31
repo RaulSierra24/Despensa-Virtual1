@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using despensa.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace despensa.Controllers
 {
@@ -19,12 +20,14 @@ namespace despensa.Controllers
         }
 
         // GET: Marcas
+        [Authorize(Roles = "2,3")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Marca.ToListAsync());
         }
 
         // GET: Marcas/Details/5
+        [Authorize(Roles = "2,3")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,6 +46,7 @@ namespace despensa.Controllers
         }
 
         // GET: Marcas/Create
+        [Authorize(Roles = "2,3")]
         public IActionResult Create()
         {
             return View();
@@ -52,6 +56,7 @@ namespace despensa.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "2,3")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CodMarca,Marca1")] Marca marca)
         {
@@ -64,7 +69,7 @@ namespace despensa.Controllers
             return View(marca);
         }
 
-        // GET: Marcas/Edit/5
+        [Authorize(Roles = "2,3")]// GET: Marcas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,7 +87,7 @@ namespace despensa.Controllers
 
         // POST: Marcas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "2,3")]// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CodMarca,Marca1")] Marca marca)
@@ -115,7 +120,7 @@ namespace despensa.Controllers
             return View(marca);
         }
 
-        // GET: Marcas/Delete/5
+        [Authorize(Roles = "3")]// GET: Marcas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,6 +140,7 @@ namespace despensa.Controllers
 
         // POST: Marcas/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "3")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

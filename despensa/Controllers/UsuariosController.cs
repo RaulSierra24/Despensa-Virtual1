@@ -85,6 +85,8 @@ namespace despensa.Controllers
         [Authorize(Roles = "3")]
         public IActionResult Create()
         {
+            ViewData["CodGeneo"] = new SelectList(_context.Genero, "CodGenero", "Genero1");
+            ViewData["CodRol"] = new SelectList(_context.Rol, "CodRol", "Rol1");
             return View();
         }
 
@@ -140,10 +142,22 @@ namespace despensa.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "3")]
         public async Task<IActionResult> CreateAdmin([Bind("CodUsuario,PrimerNombre,SegundoNombre,PrimerApellido,SegundoApellido,Contraseña,CodGenero,Cui,Telefono,Direccion,Nit,CorreoElectronico,FecNac,CodGeneo,CodRol,CodEstado,Grid,Grid2,ImagenPerfil,PedidoFavorito")] Usuario usuario)
         {
             if (ModelState.IsValid)
             {
+                string resetCode = Guid.NewGuid().ToString();
+                EnviarEmail(usuario.CorreoElectronico, resetCode, 3);
+                usuario.Grid2 = resetCode;
+                if (usuario.Cui==null||usuario.Cui=="")
+                {
+                    usuario.Cui = "";
+                }
+                usuario.CodEstado = 4;
+                usuario.CodRol = 2;
+                usuario.ImagenPerfil = "perfildefect101920952.jpg";
+                usuario.Contraseña = Crypto.Hash(usuario.Contraseña);
                 _context.Add(usuario);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -599,6 +613,19 @@ namespace despensa.Controllers
                 osmtpClient.Send(oMailMensaje);
                 osmtpClient.Dispose();
             }
+            else if (accion == 3)
+            {
+                string url = "https://localhost:44383/Usuarios/cambiarContra/" + token;
+                MailMessage oMailMensaje = new MailMessage(EmailOrigen, EmailDestino, "Bienvenido", "Bienenido al equipo de trabajo de Despensa Virtual <a href='" + url + "'>Click aqui</a> para Configurar tu contraseña y empieza Ya!");
+                oMailMensaje.IsBodyHtml = true;
+                SmtpClient osmtpClient = new SmtpClient("smtp.gmail.com");
+                osmtpClient.EnableSsl = true;
+                osmtpClient.UseDefaultCredentials = false;
+                osmtpClient.Port = 587;
+                osmtpClient.Credentials = new System.Net.NetworkCredential(EmailOrigen, Contraseña);
+                osmtpClient.Send(oMailMensaje);
+                osmtpClient.Dispose();
+            }
         }
 
 
@@ -708,6 +735,7 @@ namespace despensa.Controllers
                         {
                             user.Contraseña = Crypto.Hash(contra); 
                             user.Grid2 = null;
+                            user.CodEstado = 3;
                             _context.Update(user);
                             await _context.SaveChangesAsync();
                             ClaimsIdentity identity = null;

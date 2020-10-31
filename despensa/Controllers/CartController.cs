@@ -16,13 +16,24 @@ namespace despensa.Controllers
         [Authorize(Roles = "3,2,1")]
         public IActionResult Index()
         {
-            var cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
-            ViewBag.cart = cart;
-            ViewBag.total = cart.Sum(item => item.Product.PrecioVenta * item.Quantity);
-            return View();
+            try
+            {
+                var cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+
+                ViewBag.cart = cart;
+                ViewBag.total = cart.Sum(item => item.Product.PrecioVenta * item.Quantity);
+                return View();
+            }
+            catch
+            {
+                List<Item> cart = new List<Item>();
+                ViewBag.cart = cart;
+                ViewBag.total = 0;
+                return View();
+            }
         }
 
-        [HttpGet]
+        [HttpGet] 
         public JsonResult Get()
         {
             try{

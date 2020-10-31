@@ -3,7 +3,7 @@
 <html lang="zxx">
 
 <head>
-    <title>Grocery Shoppy an Ecommerce Category Bootstrap Responsive Web Template | Home :: w3layouts</title>
+    <title>@ViewData["Title"] - DespesaVirtual</title>
     <!--/tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -59,10 +59,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <!-- header-bot-->
                 <div class="col-md-4 logo_agile">
                     <h1>
-                        <a href="index.html">
-                            <span>G</span>rocery
-                            <span>S</span>hoppy
-                            <img src="~/images/logo2.png" alt=" ">
+                        <a href="index">
+                            <img alt=" " src="/images/logo1.png" style="width:375px;max-width:100%">
                         </a>
                     </h1>
                 </div>
@@ -126,7 +124,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             else
                             {
                                 <form asp-controller="Productoes" asp-action="BuscarProducto" method="get">
-                                    <input name="Buscar" type="search" placeholder="¿Qué necesitas el día de hoy?" required="">
+                                    <input name="Buscar" id="tambusqueda" type="search" placeholder="¿Qué necesitas el día de hoy?" required="">
                                     <button type="submit" class="btn btn-default" aria-label="Left Align">
                                         <span class="fa fa-search" aria-hidden="true"></span>
                                     </button>
@@ -137,7 +135,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         else
                         {
                             <form asp-controller="Productoes" asp-action="BuscarProducto" method="get">
-                                <input name="Buscar" type="search" placeholder="¿Qué necesitas el día de hoy?" required="">
+                                <input name="Buscar" id="tambusqueda" type="search" placeholder="¿Qué necesitas el día de hoy?" required="">
                                 <button type="submit" class="btn btn-default" aria-label="Left Align">
                                     <span class="fa fa-search" aria-hidden="true"></span>
                                 </button>
@@ -213,11 +211,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </div>
                 </div>
             </div>
-            <footer class="mimodal-footer">
-                <div>Total</div>
-                <div class="total"></div>
-                <a asp-controller="PredidoFacturas" asp-action="Create" class="action">Hacer Pedido</a>
-                <button class="action">Decline</button>
+            <div class="text-center"><h3>total: </h3><h3 class="total"></h3></div>
+            <footer class="mimodal-footer" style="padding:0;">
+
+                <a asp-controller="PredidoFacturas" asp-action="Create" class="botones validar circle">Hacer Pedido</a>
             </footer>
         </article>
     </div>
@@ -766,136 +763,123 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <div class="copy-right">
         <div class="container">
             <p>
-                © 2017 Grocery Shoppy. All rights reserved | Design by
-                <a href="http://w3layouts.com"> W3layouts.</a>
+                © 2020 Despensa Virtual. Todos los derechos reservados | Diseñado de<a href="http://w3layouts.com"> W3layouts.</a>
             </p>
         </div>
     </div>
     @*   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js%22%3E"></script>*@
-    <script>
-        var cnt = 0;
-        function obtenerCarrito() {
-            $.ajax({
-                dataType: "json",
-                url: "/cart/get",
-                success: function (data) {
-                    console.log(data);
-                    cnt = 0;
-                    $("#lstProductos > tbody").html("");
-                    for (n = 0; n < data.length; n++) {
-                        enlistarProducto(data[n].product.codProducto, data[n].product.nombre, data[n].product.precioVenta, data[n].quantity);
-                    }
-                    const trigger = "trigger-1";
-                    const mimodal = document.querySelector(`[data-mimodal=${trigger}]`);
-                    const contentWrapper = mimodal.querySelector('.content-wrapper');
-                    const close = mimodal.querySelector('.close');
-                    close.addEventListener('click', () => mimodal.classList.remove('open'));
-                    mimodal.addEventListener('click', () => mimodal.classList.remove('open'));
-                    contentWrapper.addEventListener('click', (e) => e.stopPropagation());
-                    mimodal.classList.toggle('open');
-                }
-            });
-        }
-        function enlistarProducto(codProducto, nombre, precio, cantidad) {
-            var fila = '<tr>';
-            fila += '<td>';
-            fila += '<div class ="pikachu">';
-            fila += '<input type="number" min="0" step="1" value="' + cantidad + '" class="cantidad form-control" onchange="calcular2(this,' + codProducto + ');"></td> </div>';
-            fila += '<td>' + nombre + '</td>';
-            fila += '<td ><input type="hidden" value="' + precio + '" class="precio_unitario form-control">' + precio + '</div></td>';
-            fila += '<td><input class="form-control subtotal" type="text" disabled></td>';
-            fila += "<td><button class='btn btn-danger' onclick='eliminarFila(this," + codProducto + ")'>Eliminar</button></td>";
-            fila += '</tr>';
-            $("#lstProductos > tbody").append(fila);
-            cnt++;
-            calcular();
-        }
-        function buscar_correo(obj) {
-            valor = $(obj).val();
-            $.ajax({
-                url: "/Home/VerificarCorreo/",
-                data: { "CorreoElectronico": valor },
-                success: function (data) {
-                    if (data == false) {
-                        $("#comprobaciones").html("El correo: " + valor + " ya fue registrado &#128521");
-                        $("#comprobaciones1").html("El correo: " + valor + " ya fue registrado &#128521");
-                        valor = $(obj).val("");
-                    } else {
-                        $("#comprobaciones").html("");
-                        $("#comprobaciones1").html("");
-                    }
-                }
-            });
-        }
-        function eliminarFila(obj, codigo) {
-            cnt--;
-            fila = $(obj).parent().parent();
-            $(fila).fadeOut(300).delay(100).remove();
-            $.ajax({
-                url: "/cart/Remove/",
-                data: { "id": codigo },
-                success: function () {
-                }
-            });
-            if (cnt == 0) {
-                $(".total").html("Q. " + cnt);
-                $('#total_factura').html(cnt);
-                $('#total_factura').html(total.toFixed(2));
-            }
-            calcular();
-        }
-        function calcular() {
-            var filas = $("#tblProductos > tbody > tr");
-            var total = 0;
-            $('#lstProductos> tbody').find('tr').each(function (i, tr) {
-                cantidad = parseFloat($(tr).find('.cantidad').val());
-                precio_unitario = $(tr).find('.precio_unitario').val();
-                if (cantidad <= 0 || isNaN(cantidad)) {
-                    $(tr).find('.cantidad').val(0);
-                    cantidad = 0;
-                }
-                if (precio_unitario <= 0 || isNaN(precio_unitario)) {
-                    $(tr).find('.precio_unitario').val(0);
-                    precio_unitario = "0";
-                }
-
-                total += cantidad * precio_unitario;
-                $(".total").html("Q. " + total.toFixed(2));
-                $(tr).find('.subtotal').val("" + (cantidad * precio_unitario).toFixed(2));
-            })
-        }
-        function calcular2(obj, codigo) {
-            var x = 0;
-            var total = 0;
-            cantidades = $(obj).val();
-            console.log(cantidades);
-            $('#lstProductos> tbody').find('tr').each(function (i, tr) {
-                cantidad = parseFloat($(tr).find('.cantidad').val());
-                precio_unitario = $(tr).find('.precio_unitario').val();
-                if (cantidad <= 0 || isNaN(cantidad)) {
-                    $(tr).find('.cantidad').val(0);
-                    cantidad = 0;
-                }
-                if (precio_unitario <= 0 || isNaN(precio_unitario)) {
-                    $(tr).find('.precio_unitario').val(0);
-                    precio_unitario = 0;
-                }
-                total += cantidad * precio_unitario;
-                x = cantidad;
-                $(".total").html("Q. " + total.toFixed(2));
-                console.log("pude impim");
-                $(tr).find('.subtotal').val("" + (cantidad * precio_unitario).toFixed(2));
-            })
-            if (x >= 0) {
+    @if (@User.Identity.IsAuthenticated)
+    {
+        <script>
+            var cnt = 0;
+            function obtenerCarrito() {
                 $.ajax({
-                    url: "/cart/Editar/",
-                    data: { "id": codigo, "cantidad": cantidades },
-                    success: function () {
+                    dataType: "json",
+                    url: "/cart/get",
+                    success: function (data) {
+                        console.log(data);
+                        cnt = 0;
+                        $("#lstProductos > tbody").html("");
+                        for (n = 0; n < data.length; n++) {
+                            enlistarProducto(data[n].product.codProducto, data[n].product.nombre, data[n].product.precioVenta, data[n].quantity);
+                        }
+                        const trigger = "trigger-1";
+                        const mimodal = document.querySelector(`[data-mimodal=${trigger}]`);
+                        const contentWrapper = mimodal.querySelector('.content-wrapper');
+                        const close = mimodal.querySelector('.close');
+                        close.addEventListener('click', () => mimodal.classList.remove('open'));
+                        mimodal.addEventListener('click', () => mimodal.classList.remove('open'));
+                        contentWrapper.addEventListener('click', (e) => e.stopPropagation());
+                        mimodal.classList.toggle('open');
                     }
                 });
             }
-        }
-    </script>
+            function enlistarProducto(codProducto, nombre, precio, cantidad) {
+                var fila = '<tr>';
+                fila += '<td>';
+                fila += '<div class ="pikachu">';
+                fila += '<input type="number" min="0" step="1" value="' + cantidad + '" class="cantidad form-control" onchange="calcular2(this,' + codProducto + ');"></td> </div>';
+                fila += '<td>' + nombre + '</td>';
+                fila += '<td ><input type="hidden" value="' + precio + '" class="precio_unitario form-control">' + precio + '</div></td>';
+                fila += '<td><input class="form-control subtotal" type="text" disabled></td>';
+                fila += "<td><button class='btn btn-danger' onclick='eliminarFila(this," + codProducto + ")'>Eliminar</button></td>";
+                fila += '</tr>';
+                $("#lstProductos > tbody").append(fila);
+                cnt++;
+                calcular();
+            }
+
+            function eliminarFila(obj, codigo) {
+                cnt--;
+                fila = $(obj).parent().parent();
+                $(fila).fadeOut(300).delay(100).remove();
+                $.ajax({
+                    url: "/cart/Remove/",
+                    data: { "id": codigo },
+                    success: function () {
+                    }
+                });
+                if (cnt == 0) {
+                    $(".total").html("Q. " + cnt);
+                    $('#total_factura').html(cnt);
+                    $('#total_factura').html(total.toFixed(2));
+                }
+                calcular();
+            }
+            function calcular() {
+                var filas = $("#tblProductos > tbody > tr");
+                var total = 0;
+                $('#lstProductos> tbody').find('tr').each(function (i, tr) {
+                    cantidad = parseFloat($(tr).find('.cantidad').val());
+                    precio_unitario = $(tr).find('.precio_unitario').val();
+                    if (cantidad <= 0 || isNaN(cantidad)) {
+                        $(tr).find('.cantidad').val(0);
+                        cantidad = 0;
+                    }
+                    if (precio_unitario <= 0 || isNaN(precio_unitario)) {
+                        $(tr).find('.precio_unitario').val(0);
+                        precio_unitario = "0";
+                    }
+
+                    total += cantidad * precio_unitario;
+                    $(".total").html("Q. " + total.toFixed(2));
+                    $(tr).find('.subtotal').val("" + (cantidad * precio_unitario).toFixed(2));
+                })
+            }
+            function calcular2(obj, codigo) {
+                var x = 0;
+                var total = 0;
+                cantidades = $(obj).val();
+                console.log(cantidades);
+                $('#lstProductos> tbody').find('tr').each(function (i, tr) {
+                    cantidad = parseFloat($(tr).find('.cantidad').val());
+                    precio_unitario = $(tr).find('.precio_unitario').val();
+                    if (cantidad <= 0 || isNaN(cantidad)) {
+                        $(tr).find('.cantidad').val(0);
+                        cantidad = 0;
+                    }
+                    if (precio_unitario <= 0 || isNaN(precio_unitario)) {
+                        $(tr).find('.precio_unitario').val(0);
+                        precio_unitario = 0;
+                    }
+                    total += cantidad * precio_unitario;
+                    x = cantidad;
+                    $(".total").html("Q. " + total.toFixed(2));
+                    console.log("pude impim");
+                    $(tr).find('.subtotal').val("" + (cantidad * precio_unitario).toFixed(2));
+                })
+                if (x >= 0) {
+                    $.ajax({
+                        url: "/cart/Editar/",
+                        data: { "id": codigo, "cantidad": cantidades },
+                        success: function () {
+                        }
+                    });
+                }
+            }
+        </script>
+    }
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -923,6 +907,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 mainClass: 'my-mfp-zoom-in'
             });
         });
+        function buscar_correo(obj) {
+            valor = $(obj).val();
+            $.ajax({
+                url: "/Home/VerificarCorreo/",
+                data: { "CorreoElectronico": valor },
+                success: function (data) {
+                    if (data == false) {
+                        $("#comprobaciones").html("El correo: " + valor + " ya fue registrado &#128521");
+                        $("#comprobaciones1").html("El correo: " + valor + " ya fue registrado &#128521");
+                        valor = $(obj).val("");
+                    } else {
+                        $("#comprobaciones").html("");
+                        $("#comprobaciones1").html("");
+                    }
+                }
+            });
+        }
     </script>
     <script src="~/js/jquery-ui.js"></script>
     <script>
@@ -977,10 +978,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         });
     </script>
     <script src="~/js/bootstrap.js"></script>
-
-
     @RenderSection("Scripts", required: false)
-
 </body>
 </html>
 

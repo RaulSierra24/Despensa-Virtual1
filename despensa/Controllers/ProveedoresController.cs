@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using despensa.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace despensa.Controllers
 {
@@ -18,14 +19,14 @@ namespace despensa.Controllers
             _context = context;
         }
 
-        // GET: Proveedores
+        [Authorize(Roles = "2,3")]// GET: Proveedores
         public async Task<IActionResult> Index()
         {
             var despensa1Context = _context.Proveedor.Include(p => p.CodEstadoNavigation);
             return View(await despensa1Context.ToListAsync());
         }
 
-        // GET: Proveedores/Details/5
+        [Authorize(Roles = "2,3")]// GET: Proveedores/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,7 +45,7 @@ namespace despensa.Controllers
             return View(proveedor);
         }
 
-        // GET: Proveedores/Create
+        [Authorize(Roles = "2,3")]// GET: Proveedores/Create
         public IActionResult Create()
         {
             ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "CodEstado");
@@ -53,7 +54,7 @@ namespace despensa.Controllers
 
         // POST: Proveedores/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "2,3")]// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CodProveedor,Proveedor1,CodEstado")] Proveedor proveedor)
@@ -68,7 +69,7 @@ namespace despensa.Controllers
             return View(proveedor);
         }
 
-        // GET: Proveedores/Edit/5
+        [Authorize(Roles = "2,3")]// GET: Proveedores/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -89,6 +90,7 @@ namespace despensa.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "2,3")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CodProveedor,Proveedor1,CodEstado")] Proveedor proveedor)
         {
@@ -121,7 +123,7 @@ namespace despensa.Controllers
             return View(proveedor);
         }
 
-        // GET: Proveedores/Delete/5
+        [Authorize(Roles = "2,3")]// GET: Proveedores/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -140,7 +142,7 @@ namespace despensa.Controllers
             return View(proveedor);
         }
 
-        // POST: Proveedores/Delete/5
+        [Authorize(Roles = "3")]// POST: Proveedores/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -150,7 +152,7 @@ namespace despensa.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        [Authorize(Roles = "3")]
         private bool ProveedorExists(int id)
         {
             return _context.Proveedor.Any(e => e.CodProveedor == id);

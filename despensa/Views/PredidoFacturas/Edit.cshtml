@@ -140,15 +140,14 @@
                 {
                     <form asp-action="Delete" asp-route-id="@ViewBag.id">
                         <input type="hidden" asp-for="CodFactura" />
-                        <input type="submit" value="Delete" class="btn btn-default" /> |
-                        <a asp-action="Index">Back to List</a>
+                        <input value="Invalidar" type="submit" style="width:150px;" class="botones danger redondear">
                     </form>
                 }
                 <form asp-action="Edit">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="CodFactura" />
                     <div class="checkout-right-basket">
-                        <input type="submit" value="Validadr Pedido" class="btn btn-default" />
+                        <input value="Guardar" type="submit" style="width:150px;" class="botones validar redondear">
                     </div>
                 </form>
 
@@ -157,7 +156,7 @@
         </div>
     </div>
 </div>
-<div>
-    <a asp-action="PedidosPendientes">Regresar a Pendientes</a>
-    <a asp-action="TodosPedidos">Regresar a Todos</a>
+<div class="text-center">
+    <a asp-action="PedidosPendientes" class="botones warning redondear">Pendientes</a>
+    <a asp-action="TodosPedidos" class="botones warning redondear">Todos</a>
 </div>

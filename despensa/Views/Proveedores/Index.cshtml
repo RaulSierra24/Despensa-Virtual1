@@ -4,38 +4,45 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<link rel="stylesheet" href="~/css/login.css">
+<div class="form-sh" style="margin-left:50px;"> <a class="botones info cursivo2" asp-action="Create">Crear Proveedor</a> </div>
+<div class="contenedor-formularios">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Proveedor1)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="divinput"> @Html.DisplayFor(modelItem => item.Proveedor1)</div>
+                    </td>
+                    <td>
+                        <div class="text-center">
+                            <a class="botones success circle" asp-action="Edit" asp-route-id="@item.CodProveedor" style="margin-top:15px">Editar</a>
+                            <a class="botones warning circle" asp-action="Details" asp-route-id="@item.CodProveedor">Detalles</a>
+                            </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Proveedor1)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CodEstadoNavigation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Proveedor1)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CodEstadoNavigation.CodEstado)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CodProveedor">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CodProveedor">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CodProveedor">Delete</a>
-            </td>
-        </tr>
+
+@section Scripts {
+
+    <script>
+            $(document).ready(function () {
+                $("form").each(function () { this.reset() });
+            });
+    </script>
+    <script src="~/js/login.js"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-    </tbody>
-</table>

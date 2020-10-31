@@ -1,20 +1,23 @@
-const buttons = document.querySelectorAll('.trigger[data-modal-trigger]');
+const buttons = document.querySelectorAll('.trigger[data-mimodal-trigger]');
 
-for(let button of buttons) {
-	modalEvent(button);
+for (let button of buttons) {
+	mimodalEvent(button);
 }
 
-function modalEvent(button) {
+function mimodalEvent(button) {
 	button.addEventListener('click', () => {
-		const trigger = button.getAttribute('data-modal-trigger');
-		const modal = document.querySelector(`[data-modal=${trigger}]`);
-		const contentWrapper = modal.querySelector('.content-wrapper');
-		const close = modal.querySelector('.close');
+		const trigger = "trigger-1";
+		const mimodal = document.querySelector(`[data-mimodal=${trigger}]`);
+		console.log(mimodal);
+		const contentWrapper = mimodal.querySelector('.content-wrapper');
+		console.log(contentWrapper);
+		const close = mimodal.querySelector('.close');
+		console.log(close);
 
-		close.addEventListener('click', () => modal.classList.remove('open'));
-		modal.addEventListener('click', () => modal.classList.remove('open'));
+		close.addEventListener('click', () => mimodal.classList.remove('open'));
+		mimodal.addEventListener('click', () => mimodal.classList.remove('open'));
 		contentWrapper.addEventListener('click', (e) => e.stopPropagation());
 
-		modal.classList.toggle('open');
+		mimodal.classList.toggle('open');
 	});
 }
