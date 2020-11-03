@@ -14,6 +14,7 @@ using X.PagedList;
 using System.Net.Mail;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace despensa.Controllers
 {
@@ -55,15 +56,15 @@ namespace despensa.Controllers
                 return NotFound();
             }
 
-            ViewBag.mispendientes = (from m in _context.PredidoFactura
+            ViewBag.mispendientes = (from m in _context.PredidoFactura.Include(p => p.CodClienteNavigation).Include(p => p.CodEmpleadoNavigation).Include(p => p.CodEstadoNavigation)
                                      where m.CodCliente == id && m.CodEstado == 1
                                      orderby m.FecEmision descending
                                      select m).ToList();
-            ViewBag.misEntregados = (from m in _context.PredidoFactura
+            ViewBag.misEntregados = (from m in _context.PredidoFactura.Include(p => p.CodClienteNavigation).Include(p => p.CodEmpleadoNavigation).Include(p => p.CodEstadoNavigation)
                                      where m.CodCliente == id && m.CodEstado == 2
                                      orderby m.FecEmision descending
                                      select m).ToList();
-            ViewBag.misCancelados = (from m in _context.PredidoFactura
+            ViewBag.misCancelados = (from m in _context.PredidoFactura.Include(p => p.CodClienteNavigation).Include(p => p.CodEmpleadoNavigation).Include(p => p.CodEstadoNavigation)
                                      where m.CodCliente == id && m.CodEstado == 3
                                      orderby m.FecEmision descending
                                      select m).ToList();
@@ -97,6 +98,11 @@ namespace despensa.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PrimerNombre,PrimerApellido,Direccion,CorreoElectronico,Contraseña,ConfirmarContraseña")] Usuario usuario)
         {
+            if (usuario.Contraseña==null|| usuario.ConfirmarContraseña==null)
+            {
+                ViewBag.Error1 = 6;
+                return View("Login");
+            }
             if (usuario.Contraseña.Equals(usuario.ConfirmarContraseña))
             {
                 if (ModelState.IsValid)
@@ -192,7 +198,7 @@ namespace despensa.Controllers
                         string carpeta = HostEnvironment.WebRootPath;
                         string nombrearchivo = Path.GetFileNameWithoutExtension(usuario.imagens.FileName);
                         string extencion = Path.GetExtension(usuario.imagens.FileName);
-                        anterior.ImagenPerfil = nombrearchivo = nombrearchivo + DateTime.Now.ToString("yymmssfff") + extencion;
+                        anterior.ImagenPerfil = nombrearchivo = "usua"+ id + DateTime.Now.ToString("yymmssfff") + extencion;
                         string path = Path.Combine(carpeta + "/perfiles/", nombrearchivo);
                         using (var hola = new FileStream(path, FileMode.Create))
                         {
@@ -290,6 +296,7 @@ namespace despensa.Controllers
                     usuario.CodUsuario = id;
                     usuario.CodEstado = anterior.CodEstado;
                     usuario.CodRol = anterior.CodRol;
+                    usuario.CorreoElectronico = anterior.CorreoElectronico;
                     usuario.Contraseña = anterior.Contraseña;
                     usuario.ImagenPerfil = anterior.ImagenPerfil;
                     _context.Update(usuario);
@@ -586,10 +593,17 @@ namespace despensa.Controllers
         {
             string EmailOrigen = "despensavirtual925@gmail.com";
             string Contraseña = "DespVirtual925";
-
+            string dominio = "";
+            string domino2 = Request.GetEncodedUrl();
+            string[] urlData = domino2.Split("/");
+            for (int x =0;x < urlData.Length-2;x++)
+            {
+                dominio += urlData[x]+ "/";
+            }
+            Console.WriteLine(dominio+","+ domino2);
             if (accion==1)
             {
-                string url = "https://localhost:44383/Usuarios/ConfirmarCuenta/" + token;
+                string url = dominio + "Usuarios/ConfirmarCuenta/" + token;
                 MailMessage oMailMensaje = new MailMessage(EmailOrigen, EmailDestino, "Confirmar Cuenta:", "<a href='" + url + "'>Click aqui para Confirmar tu cuenta</a>");
                 oMailMensaje.IsBodyHtml = true;
                 SmtpClient osmtpClient = new SmtpClient("smtp.gmail.com");
@@ -602,7 +616,7 @@ namespace despensa.Controllers
             }
             else if (accion==2)
             {
-                string url = "https://localhost:44383/Usuarios/cambiarContra/" + token;
+                string url = dominio + "Usuarios/cambiarContra/" + token;
                 MailMessage oMailMensaje = new MailMessage(EmailOrigen, EmailDestino, "Recuperar Contraseña", "<a href='" + url + "'>Click aqui para Confirmar tu cuenta</a>");
                 oMailMensaje.IsBodyHtml = true;
                 SmtpClient osmtpClient = new SmtpClient("smtp.gmail.com");
@@ -615,7 +629,7 @@ namespace despensa.Controllers
             }
             else if (accion == 3)
             {
-                string url = "https://localhost:44383/Usuarios/cambiarContra/" + token;
+                string url = dominio + "Usuarios/cambiarContra/" + token;
                 MailMessage oMailMensaje = new MailMessage(EmailOrigen, EmailDestino, "Bienvenido", "Bienenido al equipo de trabajo de Despensa Virtual <a href='" + url + "'>Click aqui</a> para Configurar tu contraseña y empieza Ya!");
                 oMailMensaje.IsBodyHtml = true;
                 SmtpClient osmtpClient = new SmtpClient("smtp.gmail.com");

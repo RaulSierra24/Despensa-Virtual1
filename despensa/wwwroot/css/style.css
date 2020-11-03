@@ -17,7 +17,11 @@ html, body{
     position:relative;
     background:red;
   }
-
+@media(max-width: 1800px) {
+    div#esconder {
+        display: none;
+    }
+}
 #tambusqueda {
     width: 92%;
 }

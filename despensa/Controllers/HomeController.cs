@@ -22,7 +22,7 @@ namespace despensa.Controllers
             _logger = logger;
         }
 
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> Index()
         {
             var entradas = (from m in _context.Categoria.Include(c => c.EstadoNavigation)
                             where m.Estado == 3
@@ -32,7 +32,7 @@ namespace despensa.Controllers
             var aux = await _context.Producto
                 .Where(p => p.CodEstado == 3)
                 .Include(p => p.CodCategoriaNavigation)
-                .OrderByDescending(x => x.Cantidad).Take(10).ToListAsync();
+                .OrderByDescending(x => x.Cantidad).Take(6).ToListAsync();
             ViewBag.productoshome = aux;
             return View();
         }

@@ -19,9 +19,16 @@
         </div>
 
     }
+    @if (@ViewBag.Error1 == 6)
+    {
+        <div class="alert alert-danger text-center">
+            <strong>Las Contraseñas No Deben estar Vacías</strong>
+        </div>
+
+    }
     @if (@ViewBag.ActividadCuenta == 1)
     {
-        
+
         <div class="alert alert-danger text-center">
             <strong>Las Cuenta No ha Sido Validada</strong>
             <strong>Revise Su Correo Electrónico</strong>
@@ -81,7 +88,7 @@
                     <input asp-for="Direccion" type="text" value="" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
                 </div>
 
-                
+
                 <div class="contenedor-input">
                     <label>
                         Email <span class="req">*</span>
@@ -94,14 +101,14 @@
                         Contraseña <span class="req">*</span>
                     </label>
                     <input asp-for="Contraseña" type="password" value="" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$"
-                                           title="Deve tener 8 caracteres e incluir numeros, mayusculas y minusculas">
+                           title="Debe tener 8 caracteres e incluir números, mayúsculas y minúsculas">
                 </div>
                 <div class="contenedor-input">
                     <label>
                         Repetir Contraseña <span class="req">*</span>
                     </label>
                     <input asp-for="ConfirmarContraseña" type="password" value="" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$"
-                                           title="Deve tener 8 caracteres e incluir numeros, mayusculas y minusculas">
+                           title="Debe tener 8 caracteres e incluir números, mayúsculas y minúsculas">
                 </div>
 
                 <input type="submit" class="button button-block" value="Registrarse">

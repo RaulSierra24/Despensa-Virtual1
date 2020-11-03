@@ -74,7 +74,7 @@
                  class="ui-draggable ui-draggable-handle active">
             <summary style="background-image: url('@Url.Content("~/image/" + item.Imagen)'); background-size: cover;" class="color">
                 <div class="color-title">
-                    <a asp-action="Details" asp-route-id="@item.CodProducto"> @item.Nombre</a>
+                    <h2> @item.Nombre</h2>
                 </div>
             </summary>
             <div class="color-codes">
@@ -470,12 +470,11 @@
     // <div class="color-codes"><h1>${colors.values[randNum]}</h1>
     function createColor(colors, randNum) {
         target.innerHTML += `<details>
-          <summary style="background-image: url('/images/logo2.png'); background-repeat: no-repeat; background-size:100%;" class="color">
-          <div class="color-title">
-          <h2> Despensa</h2>
+          <summary style="background-image: url('/images/logo2.png'); background-repeat: no-repeat; background-size:100%;background-color: white" class="color">
+          <div class="color-despensa">
 </div>
 </summary>
-<div class="color-codes"><h2> Virtual </h2>
+<div class="color-codes1">
 </div>
 </details>`;
     }

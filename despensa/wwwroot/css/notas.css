@@ -32,7 +32,6 @@
     .color-title {
       pointer-events: none;
     }
-
     summary {
       width: 100%;
       height: var(--color-size);
@@ -48,22 +47,46 @@
       width: 100%;
       bottom: 0;
     }
+        .color-title:before,
+        .color-codes:before {
+            position: absolute;
+            font-size: 26px;
+            letter-spacing: -1px;
+            font-weight: 800;
+        }
+        .color-title:before {
+            content: "Producto";
+        }
+        .color-codes:before {
+            content: "Precio";
+        }
 
-    .color-title:before,
-    .color-codes:before {
+    .color-despensa {
+        pointer-events: none;
+    }
+    .color-despensa,
+    .color-codes1 {
+      background: white;
+      padding: 15px;
+      height: calc((var(--color-size)) / 2);
       position: absolute;
-      font-size: 26px;
-      letter-spacing: -1px;
-      font-weight: 800;
+      width: 100%;
+      bottom: 0;
+    }
+        .color-despensa:before,
+        .color-codes1:before {
+            position: absolute;
+            font-size: 26px;
+            letter-spacing: -1px;
+            font-weight: 800;
+        }
+        .color-despensa:before {
+            content: "Despensa";
+        }
+    .color-codes1:before {
+    content: "Virtual";
     }
 
-    .color-title:before {
-      content: "Producto";
-    }
-
-    .color-codes:before {
-      content: "Precio";
-    }
 
     details>summary::-webkit-details-marker {
       display: none;

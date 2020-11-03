@@ -5,6 +5,7 @@
 }
 <link rel="stylesheet" href="~/css/Perfil.css">
 <link rel="stylesheet" href="~/css/login.css">
+<link rel="stylesheet" href="~/css/pedidos.css">
 <div class="container">
     <h3 class="tittle-w3l" style="margin-bottom:0">
         Perfil
@@ -34,7 +35,7 @@
         </div>
         <div class="col-md-9  ">
             <div class="chat">
-                <div class="head">
+                <div class="head" style="color:black">
                     <i class="fa fa-address-card-o"></i>
                     Mis Datos Personales
                 </div>
@@ -49,8 +50,8 @@
                             </div>
                         }
                         <ul class="contenedor-tabs">
-                            <li class="tab tab-segunda active"><a href="#iniciar-sesion">Mis Datos</a></li>
-                            <li class="tab tab-primera"><a href="#registrarse">Cambiar Contraseña</a></li>
+                            <li class="tab tab-segunda active"><a href="#iniciar-sesion" style="color:black">Mis Datos</a></li>
+                            <li class="tab tab-primera"><a href="#registrarse" style="color:black">Cambiar Contraseña</a></li>
                         </ul>
                         <!-- Contenido de los Formularios -->
                         <div class="contenido-tab">
@@ -123,13 +124,13 @@
                                         </label>
                                         <input asp-for="Direccion" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
                                     </div>
-                                    
+
                                     <div class="text-left">
                                         <input type="submit" class="botones primary redondear" value="Guardar" style="width:15%">
                                     </div>
                                 </form>
                             </div>
-                                
+
                             <!-- Registrarse -->
                             <div id="registrarse">
                                 <form id="my-form21" asp-controller="Usuarios" asp-action="Cambiar_contaseña">
@@ -140,7 +141,7 @@
                                                 Contraseña <span class="req">*</span>
                                             </label>
                                             <input asp-for="Contraseña" type="password" style="width:200%;" ID="txtPassword" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$"
-                                           title="Deve tener 8 caracteres e incluir numeros, mayusculas y minusculas">
+                                                   title="Debe tener 8 caracteres e incluir números, mayúsculas y minúsculas">
                                         </div>
                                         <span class="input-group-btn">
                                             <button id="show_password" class="btn btn-primary" style="float: right;" type="button" onclick="mostrarPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
@@ -152,7 +153,7 @@
                                                 Contraseña <span class="req">*</span>
                                             </label>
                                             <input asp-for="ConfirmarContraseña" type="password" style="width:200%;" ID="txtPassword1" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$"
-                                           title="Deve tener 8 caracteres e incluir numeros, mayusculas y minusculas">
+                                                   title="Debe tener 8 caracteres e incluir números, mayúsculas y minúsculas">
                                         </div>
                                         <span class="input-group-btn">
                                             <button id="show_password1" class="btn btn-primary" style="float: right;" type="button" onclick="mostrarPassword1()"> <span class="fa fa-eye-slash icon"></span> </button>
@@ -172,33 +173,38 @@
         </div>
         <div class="clearfix"></div>
     </div>
+
+
+
+
     <div class="product-sec1" id="pedidosscroll">
         <div class="col-md-12">
             <div class="chat">
-                <div class="head">
+                <div class="head" style="color:black">
                     <i class="fa fa-money"></i>
                     Mis Pedidos En Espera
                 </div>
                 <div class="chat_inner">
-                        @foreach (var item in ViewBag.mispendientes)
-                        {
-                            <div class="col-md-4 product-men">
-                                <div class="men-pro-item simpleCart_shelfItem">
-                                    <div class="item-info-product ">
-                                        <h4>
-                                            <a href="single.html"> Factura realizada el: @item.FecEmision</a>
-                                        </h4>
-                                        <div class="info-product-price">
-                                            <span class="item_price">$@item.TotalVendido</span>
-
+                    @foreach (var item in ViewBag.mispendientes)
+                    {
+                        <div class="col-md-2 product-men" style="margin-top: 0px; margin-bottom: 30px;">
+                            <div class="men-pro-item simpleCart_shelfItem">
+                                <div class="item-info-product ">
+                                    <a asp-action="Edit" asp-route-id="@item.CodFactura">
+                                        <div class="plan basic" onclick="void(0);" style="width: 100%;">
+                                            <div class="title"> @item.CodClienteNavigation.PrimerNombre @item.CodClienteNavigation.PrimerApellido)</div>
+                                            <div class="price">Q.@item.TotalVendido<span>@item.FecEmision)</span></div>
+                                            <div class="lines">
+                                                <div>@item.CodClienteNavigation.PrimerNombre</div>
+                                                <div>@item.CodClienteNavigation.PrimerNombre</div>
+                                                <div>@item.CodClienteNavigation.PrimerNombre</div>
+                                            </div>
                                         </div>
-                                        <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                                            <a target="_blank" class="button2" asp-controller="PredidoFacturas" asp-action="Details" asp-route-id="@item.CodFactura">Ver Pedido</a>
-                                        </div>
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
-                        }
+                        </div>
+                    }
                 </div>
                 <div class="footer">
                 </div>
@@ -208,38 +214,33 @@
     </div>
 
 
-
-
-
-    <div class="product-sec1">
+    <div class="product-sec1" id="pedidosscroll">
         <div class="col-md-12">
             <div class="chat">
-                <div class="head">
+                <div class="head" style="color:black">
                     <i class="fa fa-money"></i>
-                    Mis Pedidos Entregados
+                    Pedidos Completados
                 </div>
                 <div class="chat_inner">
-                    <div class="product-sec1">
-                        @foreach (var item in ViewBag.misEntregados)
-                        {
-                            <div class="col-md-4 product-men">
-                                <div class="men-pro-item simpleCart_shelfItem">
-                                    <div class="item-info-product ">
-                                        <h4>
-                                            <a href="single.html"> Factura realizada el: @item.FecEmision</a>
-                                        </h4>
-                                        <div class="info-product-price">
-                                            <span class="item_price">$@item.TotalVendido</span>
-
+                    @foreach (var item in ViewBag.misEntregados)
+                    {
+                        <div class="col-md-2 product-men" style="margin-top: 0px; margin-bottom: 30px;">
+                            <div class="men-pro-item simpleCart_shelfItem">
+                                <div class="item-info-product ">
+                                    <a asp-action="Details" asp-route-id="@item.CodFactura">
+                                        <div class="plan basic" onclick="void(0);" style="width: 100%;">
+                                            <div class="title" style="background-color: #38ee00e5;"> @item.CodClienteNavigation.PrimerNombre @item.CodClienteNavigation.PrimerApellido</div>
+                                            <div class="price">Q.@item.TotalVendido<span>@item.FecEmision</span></div>
+                                            <div class="lines">
+                                                <a class="botones warning-border redondear" asp-action="Factura" asp-route-id="@item.CodFactura" style="margin:0px;"><span>Ver Factura</span></a>
+                                            </div>
                                         </div>
-                                        <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                                            <a target="_blank" class="button2" asp-controller="PredidoFacturas" asp-action="Factura" asp-route-id="@item.CodFactura">Ver Factura</a>
-                                        </div>
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
-                        }
-                    </div>
+                        </div>
+                        
+                    }
                 </div>
                 <div class="footer">
                 </div>
@@ -249,35 +250,35 @@
     </div>
 
 
-    <div class="product-sec1">
+
+    <div class="product-sec1" id="pedidosscroll">
         <div class="col-md-12">
             <div class="chat">
-                <div class="head">
+                <div class="head" style="color:black">
                     <i class="fa fa-money"></i>
-                    Mis Pedidos Cancelados
+                    Pedidos Cancelados
                 </div>
                 <div class="chat_inner">
-                    <div class="product-sec1">
-                        @foreach (var item in ViewBag.misCancelados)
-                        {
-                            <div class="col-md-4 product-men">
-                                <div class="men-pro-item simpleCart_shelfItem">
-                                    <div class="item-info-product ">
-                                        <h4>
-                                            <a > Factura realizada el: @item.FecEmision</a>
-                                        </h4>
-                                        <div class="info-product-price">
-                                            <span class="item_price">$@item.TotalVendido</span>
-
+                    @foreach (var item in ViewBag.misCancelados)
+                    {
+                        <div class="col-md-2 product-men" style="margin-top: 0px; margin-bottom: 30px;">
+                            <div class="men-pro-item simpleCart_shelfItem">
+                                <div class="item-info-product ">
+                                    <a asp-action="Details" asp-route-id="@item.CodFactura">
+                                        <div class="plan basic" onclick="void(0);" style="width: 100%;">
+                                            <div class="title" style="background-color: #ee0000e5;"> @item.CodClienteNavigation.PrimerNombre @item.CodClienteNavigation.PrimerApellido</div>
+                                            <div class="price">Q.@item.TotalVendido<span>@item.FecEmision</span></div>
+                                            <div class="lines">
+                                                <div>@item.CodClienteNavigation.PrimerNombre</div>
+                                                <div>@item.CodClienteNavigation.PrimerNombre</div>
+                                                <div>@item.CodClienteNavigation.PrimerNombre</div>
+                                            </div>
                                         </div>
-                                        <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                                            <a target="_blank" class="button2" asp-controller="PredidoFacturas" asp-action="Details" asp-route-id="@item.CodFactura">Ver Factura</a>
-                                        </div>
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
-                        }
-                    </div>
+                        </div>
+                    }
                 </div>
                 <div class="footer">
                 </div>
@@ -285,6 +286,11 @@
         </div>
         <div class="clearfix"></div>
     </div>
+
+
+
+
+
 
 
     <div class="clearfix"></div>

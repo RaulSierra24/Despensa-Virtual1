@@ -44,7 +44,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     </style>
 </head>
 
-<body>
+<body style="padding:0">
     <!-- top-header -->
     <div class="header-most-top">
         <p>DESPENSA VIRTUAL</p>
@@ -59,7 +59,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <!-- header-bot-->
                 <div class="col-md-4 logo_agile">
                     <h1>
-                        <a href="index">
+                        <a asp-controller="Home" asp-action="Index">
                             <img alt=" " src="/images/logo1.png" style="width:375px;max-width:100%">
                         </a>
                     </h1>
@@ -69,17 +69,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <!-- header lists -->
                     <ul>
                         <li>
-                            <a class="play-icon popup-with-zoom-anim" href="#small-dialog1">
-                                <span class="fa fa-map-marker" aria-hidden="true"></span> Shop Locator
+                            <a class="play-icon popup-with-zoom-anim">
+                                <span class="fa fa-map-marker" aria-hidden="true"></span> San Cristóbal
                             </a>
                         </li>
                         <li>
-                            <a href="#" data-toggle="modal" data-target="#myModal1">
-                                <span class="fa fa-truck" aria-hidden="true"></span>Track Order
+                            <a href="#" data-toggle="modal" >
+                                <span class="fa fa-truck" aria-hidden="true"></span> Envío Gratis
                             </a>
                         </li>
                         <li>
-                            <span class="fa fa-phone" aria-hidden="true"></span> 001 234 5678
+                            <span class="fa fa-phone" aria-hidden="true"></span> 502 5898-0727
                         </li>
                         @if (@User.Identity.IsAuthenticated)
                         {
@@ -294,14 +294,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     <input name="CorreoElectronico" type="email" placeholder="Correo Electronico" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" onchange="buscar_correo(this);" required>
                                 </div>
                                 <div class="styled-input">
-                                    <input name="Contraseña" type="password" placeholder="Contraseña" id="password1" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$"
-                                           title="Deve tener mino 8 caracteres e incluir numeros y letras">
+                                    <input name="Contraseña" type="password" placeholder="Contraseña" id="password1" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$"
+                                           title="Debe tener 8 caracteres e incluir números, mayúsculas y minúsculas" required>
                                 </div>
                                 <div class="styled-input">
-                                    <input name="ConfirmarContraseña" type="password" placeholder="Confirmar Contraseña" id="password2" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$"
-                                           title="Deve tener mino 8 caracteres e incluir numeros y letras">
+                                    <input name="ConfirmarContraseña" type="password" placeholder="Confirmar Contraseña" id="password2" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');"  pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$"
+                                           title="Debe tener 8 caracteres e incluir números, mayúsculas y minúsculas" required>
                                 </div>
-                                <input type="submit" value="Sign Up">
+                                <input type="submit" value="Registrarse">
                             </form>
                             <p>
                             </p>
@@ -317,18 +317,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="agileits-navi_search">
                 <form action="#" method="post">
                     <select id="agileinfo-nav_search" name="agileinfo_search" required="">
-                        <option value="">All Categories</option>
-                        <option value="Kitchen">Kitchen</option>
-                        <option value="Household">Household</option>
-                        <option value="Snacks &amp; Beverages">Snacks & Beverages</option>
-                        <option value="Personal Care">Personal Care</option>
-                        <option value="Gift Hampers">Gift Hampers</option>
-                        <option value="Fruits &amp; Vegetables">Fruits & Vegetables</option>
-                        <option value="Baby Care">Baby Care</option>
-                        <option value="Soft Drinks &amp; Juices">Soft Drinks & Juices</option>
-                        <option value="Frozen Food">Frozen Food</option>
-                        <option value="Bread &amp; Bakery">Bread & Bakery</option>
-                        <option value="Sweets">Sweets</option>
+                        <option>Categorías</option>
+                        <option href="/Productoes?idcat=3">Alacena</option>
+                        <option href="/Productoes?idcat=4">Bebés</option>
+                        <option href="/Productoes?idcat=8">Jugos y Bebidas</option>
+                        <option href="/Productoes?idcat=6">Cuidado Personal</option>
+                        <option href="/Productoes?idcat=5">Cerveza y Licor</option>
+                        <option href="/Productoes?idcat=7">Farmacia</option>
+                        <option href="/Productoes?idcat=11">Lacteos y Huevos</option>
+                        <option href="/Productoes?idcat=9">Limpieza del Hogar</option>
                     </select>
                 </form>
             </div>
@@ -396,8 +393,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                     </li>
                                     @if (User.IsInRole("3"))
                                     {
-                                        <li>
-                                            <a asp-controller="Usuarios" asp-action="Index">Usuarios</a>
+                                        <li class="dropdown">
+                                            <a class="nav-stylehead dropdown-toggle" href="#" data-toggle="dropdown">
+                                                Administrar
+                                                <b class="caret"></b>
+                                            </a>
+                                            <ul class="dropdown-menu agile_short_dropdown">
+                                                <li>
+                                                    <a asp-controller="Usuarios" asp-action="Index">Usuarios</a>
+                                                </li>
+                                                <li>
+                                                    <a asp-controller="Marcas" asp-action="Index">Marcas</a>
+                                                </li>
+                                                <li>
+                                                    <a asp-controller="Proveedores" asp-action="Index" asp-route-Austoscroll="pedidos">Proveedores</a>
+                                                </li>
+                                            </ul>
                                         </li>
                                     }
                                     else
@@ -426,7 +437,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 }
 
                                 <li class="">
-                                    <a class="nav-stylehead" href="contact.html">Contact</a>
+                                    <a class="nav-stylehead" href="contact.html">Contáctanos</a>
                                 </li>
                             </ul>
                         </div>
@@ -881,7 +892,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     }
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @*<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/jquery-2.1.4.min.js"></script>
     <script src="~/js/jquery.magnific-popup.js"></script>
@@ -926,20 +937,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         }
     </script>
     <script src="~/js/jquery-ui.js"></script>
-    <script>
-        $(window).load(function () {
-            $("#slider-range").slider({
-                range: true,
-                min: 0,
-                max: 9000,
-                values: [50, 6000],
-                slide: function (event, ui) {
-                    $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
-                }
-            });
-            $("#amount").val("$" + $("#slider-range").slider("values", 0) + " - $" + $("#slider-range").slider("values", 1));
-        });
-    </script>
+
     <script src="~/js/modal.js"></script>
     @if (!@User.Identity.IsAuthenticated)
     {

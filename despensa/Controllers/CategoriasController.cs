@@ -10,6 +10,7 @@ using System.IO;
 using despensa.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using X.PagedList;
 
 namespace despensa.Controllers
 {
@@ -27,13 +28,21 @@ namespace despensa.Controllers
 
         // GET: Categorias
         [Authorize(Roles = "3,2,1")]
-        public ActionResult Index()
+        public ActionResult Index(int? page, string a, string b, string c)
         {
+            if (a =="PedidoSatisfactorio")
+            {
+                ViewBag.pedidossac = "verdadero";
+                ViewBag.totalb = b;
+                ViewBag.fechac = c;
+            }
+            var pageNumber = page ?? 1;
             var entradas = (from m in _context.Categoria.Include(c => c.EstadoNavigation)
                             where m.Estado == 3 
                             orderby m.Nombre ascending
                             select m).ToList();
-            return View(entradas);
+            var unaPagina = entradas.ToPagedList(pageNumber, 9);
+            return View(unaPagina);
         }
         [Authorize(Roles = "3")]
         public ActionResult IndexDesactivo()
@@ -89,7 +98,7 @@ namespace despensa.Controllers
                     string carpeta = HostEnvironment.WebRootPath;
                     string nombrearchivo = Path.GetFileNameWithoutExtension(categoria.ImageFie.FileName);
                     string extencion = Path.GetExtension(categoria.ImageFie.FileName);
-                    categoria.Imagen = nombrearchivo = nombrearchivo + DateTime.Now.ToString("yymmssfff") + extencion;
+                    categoria.Imagen = nombrearchivo = "cate" + DateTime.Now.ToString("yymmssfff") + extencion;
                     string path = Path.Combine(carpeta + "/image/", nombrearchivo);
                     using (var hola = new FileStream(path, FileMode.Create))
                     {
@@ -149,7 +158,7 @@ namespace despensa.Controllers
                         string carpeta = HostEnvironment.WebRootPath;
                         string nombrearchivo = Path.GetFileNameWithoutExtension(categoria.ImageFie.FileName);
                         string extencion = Path.GetExtension(categoria.ImageFie.FileName);
-                        categoria.Imagen = nombrearchivo = nombrearchivo + DateTime.Now.ToString("yymmssfff") + extencion;
+                        categoria.Imagen = nombrearchivo = "cate" + DateTime.Now.ToString("yymmssfff") + extencion;
                         string path = Path.Combine(carpeta + "/image/", nombrearchivo);
                         using (var hola = new FileStream(path, FileMode.Create))
                         {

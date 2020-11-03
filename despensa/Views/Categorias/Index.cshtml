@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<despensa.Models.Categoria>
-
+@using X.PagedList
+@using X.PagedList.Mvc.Core
 @{
     ViewData["Title"] = "Index";
 }
@@ -19,35 +20,102 @@
             <div class="row clearfix">
                 <div class="find-box">
                     <div class="col-sm-3">
-                        @if (User.IsInRole("3")) {<div class="form-sh"> <a class="botones info cursivo2" asp-action="Create">Crear Categoria</a> </div>}
-                        </div>
+                        @if (User.IsInRole("3"))
+                        {<div class="form-sh"> <a class="botones info cursivo2" asp-action="Create">Crear Categoria</a> </div>}
+                    </div>
                 </div>
             </div>
-                @foreach (var item in Model)
-                {
-                    <div class="col-lg-4 col-sm-6 col-md-3">
-                        <a asp-controller="Productoes" asp-route-idcat="@item.CodCategoria">
-                            <div class="box-img">
-                                <div class="text-center">
-                                    <h2 style="margin-bottom:8px"> @Html.DisplayFor(modelItem => item.Nombre) </h2>
-                                </div>
-                                <img src=@Url.Content("~/image/" + item.Imagen) alt="" class="img-responsive zoom-img" style="width: 100%;" />
-                            </div>
-                        </a>
-                        @if (User.IsInRole("3"))
-                        {
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-sm-6 col-md-3">
+                    <a asp-controller="Productoes" asp-route-idcat="@item.CodCategoria">
+                        <div class="box-img">
                             <div class="text-center">
-                                <a class="botones success circle"  asp-action="Edit" asp-route-id="@item.CodCategoria" style="margin-top:15px">Editar</a>
-                                <a class="botones warning circle"  asp-action="Details" asp-route-id="@item.CodCategoria">Detalles</a>
+                                <h2 style="margin-bottom:8px"> @Html.DisplayFor(modelItem => item.Nombre) </h2>
                             </div>
-                            
-                        }
-                        <br />
-                        <br />
-                    </div>  
-                }
-                
-            </div>
+                            <img src=@Url.Content("~/image/" + item.Imagen) alt="" class="img-responsive zoom-img" style="width: 100%;" />
+                        </div>
+                    </a>
+                    @if (User.IsInRole("3"))
+                    {
+                        <div class="text-center">
+                            <a class="botones success circle" asp-action="Edit" asp-route-id="@item.CodCategoria" style="margin-top:15px">Editar</a>
+                            <a class="botones warning circle" asp-action="Details" asp-route-id="@item.CodCategoria">Detalles</a>
+                        </div>
+
+                    }
+                    <br />
+                    <br />
+                </div>
+            }
+
+        </div>
+        <div class="text-center">
+            @Html.PagedListPager((IPagedList)Model, page => Url.Action("index", new { page = page }))
         </div>
     </div>
 </div>
+
+@if (ViewBag.pedidossac == "verdadero")
+{
+    <link href='https://fonts.googleapis.com/css?family=Share+Tech+Mono' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Signika:400' rel='stylesheet' type='text/css'>
+    <link href='~/css/tarjeta.css' rel='stylesheet' type='text/css'>
+    <div class="modal fade" id="myModalimagen" role="dialog">
+        <div class="modal-dialog" style="top: 25%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Imagen de Perfil</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="iniciar-sesion">
+                        <div class="card-holder">
+                            <div class="card" style="width:100%">
+                                <span class="title">Despensa Virtual</span>
+                                <span class="bank-logo">
+                                    <!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In  -->
+
+                                    <style type="text/css">
+                                        .st0 {
+                                            fill: #FFFFFF;
+                                        }
+                                    </style>
+                                    <defs>
+                                    </defs>
+
+                                    <img class="chip" src="~/images/chip.png">
+
+
+                                    <span class="holo-back"></span>
+                                    <span class="holo"></span>
+                                    <span class="emboss number">Pedido Realizado</span>
+                                    <br>
+                                    <span class="small-type">FECHA        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; COSTO TOTAL</span><br>
+                                    <span class="emboss exp">@ViewBag.fechac–Q @ViewBag.totalb</span><br>
+                                    <span class="emboss name">&nbsp;@User.Identity.Name </span>
+</div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script>
+            $(document).ready(function () {
+                $('#myModalimagen').modal('toggle')
+            });
+        </script>
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+
+
+
+}

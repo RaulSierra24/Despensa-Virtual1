@@ -10,6 +10,7 @@ using despensa.Helpers;
 using System.Security.Claims;
 using MySql.Data.MySqlClient.Memcached;
 using Microsoft.AspNetCore.Authorization;
+using X.PagedList;
 
 namespace despensa.Controllers
 {
@@ -32,24 +33,28 @@ namespace despensa.Controllers
             return View(entradas);
         }
         [Authorize(Roles = "3,2")]
-        public IActionResult TodosPedidos(string Nombre, string FecFinal, string FecInici)
+        public IActionResult TodosPedidos(int? page, string Nombre, string FecFinal, string FecInici)
         {
+            var pageNumber = page ?? 1;
             var entradas = (from m in _context.PredidoFactura.Include(p => p.CodClienteNavigation).Include(p => p.CodEmpleadoNavigation).Include(p => p.CodEstadoNavigation)
                             orderby m.FecEmision ascending
                             select m).ToList();
-            Console.WriteLine("Filtro de predido factura: nombre: '"+Nombre+"' fecini: '"+FecFinal+"' fecfin: '"+FecInici+"'");
+            Console.WriteLine("Filtro de predido factura: nombre: '" + Nombre + "' fecini: '" + FecFinal + "' fecfin: '" + FecInici + "'");
 
-            if (Nombre!=""&&Nombre!=null){entradas = entradas.Where(a=>a.CodClienteNavigation.PrimerNombre.ToLower().Contains(Nombre.ToLower())||a.CodClienteNavigation.PrimerApellido.ToLower().Contains(Nombre.ToLower())).ToList();}
-            if (FecInici != "" && FecFinal!="" && FecInici != null && FecFinal != null) {
+            if (Nombre != "" && Nombre != null) { ViewBag.nombre = Nombre; entradas = entradas.Where(a => a.CodClienteNavigation.PrimerNombre.ToLower().Contains(Nombre.ToLower()) || a.CodClienteNavigation.PrimerApellido.ToLower().Contains(Nombre.ToLower())).ToList(); }
+            if (FecInici != "" && FecFinal != "" && FecInici != null && FecFinal != null) {
                 try
                 {
                     DateTime fecini = DateTime.ParseExact(FecInici, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
                     DateTime fecfin = DateTime.ParseExact(FecFinal, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-                    entradas = entradas.Where(a => a.FecEmision>=fecini && a.FecEmision <= fecfin).ToList();
+                    entradas = entradas.Where(a => a.FecEmision >= fecini && a.FecEmision <= fecfin).ToList();
+                    ViewBag.fech1 = FecInici;
+                    ViewBag.fech2 = FecFinal;
                 }
                 catch (Exception ex) { Console.WriteLine(ex); }
             }
-            return View(entradas);
+            var unaPagina = entradas.ToPagedList(pageNumber, 18);
+            return View(unaPagina);
         }
 
         // GET: PredidoFacturas/Details/5
@@ -192,6 +197,7 @@ namespace despensa.Controllers
 
             if (ModelState.IsValid)
             {
+                string fecha = DateTime.Now.ToString("dd/MM/yyyy");
                 predidoFactura.FecEmision= DateTime.Now;
                 predidoFactura.TotalVendido = totalventa;
                 predidoFactura.TotalCosto = totalcosto;
@@ -201,7 +207,7 @@ namespace despensa.Controllers
                 _context.Add(predidoFactura);
                 await _context.SaveChangesAsync();
                 limpiarCarrito();
-                return RedirectToAction("Details", "Usuarios");
+                return RedirectToAction("Index", "Categorias", new { a = "PedidoSatisfactorio", b=predidoFactura.TotalVendido, c= fecha });
             }
             ViewBag.Pedidofactura = "entre aqui";
             ViewData["CodCliente"] = new SelectList(_context.Usuario, "CodUsuario", "CodUsuario", predidoFactura.CodCliente);

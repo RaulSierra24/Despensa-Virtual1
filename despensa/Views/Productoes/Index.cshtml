@@ -65,7 +65,9 @@
 
                     <div class="clearfix"></div>
                 </div>
-                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page = page, idcat = @ViewBag.categoriass }))
+                <div class="text-center">
+                    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page = page, idcat = @ViewBag.categoriass }))
+                </div>
             </div>
         </div>
         <!-- //product right -->

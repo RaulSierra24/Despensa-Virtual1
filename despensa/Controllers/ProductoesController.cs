@@ -102,6 +102,7 @@ namespace despensa.Controllers
             ViewData["codigo_cat"] = idcat;
             if (id == null)
             {
+                Console.WriteLine("entreaqui1");
                 return NotFound();
             }
             var r = new Random();
@@ -119,6 +120,7 @@ namespace despensa.Controllers
             
             if (producto == null)
             {
+                Console.WriteLine("entreaqui2");
                 return NotFound();
             }
 
@@ -158,7 +160,7 @@ namespace despensa.Controllers
                     string carpeta = HostEnvironment.WebRootPath;
                     string nombrearchivo = Path.GetFileNameWithoutExtension(producto.ImageFie.FileName);
                     string extencion = Path.GetExtension(producto.ImageFie.FileName);
-                    producto.Imagen = nombrearchivo = nombrearchivo + DateTime.Now.ToString("yymmssfff") + extencion;
+                    producto.Imagen = nombrearchivo = "produc" + DateTime.Now.ToString("yymmssfff") + extencion;
                     string path = Path.Combine(carpeta + "/image/", nombrearchivo);
                     using (var hola = new FileStream(path, FileMode.Create))
                     {
@@ -224,7 +226,7 @@ namespace despensa.Controllers
                         string carpeta = HostEnvironment.WebRootPath;
                         string nombrearchivo = Path.GetFileNameWithoutExtension(producto.ImageFie.FileName);
                         string extencion = Path.GetExtension(producto.ImageFie.FileName);
-                        producto.Imagen = nombrearchivo = nombrearchivo + DateTime.Now.ToString("yymmssfff") + extencion;
+                        producto.Imagen = nombrearchivo = "produc" + DateTime.Now.ToString("yymmssfff") + extencion;
                         string path = Path.Combine(carpeta + "/image/", nombrearchivo);
                         using (var hola = new FileStream(path, FileMode.Create))
                         {
