@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using despensa.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+using X.PagedList;
 
 namespace despensa.Controllers
 {
@@ -37,9 +39,48 @@ namespace despensa.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Comentarios(int? page)
         {
-            return View();
+            int id;
+            if (this.User.Identity.IsAuthenticated)
+            {
+                ClaimsPrincipal currentUser = this.User;
+                var identity = (ClaimsIdentity)currentUser.Identity;
+                id = Int32.Parse(identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
+                var usuario = await _context.Usuario
+                .Include(u => u.CodEstadoNavigation)
+                .Include(u => u.CodGeneoNavigation)
+                .Include(u => u.CodRolNavigation)
+                .FirstOrDefaultAsync(m => m.CodUsuario == id);
+                ViewBag.micomentario = usuario;
+            }
+            var pageNumber = page ?? 1;
+            var entradas = (from m in _context.Comentario.Include(u => u.CodClienteNavigation)
+                            orderby m.Fecha descending
+                            select m).ToList();
+            var entrada = entradas.ToPagedList(pageNumber, 10);
+
+            return View(entrada);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Createcomentario([Bind("Comentario1,hola")] Comentario comentario)
+        {
+            if (ModelState.IsValid)
+            {
+                ClaimsPrincipal currentUser = this.User;
+                var identity = (ClaimsIdentity)currentUser.Identity;
+                comentario.Fecha = DateTime.Now; 
+                comentario.CodCliente = Int32.Parse(identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
+
+                _context.Add(comentario);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Comentarios", "Home");
+            }
+
+            return View(comentario);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

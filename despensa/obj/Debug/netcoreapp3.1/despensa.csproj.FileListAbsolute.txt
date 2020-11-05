@@ -862,7 +862,6 @@ D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\View
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\EstadoActividads\Edit.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\EstadoActividads\Index.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
-D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\PredidoFacturas\Create.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\PredidoFacturas\Delete.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\PredidoFacturas\Details.cshtml.g.cs
@@ -1146,3 +1145,4 @@ D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\View
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout1.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout3.cshtml.g.cs
 D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\despensa.csprojAssemblyReference.cache
+D:\proyectosvisual\Despensa-Virtual1\despensa\obj\Debug\netcoreapp3.1\Razor\Views\Home\Comentarios.cshtml.g.cs

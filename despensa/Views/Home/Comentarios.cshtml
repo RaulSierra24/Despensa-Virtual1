@@ -1,0 +1,164 @@
+﻿@model IEnumerable<despensa.Models.Comentario>
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@{
+    ViewData["Title"] = "Comentarios";
+}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+<!-- Begin emoji-picker Stylesheets -->
+<link href="~/emoji/css/emoji.css" rel="stylesheet">
+<link rel="stylesheet" href="~/css/comentarios.css">
+
+
+@if(@User.Identity.IsAuthenticated){
+<div class="comments-container">
+    <div class="comment-main-level">
+        <!-- Avatar -->
+        <div class="comment-avatar" style="background-image: url(''); background-size: cover;"></div>
+        <!-- Contenedor del Comentario -->
+        <div class="comment-box">
+            <div class="comment-head">
+                <div style="background-image: url('@Url.Content("~/perfiles/" + @ViewBag.micomentario.ImagenPerfil)'); background-size: cover; width:50px; height:50px" class="col-md-3">
+                    <h1 class="comment-name" style="font-size: 250%;width:375px">&nbsp;&nbsp;&nbsp; @ViewBag.micomentario.PrimerNombre @ViewBag.micomentario.PrimerApellido</h1>
+                </div>
+            </div>
+            <div class="comment-content">
+                <form asp-action="Createcomentario" id="formcomentario" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+
+                            <textarea name="Comentario1" class="form-control" style="max-width: 745px;" data-emojiable="true"></textarea>
+
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Comentar" class="botones validar redondear" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+
+
+
+
+<div class="comments-container">
+    <h1>Comentarios</h1>
+    <ul id="comments-list" class="comments-list">
+        @*<li>
+                <div class="comment-main-level">
+                    <!-- Avatar -->
+                    <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
+                    <!-- Contenedor del Comentario -->
+                    <div class="comment-box">
+                        <div class="comment-head">
+                            <h6 class="comment-name by-author"><a href="http://creaticode.com/blog">Agustin Ortiz</a></h6>
+                            <span>hace 20 minutos</span>
+                            <i class="fa fa-reply"></i>
+                            <i class="fa fa-heart"></i>
+                        </div>
+                        <div class="comment-content">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                        </div>
+                    </div>
+                </div>
+                <!-- Respuestas de los comentarios -->
+                <ul class="comments-list reply-list">
+                    <li>
+                        <!-- Avatar -->
+                        <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt=""></div>
+                        <!-- Contenedor del Comentario -->
+                        <div class="comment-box">
+                            <div class="comment-head">
+                                <h6 class="comment-name"><a href="http://creaticode.com/blog">Lorena Rojero</a></h6>
+                                <span>hace 10 minutos</span>
+                                <i class="fa fa-reply"></i>
+                                <i class="fa fa-heart"></i>
+                            </div>
+                            <div class="comment-content">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <!-- Avatar -->
+                        <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
+                        <!-- Contenedor del Comentario -->
+                        <div class="comment-box">
+                            <div class="comment-head">
+                                <h6 class="comment-name by-author"><a href="http://creaticode.com/blog">Agustin Ortiz</a></h6>
+                                <span>hace 10 minutos</span>
+                                <i class="fa fa-reply"></i>
+                                <i class="fa fa-heart"></i>
+                            </div>
+                            <div class="comment-content">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>*@
+        @foreach (var item in Model)
+        {
+        <li>
+            <div class="comment-main-level">
+                <!-- Avatar -->
+                <div class="comment-avatar" style="background-image: url('@Url.Content("~/perfiles/" + item.CodClienteNavigation.ImagenPerfil)'); background-size: cover;"></div>
+                <!-- Contenedor del Comentario -->
+                <div class="comment-box">
+                    <div class="comment-head">
+                        <h6 class="comment-name">@item.CodClienteNavigation.PrimerNombre @item.CodClienteNavigation.PrimerApellido</h6>
+                        <span>@item.Fecha</span>
+                        <i class="fa fa-reply"></i>
+                        <i class="fa fa-heart"></i>
+                    </div>
+                    <div class="comment-content">
+                        @item.Comentario1
+                    </div>
+                </div>
+            </div>
+        </li>
+        }
+
+    </ul>
+    <div class="text-center">
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("index", new { page = page }))
+    </div>
+</div>
+
+
+<!-- End emoji-picker JavaScript -->
+
+
+@if(@User.Identity.IsAuthenticated){
+@section Scripts {
+
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <!-- Begin emoji-picker JavaScript -->
+    <script src="~/emoji/js/config.js"></script>
+    <script src="~/emoji/js/util.js"></script>
+    <script src="~/emoji/js/jquery.emojiarea.js"></script>
+    <script src="~/emoji/js/emoji-picker.js"></script>
+    <script>
+
+        $(function () {
+            // Initializes and creates emoji set from sprite sheet
+            window.emojiPicker = new EmojiPicker({
+                emojiable_selector: '[data-emojiable=true]',
+                assetsPath: '/emoji/img/',
+                popupButtonClasses: 'fa fa-smile-o'
+            });
+            // Finds all elements with `emojiable_selector` and converts them to rich emoji input fields
+            // You may want to delay this step if you have dynamically created input fields that appear later in the loading process
+            // It can be called as many times as necessary; previously converted input fields will not be converted again
+            window.emojiPicker.discover();
+        });
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+}

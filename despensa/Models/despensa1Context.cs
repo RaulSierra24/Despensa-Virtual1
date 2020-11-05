@@ -36,7 +36,7 @@ namespace despensa.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=password;database=despensa1", x => x.ServerVersion("5.7.28-mysql"));
+                optionsBuilder.UseMySql("server = 178.128.190.202; port = 3306; user = root; password = Server$20202; database = despensa1", x => x.ServerVersion("5.7.28-mysql"));
             }
         }
 
@@ -135,6 +135,9 @@ namespace despensa.Models
                     .WithMany(p => p.Comentario)
                     .HasForeignKey(d => d.CodCliente)
                     .HasConstraintName("comentario_cliente");
+                entity.Property(e => e.Fecha)
+                    .HasColumnName("fecha")
+                    .HasColumnType("datetime");
             });
 
             modelBuilder.Entity<DetalleFactura>(entity =>

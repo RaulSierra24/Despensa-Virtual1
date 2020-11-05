@@ -27,7 +27,7 @@ namespace despensa
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<despensa1Context>(options => options.UseMySQL("server = localhost; port = 3306; user = root; password = password; database = despensa1"));
+            services.AddDbContext<despensa1Context>(options => options.UseMySQL("server = 178.128.190.202; port = 3306; user = root; password = Server$20202; database = despensa1"));
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>
             {
@@ -49,19 +49,18 @@ namespace despensa
             }
             else
             {
-                app.UseDeveloperExceptionPage();
-                //app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                //app.UseHsts();
+                app.UseHsts();
             }
-            /*
+            
             app.UseStatusCodePages(async context =>
             {
                 if (context.HttpContext.Response.StatusCode == 404)
                 {
                     context.HttpContext.Response.Redirect("/Home/Error");
                 }
-            });*/
+            });
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
