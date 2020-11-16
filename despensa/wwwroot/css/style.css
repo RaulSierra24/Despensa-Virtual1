@@ -4920,55 +4920,69 @@ input[type="radio"], input[type="checkbox"] {
     
 }
 
-.encabezadopro {
-    font: 700 4em/1 "Oswald", sans-serif;
-    letter-spacing: 0;
-    padding: .25em 0 .325em;
-    display: block;
-    margin: 0 auto;
-    text-shadow: 0 0 80px rgba(255, 255, 255, 0.5);
-    background: url(/img/animated_text_fill.png) repeat-y;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-animation: aitf 80s linear infinite;
-    -webkit-transform: translate3d(-20, -20, -20);
-    -webkit-backface-visibility: hidden;
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:800);
+
+.encabezado {
+    fill: none;
+    stroke-width: 3;
+    stroke-linejoin: round;
+    stroke-dasharray: 70 330;
+    stroke-dashoffset: 0;
+    -webkit-animation: stroke 10s infinite linear;
+    animation: stroke 10s infinite linear;
 }
 
-@-webkit-keyframes aitf {
-    0% {
-        background-position: 0% 50%;
+    .encabezado:nth-child(5n + 1) {
+        stroke: #ff002f;
+        -webkit-animation-delay: -2s;
+        animation-delay: -2s;
     }
 
+    .encabezado:nth-child(5n + 2) {
+        stroke: #ff6a3c;
+        -webkit-animation-delay: -4s;
+        animation-delay: -4s;
+    }
+
+    .encabezado:nth-child(5n + 3) {
+        stroke: #171816;
+        -webkit-animation-delay: -6s;
+        animation-delay: -6s;
+    }
+
+    .encabezado:nth-child(5n + 4) {
+        stroke: #56d991;
+        -webkit-animation-delay: -8s;
+        animation-delay: -8s;
+    }
+
+    .encabezado:nth-child(5n + 5) {
+        stroke: #1accfd;
+        -webkit-animation-delay: -10s;
+        animation-delay: -10s;
+    }
+
+@-webkit-keyframes stroke {
     100% {
-        background-position: 100% 50%;
+        stroke-dashoffset: -400;
     }
 }
 
-
-.encabezadopro1 {
-    font: 700 4em/1 "Oswald", sans-serif;
-    letter-spacing: 0;
-    padding: .25em 0 .325em;
-    display: block;
-    margin: 0 auto;
-    text-shadow: 0 0 80px rgba(255, 255, 255, 0.5);
-    background: url(/img/animated_text_fill2.png) repeat-y;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-animation: aitf2 80s linear infinite;
-    -webkit-transform: translate3d(-20, -20, -20);
-    -webkit-backface-visibility: hidden;
-}
-
-@-webkit-keyframes aitf2 {
+@keyframes stroke {
     100% {
-        background-position: 0% 50%;
+        stroke-dashoffset: -400;
     }
+}
+/* Other styles */
 
-    0% {
-        background-position: 100% 50%;
-    }
+.contenedorletras {
+    z-index:10000;
+    background-size: .2em 100%;
+    font: 5em/1 Open Sans, Impact;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.svgletras {
+    width: 100%;
 }
