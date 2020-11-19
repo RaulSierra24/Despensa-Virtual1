@@ -104,7 +104,6 @@ namespace despensa.Controllers
         [Authorize(Roles = "3,2,1")]
         public async Task<IActionResult> Factura(int? id)
         {
-            Console.WriteLine("hola "+id);
             if (id == null)
             {
                 return NotFound();
@@ -122,6 +121,7 @@ namespace despensa.Controllers
             {
                 return NotFound();
             }
+
             ViewBag.cantidad = detallefactura.Count;
             ViewBag.detalleFactura = detallefactura;
             ViewBag.factura = factura;

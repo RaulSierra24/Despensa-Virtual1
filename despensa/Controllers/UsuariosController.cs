@@ -40,7 +40,7 @@ namespace despensa.Controllers
             if (Nombre != "" && Nombre != null) { ViewBag.nombres = Nombre; entradas = entradas.Where(a => a.PrimerNombre.ToLower().Contains(Nombre.ToLower())).ToList(); }
             if (Apellido != "" && Apellido != null) { ViewBag.apellido = Apellido; entradas = entradas.Where(a => a.PrimerApellido.ToLower().Contains(Apellido.ToLower())).ToList(); }
             if (cui != "" && cui != null) { ViewBag.cui = cui; entradas = entradas.Where(a => a.Cui.Contains(cui.ToLower())).ToList(); }
-            var entrada = entradas.ToPagedList(pageNumber, 3);
+            var entrada = entradas.ToPagedList(pageNumber, 6);
             return View(entrada);
         }
 
@@ -534,14 +534,6 @@ namespace despensa.Controllers
                                 }
 
                             }
-
-                            //int timeout = login.RememberMe ? 525600 : 20;  //52600 min=1año
-                            //var ticket = new FormsAuthenticationTicket(login.Email, login.RememberMe, timeout);
-                            //string encrypted = FormsAuthentication.Encrypt(ticket);
-                            //var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypted);
-                            //cookie.Expires = DateTime.Now.AddMinutes(timeout);
-                            //cookie.HttpOnly = true;
-                            //Response.Cookies.Add(cookie);
                         }
                         else
                         {

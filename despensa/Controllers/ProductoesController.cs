@@ -135,10 +135,10 @@ namespace despensa.Controllers
             {
                 ViewBag.nombre_cat = _context.Categoria.Where(a => a.CodCategoria == idcat);
                 ViewBag.codig_cat = idcat;
-                ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "CodEstado");
+                ViewData["CodEstado"] = new SelectList(_context.EstadoActividad, "CodEstado", "Estado");
                 ViewData["CodCategoria"] = new SelectList(_context.Categoria, "CodCategoria", "CodCategoria");
-                ViewData["CodMarca"] = new SelectList(_context.Marca, "CodMarca", "CodMarca");
-                ViewData["CodProveedor"] = new SelectList(_context.Proveedor, "CodProveedor", "CodProveedor");
+                ViewData["CodMarca"] = new SelectList(_context.Marca, "CodMarca", "Marca1");
+                ViewData["CodProveedor"] = new SelectList(_context.Proveedor, "CodProveedor", "Proveedor1");
                 return View();
             }
             return RedirectToAction("Index", "Categorias");

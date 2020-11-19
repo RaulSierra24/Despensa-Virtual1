@@ -1,97 +1,107 @@
 ﻿@model despensa.Models.Usuario
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Usuario";
 }
 <link rel="stylesheet" href="~/css/login.css">
 
-<h4>Usuario</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="CreateAdmin">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="contenedor-input">
-                <label class="active highlight">
-                    Rol De Usuario <span class="req">*</span>
-                </label>
-                <select asp-for="CodRol" class="select-css" style="width:100%;" asp-items="ViewBag.CodRol"></select>
-            </div>
-            <div class="fila-arriba">
+<div class="container">
+    <h3 class="tittle-w3l">
+        Agregar Usuario
+        <span class="heading-style">
+            <i></i>
+            <i></i>
+            <i></i>
+        </span>
+    </h3>
+</div>
+<div class="container">
+    <div class="row">
+        <div>
+            <form asp-action="CreateAdmin">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="contenedor-input">
                     <label class="active highlight">
-                        Primer Nombre <span class="req">*</span>
+                        Rol De Usuario <span class="req">*</span>
                     </label>
-                    <input asp-for="PrimerNombre" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                    <select asp-for="CodRol" class="select-css" style="width:100%;" asp-items="ViewBag.CodRol"></select>
                 </div>
+                <div class="fila-arriba">
+                    <div class="contenedor-input">
+                        <label class="active highlight">
+                            Primer Nombre <span class="req">*</span>
+                        </label>
+                        <input asp-for="PrimerNombre" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                    </div>
 
-                <div class="contenedor-input">
-                    <label class="active highlight">
-                        Segundo Nombre <span class="req">*</span>
-                    </label>
-                    <input asp-for="SegundoNombre" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                    <div class="contenedor-input">
+                        <label class="active highlight">
+                            Segundo Nombre <span class="req">*</span>
+                        </label>
+                        <input asp-for="SegundoNombre" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                    </div>
                 </div>
-            </div>
-            <div class="fila-arriba">
-                <div class="contenedor-input">
-                    <label class="active highlight">
-                        Primer Apellido <span class="req">*</span>
-                    </label>
-                    <input asp-for="PrimerApellido" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
-                </div>
+                <div class="fila-arriba">
+                    <div class="contenedor-input">
+                        <label class="active highlight">
+                            Primer Apellido <span class="req">*</span>
+                        </label>
+                        <input asp-for="PrimerApellido" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                    </div>
 
-                <div class="contenedor-input">
-                    <label class="active highlight">
-                        Segundo Apellido <span class="req">*</span>
-                    </label>
-                    <input asp-for="SegundoApellido" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                    <div class="contenedor-input">
+                        <label class="active highlight">
+                            Segundo Apellido <span class="req">*</span>
+                        </label>
+                        <input asp-for="SegundoApellido" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                    </div>
                 </div>
-            </div>
-            <div class="fila-arriba">
-                <div class="contenedor-input">
-                    <label class="active highlight">
-                        CUI <span class="req">*</span>
-                    </label>
-                    <input asp-for="Cui" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
-                </div>
+                <div class="fila-arriba">
+                    <div class="contenedor-input">
+                        <label class="active highlight">
+                            CUI <span class="req">*</span>
+                        </label>
+                        <input asp-for="Cui" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                    </div>
 
+                    <div class="contenedor-input">
+                        <label class="active highlight">
+                            NIT <span class="req">*</span>
+                        </label>
+                        <input asp-for="Nit " type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                    </div>
+                </div>
+                <div class="fila-arriba">
+                    <div class="contenedor-input">
+                        <label class="active highlight">
+                            Genero <span class="req">*</span>
+                        </label>
+                        <select asp-for="CodGeneo" class="select-css" style="width:200%;" asp-items="ViewBag.CodGeneo"></select>
+                    </div>
+                    <div class="contenedor-input">
+                        <label class="active highlight">
+                            Fecha de Nacimiento <span class="req">*</span>
+                        </label>
+                        <input asp-for="FecNac" type="date" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                    </div>
+                </div>
                 <div class="contenedor-input">
                     <label class="active highlight">
-                        NIT <span class="req">*</span>
+                        Direccion <span class="req">*</span>
                     </label>
-                    <input asp-for="Nit " type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
-                </div>
-            </div>
-            <div class="fila-arriba">
-                <div class="contenedor-input">
-                    <label class="active highlight">
-                        Genero <span class="req">*</span>
-                    </label>
-                    <select asp-for="CodGeneo" class="select-css" style="width:200%;" asp-items="ViewBag.CodGeneo"></select>
+                    <input asp-for="Direccion" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
                 </div>
                 <div class="contenedor-input">
                     <label class="active highlight">
-                        Fecha de Nacimiento <span class="req">*</span>
+                        Email <span class="req">*</span>
                     </label>
-                    <input asp-for="FecNac" type="date" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
+                    <input asp-for="CorreoElectronico" type="email" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
                 </div>
-            </div>
-            <div class="contenedor-input">
-                <label class="active highlight">
-                    Direccion <span class="req">*</span>
-                </label>
-                <input asp-for="Direccion" type="text" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
-            </div>
-            <div class="contenedor-input">
-                <label class="active highlight">
-                    Email <span class="req">*</span>
-                </label>
-                <input asp-for="CorreoElectronico" type="email" autocomplete="off" readonly onfocus="this.removeAttribute('readonly');" required>
-            </div>
-            <div class="text-left">
-                <input type="submit" class="botones primary redondear" value="Guardar" style="width:150px">
-                <a asp-action="Index" class="botones danger redondear">Regresar</a>
-            </div>
-        </form>
+                <div class="text-center"    >
+                    <input type="submit" class="botones primary redondear" value="Guardar" style="width:150px">
+                    <a asp-action="Index" class="botones danger redondear">Regresar</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
